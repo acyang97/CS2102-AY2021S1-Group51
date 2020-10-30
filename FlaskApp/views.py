@@ -37,8 +37,10 @@ class Users(db.Model):
 
 @login_manager.user_loader
 def load_user(username):
-    user = Users.query.filter_by(username=username).first()
-    return user or current_user
+
+    #user = Users.query.filter_by(username=username).first()
+    #return user or current_user
+    return current_user
 
 ##############################
 # Can get away using the below 3 functions for now, but it would be better to find a better method
