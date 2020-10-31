@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, flash, url_for, request
+from flask import Blueprint, redirect, render_template, flash, url_for, request, session
 from flask_login import current_user, login_required, login_user, UserMixin, logout_user
 from flask_bootstrap import Bootstrap
 from wtforms.fields import DateField
@@ -11,6 +11,7 @@ import psycopg2
 import psycopg2.extras
 import math
 from datetime import date, timedelta
+import datetime
 
 import sqlalchemy
 from sqlalchemy import create_engine
@@ -533,11 +534,20 @@ def search_caretaker():
              ls = list(ls)
              table = FilteredCaretakers(ls)
              table.border = true
-        """
-        return render_template("filtered-available-caretakers.html", table=table, startDate=startDate, endDate=endDate)
+
+
+        #return render_template("filtered-available-caretakers.html", table=table, startDate=startDate, endDate=endDate)
+
+
+        session['selectedCaretaker'] = [employment, category, rating, transport, payment, startDate.strftime('%Y-%m-%d'), endDate.strftime('%Y-%m-%d')]
+        #return redirect(url_for('view.test_filtered'), table = table, tempdata = tempdata)
+        return render_template("filtered-available-caretakers.html", table=table)
     return render_template('search-caretaker.html', form=form)
 
-
+@view.route("/testing", methods=["POST","GET"])
+@login_required
+def test_filtered():
+    return render_template("filtered-available-caretakers.html", table=table)
 
 
 @view.route("/testing", methods=["POST","GET"])
@@ -616,15 +626,31 @@ def petowner_bids():
         prices=list(prices)
         prices = PriceList(prices)
 
+    session['selectedCaretakerUsername'] = caretaker
     return render_template("bid.html", username=caretaker, pet_table=ownedpets, prices=prices)
 
-@view.route("/petowner-bids", methods=["POST", "GET"])
+@view.route("/petowner-select-pet", methods=["POST", "GET"])
 @login_required
 def petowner_bid_selected():
 
+    #[employment, category, rating, transport, payment, startDate, endDate]
+    ctusername = session['selectedCaretakerUsername']
+    owner = current_user.username
+    pet_name = request.args.get('pet_name')
+    mode_of_transport = session['selectedCaretaker'][3]
+    mode_of_payment = session['selectedCaretaker'][4]
+    completed = 'f'
+    start_date = session['selectedCaretaker'][5]
+    end_date = session['selectedCaretaker'][6]
 
-    return render_template("bid.html")
+    query = "INSERT INTO bids (ctusername, owner, pet_name, mode_of_transport, mode_of_payment, completed, \
+    start_date, end_date) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(ctusername, owner, pet_name, mode_of_transport, mode_of_payment, completed, start_date, end_date)
 
+    db.session.execute(query)
+    db.session.commit()
+
+    flash('You have successfully added {}'.format(request.args.get('pet_name')), 'Success')
+    return redirect(url_for('view.search_caretaker'))
 
 """
 Set a route for the care takers to see their transactions
