@@ -536,7 +536,7 @@ def search_caretaker():
              table.border = true
         """
 
-        session['selectedCaretaker'] = [employment, category, rating, transport, payment, startDate, endDate]
+        session['selectedCaretaker'] = [employment, category, rating, transport, payment, startDate.strftime('%Y-%m-%d'), endDate.strftime('%Y-%m-%d')]
         #return redirect(url_for('view.test_filtered'), table = table, tempdata = tempdata)
         return render_template("filtered-available-caretakers.html", table=table)
     return render_template('search-caretaker.html', form=form)
@@ -637,35 +637,17 @@ def petowner_bid_selected():
     mode_of_transport = session['selectedCaretaker'][3]
     mode_of_payment = session['selectedCaretaker'][4]
     completed = 'f'
-    #start_date = session['selectedCaretakerUsername'][5]
-    #end_date = session['selectedCaretakerUsername'][6]
-
-    print(current_user.username)
-    print(session['selectedCaretaker'])
-    print(mode_of_transport)
-    print(session['selectedCaretaker'][5])
-    print(type(session['selectedCaretaker'][6]))
-
+    start_date = session['selectedCaretaker'][5]
+    end_date = session['selectedCaretaker'][6]
 
     query = "INSERT INTO bids (ctusername, owner, pet_name, mode_of_transport, mode_of_payment, completed, \
-    start_date, end_date) VALUES ('1234','123','123','4','5','f','2020-10-28','2020-10-28')"
+    start_date, end_date) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(ctusername, owner, pet_name, mode_of_transport, mode_of_payment, completed, start_date, end_date)
 
     db.session.execute(query)
     db.session.commit()
 
     flash('You have successfully added {}'.format(request.args.get('pet_name')), 'Success')
     return redirect(url_for('view.search_caretaker'))
-
-'''
-strftime
-    startDate = datetime.datetime.strptime(selectedcaretakerdata[5], '%Y-%m-%d')
-    endDate = datetime.datetime.strptime(selectedcaretakerdata[6], '%Y-%m-%d')
-'{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}'
-    .format(selectedCaretakerUsername,
-     current_user.username, request.args.get('pet_name'),selectedcaretakerdata[3],
-     selectedcaretakerdata[4], "f", selectedcaretakerdata[5], selectedcaretakerdata[6])
-'''
-
 
 """
 Set a route for the care takers to see their transactions
