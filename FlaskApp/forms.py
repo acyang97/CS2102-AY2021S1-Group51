@@ -91,7 +91,10 @@ class FullTimeChoosePetTypeForm(FlaskForm):
     submit = SubmitField('Choose pet types!')
 
 class TestForm(FlaskForm):
-    date = DateField('Pick a Date', format="%m/%d/%Y")
+    categories = [('Dog', 'Dog'), ('Cat', 'Cat'), ('Rabbit', 'Rabbit'),
+                ('Hamster', 'Hamster'), ('Fish', 'Fish'), ('Guinea Pig', 'Guinea Pig'),
+                ('Mice', 'Mice'), ('Terrapin', 'Terrapin'), ('Bird', 'Bird')]
+    animal = SelectField('pet chosen', choices=categories)
     submit = SubmitField('Choose pet types!')
 
 class SearchCareTakerForm(FlaskForm):

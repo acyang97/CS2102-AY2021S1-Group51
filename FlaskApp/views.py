@@ -38,9 +38,9 @@ class Users(db.Model):
 @login_manager.user_loader
 def load_user(username):
 
-    #user = Users.query.filter_by(username=username).first()
-    #return user or current_user
-    return current_user
+    user = Users.query.filter_by(username=username).first()
+    return user or current_user
+    #return current_user
 
 ##############################
 # Can get away using the below 3 functions for now, but it would be better to find a better method
@@ -553,14 +553,21 @@ def search_caretaker():
 @login_required
 def testing():
     form = TestForm()
+    x = []
     if form.validate_on_submit():
-        d = form.dt.data.strftime('%x')
-        query = "INSERT INTO dummy (date) VALUES('{}')".format(d)
-        db.session.execute(query)
-        db.session.commit()
+        pet = request.form.get('animal')
+        x.append(pet)
+        #x.append(pet)
+        #x.append(pet)
 
-        #return form.dt.data.strftime('%x')
-    return render_template('testing.html', form=form)
+        return redirect(url_for('view.testing_output', x=x))
+    return render_template('testing.html', form=form, x=x)
+
+@view.route("/testing_output", methods=["POST","GET"])
+@login_required
+def testing_output():
+    x=request.args.get('x', None)
+    return render_template('testing_output.html',  x=x)
 
 
 """
@@ -633,6 +640,7 @@ def petowner_bid_selected():
 
 
     return render_template("bid.html")
+
 
 
 """
