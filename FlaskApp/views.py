@@ -686,10 +686,13 @@ def caretaker_incomplete_transactions():
     return;
 """
 
+"""
+Set a route for the pet owners to see their COMPLETED transactions
+"""
 
 @view.route("/petowner_completed_transactions", methods=["POST", "GET"])
 @login_required
-def caretaker_completed_transactions():
+def petowner_completed_transactions():
     owner = current_user.username
     if is_user_a_petowner(current_user) == False:
         flash("You are not a Pet Owner, sign up as one first!", 'error')
@@ -705,6 +708,9 @@ def caretaker_completed_transactions():
     table.border = True
     return render_template("petowner_completed_transactions.html", table=table)
 
+"""
+Set a route for thE CARE TAKERS to see their COMPLETED transactions
+"""
 @view.route("/caretaker_completed_transactions", methods=["POST", "GET"])
 @login_required
 def caretaker_completed_transactions():
@@ -722,12 +728,8 @@ def caretaker_completed_transactions():
     table.border = True
     return render_template("caretaker_completed_transactions.html", table=table)
 """
-"""
 
 """
-Set a route for the pet owners to see their transactions
-"""
-
 """
 Set a route for a user to delete his account
 """
