@@ -29,8 +29,12 @@
         <a href="{{ url_for('view.petlist')}}" class="btn btn-primary">Click here!</a>
         <<h5>Testing!!!!!!!!!!!!!</h5>
         <a href="{{ url_for('view.testing')}}" class="btn btn-primary">Search for a Care Taker here!</a>
-        <h5>Look at your completed transactions here!</h5>
-        <a href="{{ url_for('view.petowner_completed_transactions')}}" class="btn btn-primary">Click here!</a>
+        <h5>Look at your completed transactions that you have reviewed here!</h5>
+        <a href="{{ url_for('view.petowner_completed_transactions_with_review')}}" class="btn btn-primary">Click here!</a>
+        <h5>Look at your completed transactions that you have yet to reviewed here!</h5>
+        <a href="{{ url_for('view.petowner_completed_transactions_without_review')}}" class="btn btn-primary">Click here!</a>
+        <h5>Look at your incomplete transactions here!</h5>
+        <a href="{{ url_for('view.petowner_incomplete_transactions')}}" class="btn btn-primary">Click here!</a>
       </div>
       <div class="col-lg-4 col-md-4 col-sm-12">
         <h3 class="feature-title">For Full-Time Care Takers</h3>
@@ -43,6 +47,8 @@
         <a href="http://www.google.com" class="btn btn-primary">Click here!</a>
         <h5>Look at your completed transactions here!</h5>
         <a href="{{ url_for('view.caretaker_completed_transactions')}}" class="btn btn-primary">Click here!</a>
+        <h5>Look at your incomplete/upcoming transactions here!</h5>
+        <a href="{{ url_for('view.caretaker_incomplete_transactions')}}" class="btn btn-primary">Click here!</a>
       </div>
       <div class="col-lg-4 col-md-4 col-sm-12">
         <h3 class="feature-title">For Part-Time Care Takers</h3>
@@ -55,6 +61,8 @@
         <a href="http://www.google.com" class="btn btn-primary">Click here!</a>
         <h5>Look at your completed transactions here!</h5>
         <a href="{{ url_for('view.caretaker_completed_transactions')}}" class="btn btn-primary">Click here!</a>
+        <h5>Look at your incomplete/upcoming transactions here!</h5>
+        <a href="{{ url_for('view.caretaker_incomplete_transactions')}}" class="btn btn-primary">Click here!</a>
       </div>
     </div>
   </div>
