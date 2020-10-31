@@ -29,6 +29,7 @@ class FilteredCaretakers(Table):
     classes  = ['table', 'table-bordered', 'table-striped']
     username = Col('Caretaker Name')
     gender = Col('Gender')
+    price = Col('Price ($)')
     rating = Col('Rating')
     select = LinkCol('Select', 'view.petowner_bids', url_kwargs=dict(username='username'))
 

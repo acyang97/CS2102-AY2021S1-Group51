@@ -478,7 +478,7 @@ def search_caretaker():
         endDate = form.endDate.data
 
         if employment == "1": #part time
-            searchquery = "SELECT DISTINCT username, gender, rating \
+            searchquery = "SELECT DISTINCT username, gender, price, rating \
                             FROM users U \
                             NATURAL JOIN PartTimePriceList \
                             NATURAL JOIN CareTakers \
@@ -499,7 +499,7 @@ def search_caretaker():
             table = FilteredCaretakers(filtered)
             table.border = True
         elif employment == "2":#full time
-            searchquery = "SELECT DISTINCT username, gender, rating \
+            searchquery = "SELECT DISTINCT username, gender, price, rating \
                             FROM users U\
                             NATURAL JOIN FullTimePriceList \
                             NATURAL JOIN CareTakers \
@@ -545,7 +545,7 @@ def search_caretaker():
 
         session['selectedCaretaker'] = [employment, category, rating, transport, payment, startDate.strftime('%Y-%m-%d'), endDate.strftime('%Y-%m-%d')]
         #return redirect(url_for('view.test_filtered'), table = table, tempdata = tempdata)
-        return render_template("filtered-available-caretakers.html", table=table)
+        return render_template("filtered-available-caretakers.html", table=table, startDate=startDate, endDate=endDate)
     return render_template('search-caretaker.html', form=form)
 
 
