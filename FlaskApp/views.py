@@ -487,12 +487,13 @@ def search_caretaker():
                             NATURAL JOIN CareTakerAvailability \
                             WHERE pettype = '{}' AND rating = '{}' \
                             AND transport = '{}' AND modeofpayment = '{}' \
+                            AND U.username <> '{}'\
                             AND True = ALL(SELECT available \
                             FROM CaretakerAvailability C \
                             WHERE C.username = U.username \
                             AND C.date >= '{}' \
                             AND C.date <= '{}') \
-                            ".format(category, rating, transport, payment, startDate, endDate)
+                            ".format(category, rating, transport, payment, current_user.username, startDate, endDate)
             filtered = db.session.execute(searchquery)
             filtered = list(filtered)
             table = FilteredCaretakers(filtered)
@@ -507,12 +508,13 @@ def search_caretaker():
                             NATURAL JOIN CareTakerAvailability \
                             WHERE pettype = '{}' AND rating = '{}' \
                             AND transport = '{}' AND modeofpayment = '{}' \
+                            AND U.username <> '{}'\
                             AND True = ALL(SELECT available \
                             FROM CaretakerAvailability C \
                             WHERE C.username = U.username \
                             AND C.date >= '{}' \
                             AND C.date <= '{}') \
-                            ".format(category, rating, transport, payment, startDate, endDate)
+                            ".format(category, rating, transport, payment, current_user.username, startDate, endDate)
             filtered = db.session.execute(searchquery)
             filtered = list(filtered)
             table = FilteredCaretakers(filtered)
@@ -590,7 +592,7 @@ Set a route for the pet owners to bid for a care taker (works hand in hand with 
 @login_required
 def petowner_bids():
     caretaker = request.args.get('username')
-    ownedpetsquery = "SELECT * FROM ownedpets WHERE owner = '{}'".format(current_user.username)
+    ownedpetsquery = "SELECT * FROM ownedpets WHERE owner = '{}' AND category ='{}'".format(current_user.username, session['selectedCaretaker'][1])
     ownedpets = db.session.execute(ownedpetsquery)
     ownedpets = list(ownedpets)
     ownedpets = SelectPet(ownedpets)
@@ -598,12 +600,12 @@ def petowner_bids():
     isParttime = "SELECT * FROM PartTime WHERE username = '{}'".format(caretaker)
     exists = db.session.execute(isParttime).fetchone()
     if exists is None:
-        pricelistquery = "SELECT pettype, price FROM DefaultPriceList"
+        pricelistquery = "SELECT pettype, price FROM DefaultPriceList WHERE pettype='{}'".format(session['selectedCaretaker'][1])
         prices=db.session.execute(pricelistquery)
         prices=list(prices)
         prices = PriceList(prices)
     else:
-        pricelistquery = "SELECT pettype, price FROM parttimepricelist WHERE username='{}'".format(caretaker)
+        pricelistquery = "SELECT pettype, price FROM parttimepricelist WHERE username='{}' AND pettype='{}'".format(caretaker, session['selectedCaretaker'][1])
         prices=db.session.execute(pricelistquery)
         prices=list(prices)
         prices = PriceList(prices)
