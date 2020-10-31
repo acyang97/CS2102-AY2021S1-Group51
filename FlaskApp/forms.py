@@ -118,3 +118,9 @@ class SearchCareTakerForm(FlaskForm):
 class UpdateAvailabilityForm(FlaskForm):
     leaveDate = DateField('Date to take leave',validators=[InputRequired()],format='%Y-%m-%d')
     submit = SubmitField('Update Availability!')
+
+class PetOwnerSendReviewForm(FlaskForm):
+    ratings = [('0', '0'), ('1', '1'), ('2','2'),('3','3'),('4','4'),('5','5')]
+    review = StringField('Give your review!', validators=[DataRequired()])
+    rating = SelectField('Rating', choices=ratings)
+    submit = SubmitField('Submit your review!')
