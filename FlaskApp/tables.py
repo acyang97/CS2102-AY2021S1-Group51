@@ -53,6 +53,7 @@ class SelectPet(Table):
 
 class CareTakerCompletedTransactions(Table):
     classes = ['table', 'table-bordered', 'table-striped', "sortable"]
+    bid_id = Col('Bid ID')
     owner = Col('Owner')
     pet_name = Col('Pet name')
     category = Col('Category')
@@ -62,9 +63,37 @@ class CareTakerCompletedTransactions(Table):
     end_date = Col('End Date')
     price_per_day = Col('Price Per Day')
 
-class PetOwnerCompletedTransactions(Table):
+"""
+This one only diff is dosent show review and rating cus dosnet make sense to have it when still incomplete
+"""
+class CareTakerIncompleteTransactions(Table):
     classes = ['table', 'table-bordered', 'table-striped', "sortable"]
-    caretaker = Col('CareTaker')
+    bid_id = Col('Bid ID')
+    owner = Col('Owner')
+    pet_name = Col('Pet name')
+    category = Col('Category')
+    start_date = Col('Start Date')
+    end_date = Col('End Date')
+    price_per_day = Col('Price Per Day')
+    update = LinkCol('Transaction completed!', 'view.caretaker_complete_transaction', url_kwargs=dict(bid_id='bid_id'))
+    #select = LinkCol('Select', 'view.petowner_bids', url_kwargs=dict(username='username'))
+
+
+class PetOwnerIncompleteTransactions(Table):
+    classes = ['table', 'table-bordered', 'table-striped', "sortable"]
+    bid_id = Col('Bid ID')
+    ctusername = Col('CareTaker')
+    pet_name = Col('Pet name')
+    category = Col('Category')
+    start_date = Col('Start Date')
+    end_date = Col('End Date')
+    price_per_day = Col('Price Per Day')
+
+
+class PetOwnerCompletedTransactionsWithReview(Table):
+    classes = ['table', 'table-bordered', 'table-striped', "sortable"]
+    bid_id = Col('Bid ID')
+    ctusername = Col('CareTaker')
     pet_name = Col('Pet name')
     category = Col('Category')
     review = Col('Review')
@@ -72,3 +101,16 @@ class PetOwnerCompletedTransactions(Table):
     start_date = Col('Start Date')
     end_date = Col('End Date')
     price_per_day = Col('Price Per Day')
+
+class PetOwnerCompletedTransactionsWithoutReview(Table):
+    classes = ['table', 'table-bordered', 'table-striped', "sortable"]
+    bid_id = Col('Bid ID')
+    ctusername = Col('CareTaker')
+    pet_name = Col('Pet name')
+    category = Col('Category')
+    review = Col('Review')
+    rating = Col('Rating')
+    start_date = Col('Start Date')
+    end_date = Col('End Date')
+    price_per_day = Col('Price Per Day')
+    update = LinkCol('Give your review!', 'view.petowner_give_review', url_kwargs=dict(bid_id='bid_id'))
