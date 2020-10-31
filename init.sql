@@ -113,6 +113,7 @@ CREATE TABLE CaretakerAvailability(
 -- is bid_date)time actually necessary? dosent seem liek so (not necessary)
 --if you want we can rename owner with POusername also like what i've done with caretaker so both are same format)
 CREATE TABLE Bids (
+    bid_id INTEGER,
     CTusername VARCHAR,
     owner VARCHAR,
     pet_name VARCHAR,
