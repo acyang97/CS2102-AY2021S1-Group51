@@ -534,14 +534,7 @@ def search_caretaker():
              table = FilteredCaretakers(ls)
              table.border = true
         """
-        return render_template("filtered-available-caretakers.html", table=table,
-        employment = employment,
-        category = category,
-        rating =rating,
-        transport = transport,
-        payment = payment,
-        startDate = startDate,
-        endDate = endDate)
+        return render_template("filtered-available-caretakers.html", table=table, startDate=startDate, endDate=endDate)
     return render_template('search-caretaker.html', form=form)
 
 
