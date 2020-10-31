@@ -534,7 +534,10 @@ def search_caretaker():
              ls = list(ls)
              table = FilteredCaretakers(ls)
              table.border = true
-        """
+
+
+        #return render_template("filtered-available-caretakers.html", table=table, startDate=startDate, endDate=endDate)
+
 
         session['selectedCaretaker'] = [employment, category, rating, transport, payment, startDate.strftime('%Y-%m-%d'), endDate.strftime('%Y-%m-%d')]
         #return redirect(url_for('view.test_filtered'), table = table, tempdata = tempdata)
