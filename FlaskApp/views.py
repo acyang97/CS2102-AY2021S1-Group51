@@ -537,7 +537,7 @@ def search_caretaker():
              table = FilteredCaretakers(ls)
              table.border = true
 
-
+        """
         #return render_template("filtered-available-caretakers.html", table=table, startDate=startDate, endDate=endDate)
 
 
@@ -546,32 +546,6 @@ def search_caretaker():
         return render_template("filtered-available-caretakers.html", table=table)
     return render_template('search-caretaker.html', form=form)
 
-@view.route("/testing", methods=["POST","GET"])
-@login_required
-def test_filtered():
-    return render_template("filtered-available-caretakers.html", table=table)
-
-
-@view.route("/testing", methods=["POST","GET"])
-@login_required
-def testing():
-    form = TestForm()
-    x = []
-    if form.validate_on_submit():
-        pet = request.form.get('animal')
-        x.append(pet)
-        #x.append(pet)
-        #x.append(pet)
-
-        return redirect(url_for('view.testing_output', x=x))
-    return render_template('testing.html', form=form, x=x)
-
-@view.route("/testing_output", methods=["POST","GET"])
-@login_required
-def testing_output():
-    x=request.args.get('x', None)
-    return render_template('testing_output.html',  x=x)
-
 
 """
 Set a route for the care takers to set their availability dates
@@ -579,7 +553,6 @@ NOTE: Completed, automated the adding to CareTakerAvailability table such
 that when a caretaker is created, will by default add every date from today to 2020-12-31 (for now, switch to 2021-12-31 in final implementation)
 to the availability table and he will be available
 """
-
 """
 Set a route for care takers to update their availability dates, meaning, for them to take leaves
 """
@@ -661,6 +634,32 @@ def petowner_bid_selected():
     flash('You have successfully added {}'.format(request.args.get('pet_name')), 'Success')
     return redirect(url_for('view.search_caretaker'))
 
+
+@view.route("/testing", methods=["POST","GET"])
+@login_required
+def test_filtered():
+    return render_template("filtered-available-caretakers.html", table=table)
+
+
+@view.route("/testing", methods=["POST","GET"])
+@login_required
+def testing():
+    form = TestForm()
+    x = []
+    if form.validate_on_submit():
+        pet = request.form.get('animal')
+        x.append(pet)
+        #x.append(pet)
+        #x.append(pet)
+
+        return redirect(url_for('view.testing_output', x=x))
+    return render_template('testing.html', form=form, x=x)
+
+@view.route("/testing_output", methods=["POST","GET"])
+@login_required
+def testing_output():
+    x=request.args.get('x', None)
+    return render_template('testing_output.html',  x=x)
 
 """
 Set a route for the care takers to see their transactions
