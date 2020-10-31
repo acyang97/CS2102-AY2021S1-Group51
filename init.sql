@@ -125,10 +125,9 @@ CREATE TABLE Bids (
     completed BOOLEAN DEFAULT FALSE,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
+    price_per_day NUMERIC NOT NULL,
     FOREIGN KEY (CTusername, start_date) REFERENCES CareTakerAvailability(username, date),
     FOREIGN KEY (CTusername, end_date) REFERENCES CaretakerAvailability(username, date)
-    -- no need start date and end date like what tutor said, so maybe just update the CaretakerAvailability table whenever a bid is made.
-    -- other attributes that might need: price (of bid),
 );
 
 CREATE TABLE PartTimePriceList (

@@ -616,7 +616,6 @@ def petowner_bids():
 @view.route("/petowner-select-pet", methods=["POST", "GET"])
 @login_required
 def petowner_bid_selected():
-
     #[employment, category, rating, transport, payment, startDate, endDate]
     ctusername = session['selectedCaretakerUsername']
     owner = current_user.username
@@ -663,15 +662,76 @@ def testing_output():
     x=request.args.get('x', None)
     return render_template('testing_output.html',  x=x)
 
-"""
-Set a route for the care takers to see their transactions
-"""
+
+
 
 
 """
-Set a route for the pet owners to see their transactions
+Not very sure how to set up the link to update the completed from false to true
+"""
+"""
+@view.route("/caretaker_incomplete_transactions", methods=["POST", "GET"])
+@login_required
+def caretaker_incomplete_transactions():
+    caretaker = current_user.username
+    if is_user_a_caretaker(current_user) == False:
+        flash("You are not a CareTaker, sign up as one first!", 'error')
+        return redirect(url_for('view.home')))
+    query_for_incomplete = "SELECT B.owner,  B.pet_name, B.category, start_date, end_date, price_per_day \
+                            FROM Bids B NATURAL JOIN OwnedPets OP \
+                            WHERE completed = TRUE AND CTusername = '{}' \
+                            ORDER BY start_date".format(caretaker)
+    incompletelist = db.session.execute(query_for_incomplete)
+    incompletelist = list(incompletelist)
+    table = incompletelist
+
+    return;
 """
 
+"""
+Set a route for the pet owners to see their COMPLETED transactions
+"""
+
+@view.route("/petowner_completed_transactions", methods=["POST", "GET"])
+@login_required
+def petowner_completed_transactions():
+    owner = current_user.username
+    if is_user_a_petowner(current_user) == False:
+        flash("You are not a Pet Owner, sign up as one first!", 'error')
+        return redirect(url_for('view.home'))
+
+    query_for_completed = "SELECT B.owner, B.pet_name, OP.category, review, rating, start_date, end_date, price_per_day \
+                            FROM Bids B NATURAL JOIN OwnedPets OP \
+                            WHERE completed = TRUE AND B.owner = '{}' \
+                            ORDER BY end_date DESC".format(owner)
+    completedlist = db.session.execute(query_for_completed)
+    completedlist = list(completedlist)
+    table = PetOwnerCompletedTransactions(completedlist)
+    table.border = True
+    return render_template("petowner_completed_transactions.html", table=table)
+
+"""
+Set a route for thE CARE TAKERS to see their COMPLETED transactions
+"""
+@view.route("/caretaker_completed_transactions", methods=["POST", "GET"])
+@login_required
+def caretaker_completed_transactions():
+    caretaker = current_user.username
+    if is_user_a_caretaker(current_user) == False:
+        flash("You are not a CareTaker, sign up as one first!", 'error')
+        return redirect(url_for('view.home'))
+    query_for_completed = "SELECT B.owner, B.pet_name, OP.category, review, rating, start_date, end_date, price_per_day \
+                            FROM Bids B NATURAL JOIN OwnedPets OP \
+                            WHERE completed = TRUE AND CTusername = '{}' \
+                            ORDER BY end_date DESC".format(caretaker)
+    completedlist = db.session.execute(query_for_completed)
+    completedlist = list(completedlist)
+    table = CareTakerCompletedTransactions(completedlist)
+    table.border = True
+    return render_template("caretaker_completed_transactions.html", table=table)
+"""
+
+"""
 """
 Set a route for a user to delete his account
 """

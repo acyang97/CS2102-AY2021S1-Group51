@@ -49,3 +49,25 @@ class SelectPet(Table):
     pet_name = Col('Pet Name')
     category = Col('Category')
     bid = LinkCol('bid', 'view.petowner_bid_selected', url_kwargs=dict(pet_name='pet_name'))
+
+class CareTakerCompletedTransactions(Table):
+    classes = ['table', 'table-bordered', 'table-striped', "sortable"]
+    owner = Col('Owner')
+    pet_name = Col('Pet name')
+    category = Col('Category')
+    review = Col('Review')
+    rating = Col('Rating')
+    start_date = Col('Start Date')
+    end_date = Col('End Date')
+    price_per_day = Col('Price Per Day')
+
+class PetOwnerCompletedTransactions(Table):
+    classes = ['table', 'table-bordered', 'table-striped', "sortable"]
+    caretaker = Col('CareTaker')
+    pet_name = Col('Pet name')
+    category = Col('Category')
+    review = Col('Review')
+    rating = Col('Rating')
+    start_date = Col('Start Date')
+    end_date = Col('End Date')
+    price_per_day = Col('Price Per Day')
