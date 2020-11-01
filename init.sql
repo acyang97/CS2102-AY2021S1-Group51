@@ -188,3 +188,59 @@ CREATE TABLE CareTakerSalary (
 --####################################################################
 --YEAR # MONTH # USERNAME # PETDAYS # TOTAL EARNINGS # FINAL SALARY #
 --####################################################################
+
+
+--CREATE OR REPLACE FUNCTION give_cust_points_func() RETURNS trigger AS $$
+--BEGIN
+--  UPDATE Orders set totalcost = foodcost + deliveryfee;
+--  UPDATE customers C SET ctpoints = ctpoints + FLOOR(O.totalcost::money::numeric::float8)
+--  From Orders O
+--  WHERE C.user_id = NEW.user_id
+--  AND O.orderid = NEW.orderid;
+--  RETURN NEW;
+--END;
+--$$ LANGUAGE 'plpgsql';
+
+--DROP TRIGGER IF EXISTS update_cust_points_trig ON orders;
+--CREATE TRIGGER update_cust_points_trig
+--  AFTER UPDATE of foodcost OR INSERT
+--  ON orders
+--  FOR EACH ROW
+--  EXECUTE PROCEDURE give_cust_points_func();
+
+CREATE OR REPLACE FUNCTION update_caretaker_pet_count_function() RETURNS trigger AS $$
+BEGIN
+  UPDATE CareTakerAvailability C set pet_count = pet_count + 1
+    WHERE C.username = NEW.CTUsername
+      AND C.date >= NEW.start_date
+      AND C.date <= NEW.end_date;
+  UPDATE CareTakerAvailability C set available = FALSE
+    WHERE C.username = NEW.CTUsername
+    AND (NEW.CTUsername in (SELECT * FROM FullTime))
+    AND C.date >= NEW.start_date
+    AND C.date <= NEW.end_date
+    AND C.pet_count = 5;
+  UPDATE CareTakerAvailability C set available = FALSE
+    WHERE C.username = NEW.CTUsername
+    AND (NEW.CTUsername in (SELECT * FROM PartTime))
+    AND ((SELECT rating FROM Caretakers WHERE username = NEW.CTUsername)>=4)
+    AND C.date >= NEW.start_date
+    AND C.date <= NEW.end_date
+    AND C.pet_count = 5;
+  UPDATE CareTakerAvailability C set available = FALSE
+    WHERE C.username = NEW.CTUsername
+    AND (NEW.CTUsername in (SELECT * FROM PartTime))
+    AND ((SELECT rating FROM Caretakers WHERE username = NEW.CTUsername)<4)
+    AND C.date >= NEW.start_date
+    AND C.date <= NEW.end_date
+    AND C.pet_count = 2;
+  RETURN NEW;
+END
+$$ LANGUAGE 'plpgsql';
+
+DROP TRIGGER IF EXISTS update_caretaker_petcount_after_bid_trigger ON Bids;
+CREATE TRIGGER update_caretaker_petcount_after_bid_trigger
+  AFTER INSERT
+  ON Bids
+  FOR EACH ROW
+  EXECUTE PROCEDURE update_caretaker_pet_count_function();
