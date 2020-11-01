@@ -640,12 +640,12 @@ def petowner_bids():
     isParttime = "SELECT * FROM PartTime WHERE username = '{}'".format(caretaker)
     exists = db.session.execute(isParttime).fetchone()
     if exists is None:
-        pricelistquery = "SELECT pettype, price FROM DefaultPriceList WHERE pettype='{}'".format(session['selectedCaretaker'][1])
+        pricelistquery = "SELECT pettype, CASE WHEN rating >= 4.5 THEN price * 1.5 WHEN rating >=4 THEN price * 1.25 ELSE price END price FROM DefaultPriceList NATURAL JOIN Caretakers WHERE username = '{}' AND pettype='{}'".format(caretaker, session['selectedCaretaker'][1])
         prices=db.session.execute(pricelistquery)
         prices=list(prices)
         prices = PriceList(prices)
     else:
-        pricelistquery = "SELECT pettype, price FROM parttimepricelist WHERE username='{}' AND pettype='{}'".format(caretaker, session['selectedCaretaker'][1])
+        pricelistquery = "SELECT pettype, CASE WHEN rating >= 4.5 THEN price * 1.5 WHEN rating >=4 THEN price * 1.25 ELSE price END price FROM parttimepricelist NATURAL JOIN Caretakers WHERE username='{}' AND pettype='{}'".format(caretaker, session['selectedCaretaker'][1])
         prices=db.session.execute(pricelistquery)
         prices=list(prices)
         prices = PriceList(prices)
@@ -680,12 +680,6 @@ def petowner_bid_selected():
     flash('You have successfully added {}'.format(request.args.get('pet_name')), 'Success')
     return redirect(url_for('view.search_caretaker'))
 
-"""
-@view.route("/testing", methods=["POST","GET"])
-@login_required
-def test_filtered():
-    return render_template("filtered-available-caretakers.html", table=table)
-"""
 
 @view.route("/testing", methods=["POST","GET"])
 @login_required
