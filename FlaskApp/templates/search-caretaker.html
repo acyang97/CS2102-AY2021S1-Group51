@@ -21,6 +21,9 @@
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Search for a care taker here!</legend>
             <p>Note: You do not need to type in anything for the type of pets you do not want to take care.</p>
+            <p>Error(s) submitting form:</p>
+            <p>{{ error1 }}</p>
+            <p>{{ error2 }}</p>
             <div class="form-group">
                 {{ form.employment_type.label(class="form-control-label") }}
                 {% if form.employment_type.errors %}

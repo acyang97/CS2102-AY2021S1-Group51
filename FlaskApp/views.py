@@ -21,6 +21,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey
 from sqlalchemy import inspect
 
+import datetime
 view = Blueprint("view", __name__)
 """
 class Users(db.Model):
@@ -541,6 +542,7 @@ Take care finish. - Workflow
 @login_required
 def search_caretaker():
     form = SearchCareTakerForm()
+
     if is_user_a_petowner(current_user) == False:
         flash("You are not a pet owner, sign up as one first!", 'error')
         return redirect(url_for('view.home'))
@@ -554,8 +556,17 @@ def search_caretaker():
         startDate = form.startDate.data
         endDate = form.endDate.data
 
-        if employment == "1": #part time
-            searchquery = "SELECT DISTINCT username, gender, CASE WHEN rating >= 4.5 THEN price * 1.5 WHEN rating >=4 THEN price * 1.25 ELSE price END price, rating \
+        if endDate < startDate or startDate < datetime.date.today():
+            error1 = ""
+            error2 = ""
+            if endDate < startDate:
+                error1 = "Start date cannot be later than End date!"
+            if startDate < datetime.date.today():
+                error2 = "Start date cannot be a date before today!"
+            return render_template('search-caretaker.html', form=form, error1=error1, error2=error2)
+        else:
+            if employment == "1": #part time
+                searchquery = "SELECT DISTINCT username, gender, CASE WHEN rating >= 4.5 THEN price * 1.5 WHEN rating >=4 THEN price * 1.25 ELSE price END price, rating \
                             FROM users U \
                             NATURAL JOIN PartTimePriceList \
                             NATURAL JOIN CareTakers \
@@ -571,12 +582,12 @@ def search_caretaker():
                             AND C.date >= '{}' \
                             AND C.date <= '{}') \
                             ".format(category, rating, transport, payment, current_user.username, startDate, endDate)
-            filtered = db.session.execute(searchquery)
-            filtered = list(filtered)
-            table = FilteredCaretakers(filtered)
-            table.border = True
-        elif employment == "2":#full time
-            searchquery = "SELECT DISTINCT username, gender, CASE WHEN rating >= 4.5 THEN price * 1.5 WHEN rating >=4 THEN price * 1.25 ELSE price END price, rating \
+                filtered = db.session.execute(searchquery)
+                filtered = list(filtered)
+                table = FilteredCaretakers(filtered)
+                table.border = True
+            elif employment == "2":#full time
+                searchquery = "SELECT DISTINCT username, gender, CASE WHEN rating >= 4.5 THEN price * 1.5 WHEN rating >=4 THEN price * 1.25 ELSE price END price, rating \
                             FROM users U\
                             NATURAL JOIN FullTimePriceList \
                             NATURAL JOIN CareTakers \
@@ -592,37 +603,13 @@ def search_caretaker():
                             AND C.date >= '{}' \
                             AND C.date <= '{}') \
                             ".format(category, rating, transport, payment, current_user.username, startDate, endDate)
-            filtered = db.session.execute(searchquery)
-            filtered = list(filtered)
-            table = FilteredCaretakers(filtered)
-            table.border = True
-        #elif employment == "Part Time":
-        #    filtered = db.session.execute("SELECT username, gender, area AS rating FROM Users")
-        #    filtered = list(filtered)
-        #    table = FilteredCaretakers(filtered)
-        #    table.border = True
-
-        """
-        Write the query to get the filtered names of the caretakers first
-        ** NOTE, JUST NEED THE USERNAME, THEN CAN FILTER USING WHERE Users.username = username
-        query = ....
-        db.session.execute()
-
-        1. execute the query here to get the list of available care takers that is according to what pet owner wants
-        2. then natural join caretaker and users to get username, gender, rating (i think this suffices for now)
-            a. save the above select query ls and do the follow to produce table
-             ls = db.session.execute(query)
-             ls = list(ls)
-             table = FilteredCaretakers(ls)
-             table.border = true
-
-        """
-        #return render_template("filtered-available-caretakers.html", table=table, startDate=startDate, endDate=endDate)
-
-
-        session['selectedCaretaker'] = [employment, category, rating, transport, payment, startDate.strftime('%Y-%m-%d'), endDate.strftime('%Y-%m-%d')]
-        #return redirect(url_for('view.test_filtered'), table = table, tempdata = tempdata)
-        return render_template("filtered-available-caretakers.html", table=table, startDate=startDate, endDate=endDate)
+                filtered = db.session.execute(searchquery)
+                filtered = list(filtered)
+                table = FilteredCaretakers(filtered)
+                table.border = True
+            session['selectedCaretaker'] = [employment, category, rating, transport, payment, startDate.strftime('%Y-%m-%d'), endDate.strftime('%Y-%m-%d')]
+            #return redirect(url_for('view.test_filtered'), table = table, tempdata = tempdata)
+            return render_template("filtered-available-caretakers.html", table=table, startDate=startDate, endDate=endDate)
     return render_template('search-caretaker.html', form=form)
 
 """
