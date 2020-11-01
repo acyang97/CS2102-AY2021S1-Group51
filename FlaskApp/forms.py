@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, RadioField, DateField, BooleanField, IntegerField, TimeField, SelectField, TextAreaField, FloatField, FieldList, FormField, SelectMultipleField
+from wtforms import StringField, SubmitField, PasswordField, RadioField, BooleanField, IntegerField, TimeField, SelectField, TextAreaField, FloatField, FieldList, FormField, SelectMultipleField
+from wtforms.fields.html5 import DateField
 from wtforms.validators import InputRequired, ValidationError, Length, Email, EqualTo, DataRequired, Optional
 from flask_bootstrap import Bootstrap
 
@@ -127,7 +128,7 @@ class SearchCareTakerForm(FlaskForm):
     startDate = DateField('Start date',validators=[InputRequired()],format='%Y-%m-%d')
     endDate = DateField('End date',validators=[InputRequired()],format='%Y-%m-%d')
     submit = SubmitField('Search Caretaker')
-
+    
 class UpdateAvailabilityForm(FlaskForm):
     leaveDate = DateField('Date to take leave',validators=[InputRequired()],format='%Y-%m-%d')
     submit = SubmitField('Update Availability!')
