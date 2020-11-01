@@ -8,9 +8,11 @@ from forms import *
 from tables import *
 from models import Users
 
+import simplejson as json #"pip install simplejson"
 import psycopg2
 import psycopg2.extras
 import math
+from decimal import *
 from datetime import date, timedelta
 import datetime
 
@@ -477,6 +479,41 @@ def full_time_choose_pet():
         return redirect(url_for('view.home'))
     return render_template('full-time-choose-pettype.html', form=form)
 
+"""
+Set a route for the care takers to set their availability dates
+NOTE: Completed, automated the adding to CareTakerAvailability table such
+that when a caretaker is created, will by default add every date from today to 2020-12-31 (for now, switch to 2021-12-31 in final implementation)
+to the availability table and he will be available
+"""
+"""
+Set a route for care takers to update their availability dates, meaning, for them to take leaves
+"""
+@view.route("/caretaker-update-availability", methods=["POST", "GET"])
+@login_required
+def caretaker_update_availability():
+    form = UpdateAvailabilityForm()
+    if is_user_a_caretaker(current_user) == False:
+        flash("Only Care Takers can take leave and set their availability dates", 'Danger')
+        return redirect(url_for('view.home'))
+
+    if form.validate_on_submit():
+        leaveDate = form.leaveDate.data
+        query1 = "SELECT pet_count FROM CaretakerAvailability WHERE username = '{}' AND date = '{}'".format(current_user.username, leaveDate)
+        pet_count_on_selected_date = db.session.execute(query1).fetchone()[0]
+        if pet_count_on_selected_date > 0:
+            flash("You cannot take leave on that '{}' because you have pets to take care of on that date".format(leaveDate), 'Danger')
+        else:
+            query2 = "UPDATE CareTakerAvailability SET leave = true, available = false WHERE username = '{}' AND date = '{}'"\
+                .format(current_user.username, leaveDate)
+            db.session.execute(query2)
+            db.session.commit()
+            flash('You have successfully udpdated your availability', 'Success')
+    display_query = "SELECT date, pet_count, leave, available FROM CareTakerAvailability WHERE username = '{}' ORDER BY date".format(current_user.username)
+    display = db.session.execute(display_query)
+    display = list(display)
+    table = CareTakerAvailability(display)
+    table.border = True
+    return render_template("caretaker-update-availability.html" ,form=form, table=table)
 
 """
 Workflow for bidding
@@ -588,43 +625,6 @@ def search_caretaker():
         return render_template("filtered-available-caretakers.html", table=table, startDate=startDate, endDate=endDate)
     return render_template('search-caretaker.html', form=form)
 
-
-"""
-Set a route for the care takers to set their availability dates
-NOTE: Completed, automated the adding to CareTakerAvailability table such
-that when a caretaker is created, will by default add every date from today to 2020-12-31 (for now, switch to 2021-12-31 in final implementation)
-to the availability table and he will be available
-"""
-"""
-Set a route for care takers to update their availability dates, meaning, for them to take leaves
-"""
-@view.route("/caretaker-update-availability", methods=["POST", "GET"])
-@login_required
-def caretaker_update_availability():
-    form = UpdateAvailabilityForm()
-    if is_user_a_caretaker(current_user) == False:
-        flash("Only Care Takers can take leave and set their availability dates", 'Danger')
-        return redirect(url_for('view.home'))
-
-    if form.validate_on_submit():
-        leaveDate = form.leaveDate.data
-        query1 = "SELECT pet_count FROM CaretakerAvailability WHERE username = '{}' AND date = '{}'".format(current_user.username, leaveDate)
-        pet_count_on_selected_date = db.session.execute(query1).fetchone()[0]
-        if pet_count_on_selected_date > 0:
-            flash("You cannot take leave on that '{}' because you have pets to take care of on that date".format(leaveDate), 'Danger')
-        else:
-            query2 = "UPDATE CareTakerAvailability SET leave = true, available = false WHERE username = '{}' AND date = '{}'"\
-                .format(current_user.username, leaveDate)
-            db.session.execute(query2)
-            db.session.commit()
-            flash('You have successfully udpdated your availability', 'Success')
-    display_query = "SELECT date, pet_count, leave, available FROM CareTakerAvailability WHERE username = '{}' ORDER BY date".format(current_user.username)
-    display = db.session.execute(display_query)
-    display = list(display)
-    table = CareTakerAvailability(display)
-    table.border = True
-    return render_template("caretaker-update-availability.html" ,form=form, table=table)
-
 """
 Set a route for the pet owners to bid for a care taker (works hand in hand with searchCaretaker route at line 429)
 """
@@ -649,7 +649,9 @@ def petowner_bids():
         prices=db.session.execute(pricelistquery)
         prices=list(prices)
         prices = PriceList(prices)
-
+    price_to_pay = json.dumps(Decimal(db.session.execute("SELECT CASE WHEN rating >= 4.5 THEN price * 1.5 WHEN rating >=4 THEN price * 1.25 ELSE price END price \
+                                        FROM DefaultPriceList NATURAL JOIN Caretakers WHERE username = '{}' AND pettype='{}'".format(caretaker, session['selectedCaretaker'][1])).fetchone()[0]), use_decimal=True)
+    session['price_to_pay'] = price_to_pay
     session['selectedCaretakerUsername'] = caretaker
     return render_template("bid.html", username=caretaker, pet_table=ownedpets, prices=prices)
 
@@ -669,10 +671,11 @@ def petowner_bid_selected():
     completed = 'f'
     start_date = session['selectedCaretaker'][5]
     end_date = session['selectedCaretaker'][6]
+    price = session['price_to_pay']
     bidid = db.session.execute("SELECT COUNT(*) FROM BIDS").fetchone()[0] + 1
     query = "INSERT INTO bids (bid_id, ctusername, owner, pet_name, mode_of_transport, mode_of_payment, completed, \
     start_date, end_date, price_per_day) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')". \
-    format(bidid, ctusername, owner, pet_name, mode_of_transport, mode_of_payment, completed, start_date, end_date, 0)
+    format(bidid, ctusername, owner, pet_name, mode_of_transport, mode_of_payment, completed, start_date, end_date, price)
 
     db.session.execute(query)
     db.session.commit()
