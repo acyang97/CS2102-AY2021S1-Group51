@@ -180,7 +180,7 @@ def registration():
             ##return "You have successfully signed up as a caretaker!"
             flash("You have successfully signed up!", 'success')
             return redirect(url_for('view.home'))
-    return render_template("registration_admin.html", form=form)
+    return render_template("registration.html", form=form)
 
 @view.route("/registration_admin", methods=["GET", "POST"])
 def registration_admin():
