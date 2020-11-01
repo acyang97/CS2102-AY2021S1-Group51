@@ -20,7 +20,7 @@ CREATE TABLE PetOwners (
 
 CREATE TABLE CareTakers (
     username VARCHAR PRIMARY KEY REFERENCES users(username) ON DELETE CASCADE,
-    rating INTEGER DEFAULT 0
+    rating NUMERIC DEFAULT 0
 );
 
 CREATE TABLE ModeOfTransport (
