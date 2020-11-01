@@ -518,14 +518,14 @@ def search_caretaker():
         endDate = form.endDate.data
 
         if employment == "1": #part time
-            searchquery = "SELECT DISTINCT username, gender, price, rating \
+            searchquery = "SELECT DISTINCT username, gender, CASE WHEN rating >= 4.5 THEN price * 1.5 WHEN rating >=4 THEN price * 1.25 ELSE price END price, rating \
                             FROM users U \
                             NATURAL JOIN PartTimePriceList \
                             NATURAL JOIN CareTakers \
                             NATURAL JOIN PreferredTransport \
                             NATURAL JOIN PreferredModeOfPayment \
                             NATURAL JOIN CareTakerAvailability \
-                            WHERE pettype = '{}' AND rating = '{}' \
+                            WHERE pettype = '{}' AND rating >= '{}' \
                             AND transport = '{}' AND modeofpayment = '{}' \
                             AND U.username <> '{}'\
                             AND True = ALL(SELECT available \
@@ -539,14 +539,14 @@ def search_caretaker():
             table = FilteredCaretakers(filtered)
             table.border = True
         elif employment == "2":#full time
-            searchquery = "SELECT DISTINCT username, gender, price, rating \
+            searchquery = "SELECT DISTINCT username, gender, CASE WHEN rating >= 4.5 THEN price * 1.5 WHEN rating >=4 THEN price * 1.25 ELSE price END price, rating \
                             FROM users U\
                             NATURAL JOIN FullTimePriceList \
                             NATURAL JOIN CareTakers \
                             NATURAL JOIN PreferredTransport \
                             NATURAL JOIN PreferredModeOfPayment \
                             NATURAL JOIN CareTakerAvailability \
-                            WHERE pettype = '{}' AND rating = '{}' \
+                            WHERE pettype = '{}' AND rating >= '{}' \
                             AND transport = '{}' AND modeofpayment = '{}' \
                             AND U.username <> '{}'\
                             AND True = ALL(SELECT available \
