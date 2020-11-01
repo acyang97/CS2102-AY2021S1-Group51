@@ -12,6 +12,19 @@ def agrees_terms_and_conditions(form, field):
     if not field.data:
         raise ValidationError('You must agree to the terms and conditions to sign up')
 
+class AdminRegistrationForm(FlaskForm):
+    gender = [('Male', 'Male'), ('Female', 'Female')]
+    areachoice = [('North', 'North'), ('East', 'East'), ('South', 'South'), ('West', 'West'), ('Central', 'Central')]
+    username = StringField('Username',
+                           validators=[DataRequired(), Length(min=2, max=20)])
+    email = StringField('Email',
+                        validators=[DataRequired(), Email()])
+    area = SelectField('Which area do you stay at?', choices=areachoice)
+    password = PasswordField('Password', validators=[DataRequired()])
+    gender = SelectField('Select your gender.', choices=gender)
+    confirm_password = PasswordField('Confirm Password',
+                                     validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Sign Up as an Admin!')
 
 class RegistrationForm(FlaskForm):
     gender = [('Male', 'Male'), ('Female', 'Female')]

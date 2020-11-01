@@ -6,6 +6,7 @@ from wtforms.fields import DateField
 from __init__ import db, login_manager
 from forms import *
 from tables import *
+from models import Users
 
 import psycopg2
 import psycopg2.extras
@@ -19,7 +20,7 @@ from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey
 from sqlalchemy import inspect
 
 view = Blueprint("view", __name__)
-
+"""
 class Users(db.Model):
     username = db.Column(db.String, primary_key=True)
     password = db.Column(db.String, nullable=False)
@@ -34,7 +35,7 @@ class Users(db.Model):
 
     def get_id(self):
         return self.username
-
+"""
 
 @login_manager.user_loader
 def load_user(username):
@@ -60,10 +61,22 @@ def is_user_a_caretaker(current_user):
         return False
     return True
 
-# If false, user is a full Time
-# If true, user is a part time
 def is_user_a_parttime_caretaker(current_user):
     query = "SELECT * FROM PartTime WHERE username = '{}'".format(current_user.username)
+    exists_user = db.session.execute(query).fetchone()
+    if exists_user is None:
+        return False
+    return True
+
+def is_user_a_fulltime_caretaker(current_user):
+    query = "SELECT * FROM FullTime WHERE username = '{}'".format(current_user.username)
+    exists_user = db.session.execute(query).fetchone()
+    if exists_user is None:
+        return False
+    return True
+
+def is_user_a_admin(current_user):
+    query = "SELECT * FROM PCSAdmin WHERE username = '{}'".format(current_user.username)
     exists_user = db.session.execute(query).fetchone()
     if exists_user is None:
         return False
@@ -165,7 +178,33 @@ def registration():
             ##return "You have successfully signed up as a caretaker!"
             flash("You have successfully signed up!", 'success')
             return redirect(url_for('view.home'))
-    return render_template("registration.html", form=form)
+    return render_template("registration_admin.html", form=form)
+
+@view.route("/registration_admin", methods=["GET", "POST"])
+def registration_admin():
+    form = AdminRegistrationForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        email = form.email.data
+        password = form.password.data
+        area = form.area.data
+        gender = form.gender.data
+        query = "SELECT * FROM users WHERE username = '{}'".format(username)
+        exists_user = db.session.execute(query).fetchone()
+        if exists_user:
+            form.username.errors.append("{} is already in use.".format(username))
+        else:
+            query = "INSERT INTO users(username, email, area, gender, password) VALUES ('{}', '{}', '{}', '{}', '{}')"\
+                .format(username, email, area, gender, password)
+            db.session.execute(query)
+            query_insert_into_admin = "INSERT INTO PCSAdmin(username) VALUES ('{}')"\
+                .format(username)
+            db.session.execute(query_insert_into_admin)
+            db.session.commit()
+            flash("You have successfully signed up as an admin!", 'success')
+            return redirect(url_for('view.home'))
+    return render_template("registration_admin.html", form=form)
+
 
 @view.route("/login", methods=["GET", "POST"])
 def login():
@@ -184,6 +223,7 @@ def login():
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
             flash("You have successfully logged in!", 'success')
+
             return redirect(next_page) if next_page else redirect(url_for('view.home'))
             ##return redirect("/privileged-page")
             ##flash("You have successfully logged in!", 'success')
@@ -378,7 +418,7 @@ def part_time_set_price():
 @login_required
 def full_time_choose_pet():
     form = FullTimeChoosePetTypeForm()
-    if is_user_a_parttime_caretaker(current_user) == True:
+    if is_user_a_fulltime_caretaker(current_user) == False:
         flash("Only part time Full Timers can access this page!", 'Danger')
         return redirect(url_for('view.home'))
     if form.validate_on_submit():
@@ -796,9 +836,6 @@ def caretaker_complete_transaction():
     db.session.commit()
     return redirect(url_for('view.caretaker_completed_transactions'))
 
-"""
-
-"""
 """
 Set a route for a user to delete his account
 """
