@@ -258,8 +258,33 @@ $$ LANGUAGE 'plpgsql';
 
 -- trigger that automates the changing of availability after user takes a leave
 DROP TRIGGER IF EXISTS update_caretaker_availability_after_take_leave_trigger ON CareTakerAvailability;
-CREATE TRIGGER  update_caretaker_availability_after_take_leave_trigger
+CREATE TRIGGER update_caretaker_availability_after_take_leave_trigger
   AFTER UPDATE OF leave
   ON CareTakerAvailability
   FOR EACH ROW
   EXECUTE PROCEDURE update_caretaker_availability_after_take_leave_function();
+
+
+-- NEED HELP FOR THIS!!
+-- procedure that is excuted by the trigger below
+--CREATE OR REPLACE FUNCTION check_if_fulltime_can_take_leave_function()  RETURNS trigger AS $$
+
+
+-- trigger to check if the full time can take leave (if it affects the 2 x 150 days thing)
+--DROP TRIGGER IF EXISTS check_if_fulltime_can_take_leave_trigger ON CareTakerAvailability;
+--CREATE TRIGGER check_if_fulltime_can_take_leave_trigger
+--  BEFORE UPDATE OF leave
+--  ON CareTakerAvailability
+--  FOR EACH ROW
+--  EXECUTE PROCEDURE check_if_fulltime_can_take_leave_function();
+
+
+
+
+--- create a function to automate insertion into salary and availabilit tables
+-- after inseting into caretaker
+--DROP TRIGGER IF EXISTS insert_into_salary_trigger ON CareTakerSalary;
+--CREATE TRIGGER insert_into_salary_trigger
+--  AFTER INSERT
+--  ON CareTakers
+--  EXECUTE PROCEDURE insert_into_salary_function();
