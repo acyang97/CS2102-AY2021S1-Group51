@@ -208,6 +208,7 @@ CREATE TABLE CareTakerSalary (
 --  FOR EACH ROW
 --  EXECUTE PROCEDURE give_cust_points_func();
 
+-- auto updates pet count and available
 CREATE OR REPLACE FUNCTION update_caretaker_pet_count_function() RETURNS trigger AS $$
 BEGIN
   UPDATE CareTakerAvailability C set pet_count = pet_count + 1
@@ -238,9 +239,27 @@ BEGIN
 END
 $$ LANGUAGE 'plpgsql';
 
+-- trigger that makes use of the function above to update pet count and availbaility
 DROP TRIGGER IF EXISTS update_caretaker_petcount_after_bid_trigger ON Bids;
 CREATE TRIGGER update_caretaker_petcount_after_bid_trigger
   AFTER INSERT
   ON Bids
   FOR EACH ROW
   EXECUTE PROCEDURE update_caretaker_pet_count_function();
+
+-- function that makes use of the trigger below to automates this process
+CREATE OR REPLACE FUNCTION update_caretaker_availability_after_take_leave_function() RETURNS trigger AS $$
+BEGIN
+  UPDATE CareTakerAvailability C set available = False
+    WHERE leave = true;
+  RETURN NEW;
+END
+$$ LANGUAGE 'plpgsql';
+
+-- trigger that automates the changing of availability after user takes a leave
+DROP TRIGGER IF EXISTS update_caretaker_availability_after_take_leave_trigger ON CareTakerAvailability;
+CREATE TRIGGER  update_caretaker_availability_after_take_leave_trigger
+  AFTER UPDATE OF leave
+  ON CareTakerAvailability
+  FOR EACH ROW
+  EXECUTE PROCEDURE update_caretaker_availability_after_take_leave_function();

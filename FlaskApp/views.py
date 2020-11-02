@@ -504,7 +504,8 @@ def caretaker_update_availability():
         if pet_count_on_selected_date > 0:
             flash("You cannot take leave on that '{}' because you have pets to take care of on that date".format(leaveDate), 'Danger')
         else:
-            query2 = "UPDATE CareTakerAvailability SET leave = true, available = false WHERE username = '{}' AND date = '{}'"\
+            ## AVAILABLE = FALSE AUTOMATED USING TRIGGER
+            query2 = "UPDATE CareTakerAvailability SET leave = true WHERE username = '{}' AND date = '{}'"\
                 .format(current_user.username, leaveDate)
             db.session.execute(query2)
             db.session.commit()
@@ -679,9 +680,6 @@ def testing():
     if form.validate_on_submit():
         pet = request.form.get('animal')
         x.append(pet)
-        #x.append(pet)
-        #x.append(pet)
-
         return redirect(url_for('view.testing_output', x=x))
     return render_template('testing.html', form=form, x=x)
 
