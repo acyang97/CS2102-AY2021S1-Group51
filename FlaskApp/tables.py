@@ -133,7 +133,6 @@ class PetOwnerViewFullTime(Table):
     rating  = Col('Rating')
     history = LinkCol('Look at his reviews!', 'view.caretaker_individual_history', url_kwargs = dict(username='username'))
 
-
 class CareTakerIndividualHistory(Table):
     classes = ['table', 'table-bordered', 'table-striped', 'sortable']
     CTusername = Col('Care Taker Name')
@@ -143,3 +142,9 @@ class CareTakerIndividualHistory(Table):
     rating = Col('Rating')
     start_date = Col('Start Date')
     end_date = Col('End Date')
+
+class TotalJobPerMonthSummaryTable(Table):
+    classes = ['table', 'table-bordered', 'table-striped', 'sortable']
+    year = Col('Year')
+    month = Col('Month')
+    job_count = Col('Total number of jobs completed')
