@@ -1,15 +1,15 @@
 from flask import Flask
 from flask_login import UserMixin
-from flask_admin.contrib.sqla import ModelView
-from flask_admin import Admin
+#from flask_admin.contrib.sqla import ModelView
+#from flask_admin import Admin
 
 from __init__ import db, login_manager
 from views import view
 from models import Users
 
 app = Flask(__name__)
-admin = Admin(app)
-admin.add_view(ModelView(Users, db.session))
+#admin = Admin(app)
+#admin.add_view(ModelView(Users, db.session))
 
 
 # Routing
