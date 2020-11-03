@@ -178,6 +178,30 @@ CREATE TABLE CareTakerSalary (
   PRIMARY KEY (year, month, username)
 );
 
+-- to obtain statistics for the total number of jobs in each month for the admin
+CREATE TABLE TotalJobPerMonthSummary (
+  year INTEGER,
+  month INTEGER,
+  job_count INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY(year, month)
+);
+
+INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2020, 11);
+INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2020, 12);
+INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 1);
+INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 2);
+INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 3);
+INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 4);
+INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 5);
+INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 6);
+INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 7);
+INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 8);
+INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 9);
+INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 10);
+INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 11);
+INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 12);
+
+
 
 --TABLES NEEDED FOR THE SUMMARY OF SALARY OF CARETAKER
 --FOR FULL TIME - FINAL SALARY IS $3000 for any total pet days <= 60
@@ -246,6 +270,27 @@ CREATE TRIGGER update_caretaker_petcount_after_bid_trigger
   ON Bids
   FOR EACH ROW
   EXECUTE PROCEDURE update_caretaker_pet_count_function();
+
+CREATE OR REPLACE FUNCTION update_TotalJobPerMonthSummary_function() RETURNS trigger AS $$
+BEGIN
+  UPDATE TotalJobPerMonthSummary T set job_count = job_count + 1
+  WHERE T.year = EXTRACT(YEAR FROM NEW.end_date)
+    AND T.month = EXTRACT(MONTH FROM NEW.end_date);
+  RETURN NEW;
+END
+$$ LANGUAGE 'plpgsql';
+
+--trigger to update the total number of pets by all the caretakers in the pcs app in each month
+DROP TRIGGER IF EXISTS update_TotalJobPerMonthSummary_trigger ON Bids;
+CREATE TRIGGER update_TotalJobPerMonthSummary_trigger
+  AFTER UPDATE of completed
+  ON Bids
+  FOR EACH ROW
+  EXECUTE PROCEDURE update_TotalJobPerMonthSummary_function();
+
+SELECT (2020 = EXTRACT(YEAR FROM DATE '2020-11-20'));
+SELECT (11 = EXTRACT(MONTH FROM DATE '2020-11-20')) ;
+
 
 -- function that makes use of the trigger below to automates this process
 CREATE OR REPLACE FUNCTION update_caretaker_availability_after_take_leave_function() RETURNS trigger AS $$
