@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Hi {{ current_user.username }}!</h1>
+
+    <h5>Check the average price to take care of each pet type set by caretakers here!</h5>
+    <a href="{{ url_for('view.admin_view_pet_category_and_price_summary')}}" class="btn btn-primary">Click here!</a>
+{% endblock content %}
