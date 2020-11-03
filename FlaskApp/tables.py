@@ -122,5 +122,17 @@ class Caretakersalary(Table):
     petdays = Col('Pet days')
     final_salary = Col('Salary received')
 
+class SummaryPetCategoryAndPrice(Table):
+    classes = ['table', 'table-bordered', 'table-striped', 'sortable']
+    pettype = Col('Pet Type')
+    avg_price = Col('Average price set by caretakers')
 
+class PetOwnerViewFullTime(Table):
+    classes = ['table', 'table-bordered', 'table-striped', 'sortable']
+    username = Col('Care Taker name')
+    rating  = Col('Rating')
+    #history = LinkCol('Look at his reviews!', 'view.caretaker_individual_history', url_kwargs = dict(username='username'))
 
+class CareTakerIndividualHistory(Table):
+    classes = ['table', 'table-bordered', 'table-striped', 'sortable']
+    username = Col('Care Taker name')
