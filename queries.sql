@@ -23,12 +23,48 @@ END
 $$ LANGUAGE 'plpgsql';
 
 
+CREATE OR REPLACE FUNCTION insert_into_dummy1_function() RETURNS TRIGGER AS $$
+BEGIN
+  FOR i in 1..12 LOOP
+    INSERT INTO dummy1(n) VALUES (i);
+  END LOOP;
+  RETURN NEW;
+END
+$$ LANGUAGE 'plpgsql';
+
+
 
 DROP TRIGGER IF EXISTS insert_into_dummy1_trigger ON dummy2;
 CREATE TRIGGER insert_into_dummy1_trigger
   AFTER INSERT
   ON dummy2
+  FOR EACH ROW
   EXECUTE PROCEDURE insert_into_dummy1_function();
+
+INSERT INTO DUMMY2(n) VALUES (1);
+
+
+CREATE OR REPLACE FUNCTION insert_into_dummy1_function() RETURNS TRIGGER AS $$
+DECLARE
+  date1 DATE = current_date;
+BEGIN
+  WHILE date1 <= date('2020-12-01') LOOP
+    INSERT INTO dummy1(d) VALUES (date1);
+    date1 := date1 + 1;
+  END LOOP;
+  RETURN NEW;
+END
+$$ LANGUAGE 'plpgsql';
+
+
+DROP TRIGGER IF EXISTS insert_into_dummy1_trigger ON dummy2;
+CREATE TRIGGER insert_into_dummy1_trigger
+  AFTER INSERT
+  ON dummy2
+  FOR EACH ROW
+  EXECUTE PROCEDURE insert_into_dummy1_function();
+
+INSERT INTO DUMMY2(n) VALUES (1);
 
 
 
