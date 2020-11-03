@@ -561,9 +561,9 @@ def search_caretaker():
             error1 = ""
             error2 = ""
             if endDate < startDate:
-                error1 = "Start date cannot be later than End date!"
+                error1 = "Error submitting form: Start date cannot be later than End date!"
             if startDate < datetime.date.today():
-                error2 = "Start date cannot be a date before today!"
+                error2 = "Error submitting form: Start date cannot be a date before today!"
             return render_template('search-caretaker.html', form=form, error1=error1, error2=error2)
         else:
             if employment == "1": #part time
