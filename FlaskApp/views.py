@@ -23,22 +23,6 @@ from sqlalchemy import inspect
 
 import datetime
 view = Blueprint("view", __name__)
-"""
-class Users(db.Model):
-    username = db.Column(db.String, primary_key=True)
-    password = db.Column(db.String, nullable=False)
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return False
-
-    def get_id(self):
-        return self.username
-"""
 
 @login_manager.user_loader
 def load_user(username):
@@ -854,12 +838,81 @@ def caretaker_profile():
         return render_template("search_salary.html", username = current_user.username, search_entry_table = search_entry_table)
     return render_template("caretaker_profile.html", username = current_user.username, salary_table = table, form = form)
 
+
+"""
+route for admin to go to a admin only page to see summary pages
+"""
+@view.route("/admin_page", methods = ["POST", "GET"])
+@login_required
+def admin_page():
+    if is_user_a_admin(current_user) == False:
+        flash("You are not an admin and not allowed to access this page!", 'error')
+        return redirect(url_for('view.home'))
+    return render_template('admin_page.html')
+
+"""
+Route for pet owner to view the care takers in their area
+"""
+@view.route("/petowner_view_caretakers_samearea", methods = ["POST", "GET"])
+@login_required
+def petowner_view_caretakers_samearea():
+    if is_user_a_petowner(current_user) == False:
+        flash("You are not a pet owner and not allowed to access this page!", 'error')
+        return redirect(url_for('view.home'))
+    pet_owner_area_query = "SELECT U.area \
+                        FROM PetOwners P NATURAL JOIN Users U \
+                        WHERE U.username = '{}'".format(current_user.username)
+    pet_owner_area = db.session.execute(pet_owner_area_query).fetchone()[0]
+    print(pet_owner_area)
+    query_for_fulltime = "SELECT username, rating \
+                            FROM caretakers \
+                            NATURAL JOIN Users U \
+                            NATURAL JOIN FullTime \
+                            WHERE area = '{}'".format(pet_owner_area)
+    list_fulltime = db.session.execute(query_for_fulltime)
+    list_fulltime = list(list_fulltime)
+    table = PetOwnerViewFullTime(list_fulltime)
+    table.border = True
+    return render_template("petowner_view_caretakers_samearea.html", table=table)
+"""
+@view.route("/caretaker_individual_history", methods = ["POST", "GET"])
+@login_required
+def caretaker_individual_history():
+    username = request.args.get('username')
+    history_query = "SELECT pet_name,
+                        FROM BIDS
+                        INNER JOIN PetOwners ON
+
+
+    bid_id INTEGER,
+    CTusername VARCHAR,
+    owner VARCHAR,
+    pet_name VARCHAR,
+    FOREIGN KEY(owner, pet_name) REFERENCES OwnedPets(owner, pet_name),
+    review VARCHAR DEFAULT NULL,
+    rating INTEGER DEFAULT NULL, --to be updated after the bid
+    mode_of_transport VARCHAR NOT NULL,
+    mode_of_payment VARCHAR NOT NULL,
+    credit_card VARCHAR,
+    completed BOOLEAN DEFAULT FALSE,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+"""
 """
 Set the routes for the admin to see some of the summary pages
+IDEAS LIST DOWN HERE
 """
-
-
-##@view.route("/privileged-page", methods=["GET"])
-##@login_required
-##def render_privileged_page():
-##    return "<h1>Hello, {}!</h1>".format(current_user.username)
+@view.route("/admin_view_pet_category_and_price_summary", methods = ["POST", "GET"])
+@login_required
+def admin_view_pet_category_and_price_summary():
+    query = "SELECT pettype, ROUND(AVG(price), 2) AS avg_price \
+            FROM (SELECT price, pettype FROM fulltimepricelist \
+            UNION \
+            SELECT  price, pettype \
+            FROM PARTTIMEPRICELIST) AS dummy \
+            GROUP BY dummy.pettype"
+    summary = db.session.execute(query)
+    summary = list(summary)
+    table = SummaryPetCategoryAndPrice(summary)
+    table.border = True
+    return render_template("admin_view_pet_category_and_price_summary.html", table=table)
