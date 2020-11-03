@@ -142,25 +142,8 @@ def registration():
                 elif payment == '2':
                     db.session.execute("INSERT INTO PreferredModeOfPayment(username, modeOfPayment) VALUES ('{}', '{}')".format(username, 'Cash'))
 
-                # If he sign up as a caretaker, he will automatically be available for everyday.
-                # Will need to update this table himself at another page if he dosent want to be available
-                # in any day.
-                for i in range(10, 13):
-                    db.session.execute("INSERT INTO CareTakerSalary(year, month, username) VALUES ('{}', '{}', '{}')".format(2020, i, username))
-
-                for i in range(1, 13):
-                    db.session.execute("INSERT INTO CareTakerSalary(year, month, username) VALUES ('{}', '{}', '{}')".format(2021, i, username))
-
-                first_date = date.today()
-                last_date = date(2020, 12, 31) ## Change 2020 to 2021 after testing, else too much data to handle.
-                delta = timedelta(days=1)
-                while first_date <= last_date:
-                    current = first_date.strftime("%Y-%m-%d")
-                    query_insert_into_avaialble = "INSERT INTO CaretakerAvailability(date, username) VALUES ('{}','{}')".format(current, username)
-                    first_date += delta
-                    db.session.execute(query_insert_into_avaialble)
-            ##db.session.execute(query)
-            ##db.session.execute(query2)
+                ## Automatically inserted stuff into CareTakerSalary table using insert_into_salary_after_caretaker_insertion_trigger
+                ## Automatically inserted stuff into CareTakerAvailability using insert_into_CareTakerAvailability_after_caretaker_insertion_trigger
             db.session.commit()
             ##return "You have successfully signed up as a caretaker!"
             flash("You have successfully signed up!", 'success')

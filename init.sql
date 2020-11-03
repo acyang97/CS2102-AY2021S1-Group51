@@ -264,6 +264,45 @@ CREATE TRIGGER update_caretaker_availability_after_take_leave_trigger
   FOR EACH ROW
   EXECUTE PROCEDURE update_caretaker_availability_after_take_leave_function();
 
+-- automates the insertion into the CaretakerSalaryTable
+CREATE OR REPLACE FUNCTION insert_into_salary_after_caretaker_insertion_function() RETURNS trigger AS $$
+BEGIN
+  FOR i in 11..12 LOOP
+    INSERT INTO CareTakerSalary(year, month, username) VALUES (2020, i, NEW.username);
+  END LOOP;
+  FOR i in 1..12 LOOP
+    INSERT INTO CareTakerSalary(year, month, username) VALUES (2021, i, NEW.username);
+  END LOOP;
+  RETURN NEW;
+END
+$$ LANGUAGE 'plpgsql';
+
+DROP TRIGGER IF EXISTS insert_into_salary_after_caretaker_insertion_trigger ON CareTakers;
+CREATE TRIGGER insert_into_salary_after_caretaker_insertion_trigger
+  AFTER INSERT
+  ON CareTakers
+  FOR EACH ROW
+  EXECUTE PROCEDURE insert_into_salary_after_caretaker_insertion_function();
+
+CREATE OR REPLACE FUNCTION insert_into_CareTakerAvailability_after_caretaker_insertion_function() RETURNS trigger AS $$
+DECLARE
+  date1 DATE = current_date;
+BEGIN
+  --change to 2022-01-01 after finalisation
+  WHILE date1 < date('2021-01-01') LOOP
+    INSERT INTO  CaretakerAvailability(date, username) VALUES (date1, NEW.username);
+    date1 := date1 + 1;
+  END LOOP;
+  RETURN NEW;
+END
+$$ LANGUAGE 'plpgsql';
+
+DROP TRIGGER IF EXISTS insert_into_CareTakerAvailability_after_caretaker_insertion_trigger ON CareTakers;
+CREATE TRIGGER insert_into_CareTakerAvailability_after_caretaker_insertion_trigger
+  AFTER INSERT
+  ON CareTakers
+  FOR EACH ROW
+  EXECUTE PROCEDURE insert_into_CareTakerAvailability_after_caretaker_insertion_function();
 
 -- NEED HELP FOR THIS!!
 -- procedure that is excuted by the trigger below

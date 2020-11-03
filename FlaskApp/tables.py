@@ -133,6 +133,7 @@ class PetOwnerViewFullTime(Table):
     rating  = Col('Rating')
     history = LinkCol('Look at his reviews!', 'view.caretaker_individual_history', url_kwargs = dict(username='username'))
 
+
 class CareTakerIndividualHistory(Table):
     classes = ['table', 'table-bordered', 'table-striped', 'sortable']
     CTusername = Col('Care Taker Name')
