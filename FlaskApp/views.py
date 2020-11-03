@@ -893,3 +893,13 @@ def admin_view_pet_category_and_price_summary():
     table = SummaryPetCategoryAndPrice(summary)
     table.border = True
     return render_template("admin_view_pet_category_and_price_summary.html", table=table)
+
+@view.route("/admin_view_jobs_per_month_summary", methods = ["POST", "GET"])
+@login_required
+def admin_view_jobs_per_month_summary():
+    query = "SELECT * FROM TotalJobPerMonthSummary ORDER BY YEAR, MONTH"
+    ls = db.session.execute(query)
+    ls = list(ls)
+    table = TotalJobPerMonthSummaryTable(ls)
+    table.border = True
+    return render_template("admin_view_jobs_per_month_summary.html", table=table)
