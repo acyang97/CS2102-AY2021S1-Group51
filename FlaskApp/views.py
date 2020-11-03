@@ -697,6 +697,8 @@ def petowner_incomplete_transactions():
     incompletelist = list(incompletelist)
     table = PetOwnerIncompleteTransactions(incompletelist)
     table.border = True
+
+
     return render_template("petowner_incomplete_transactions.html", table=table)
 
 @view.route("/petowner_completed_transactions_without_review", methods=["POST", "GET"])
@@ -863,41 +865,33 @@ def petowner_view_caretakers_samearea():
                         FROM PetOwners P NATURAL JOIN Users U \
                         WHERE U.username = '{}'".format(current_user.username)
     pet_owner_area = db.session.execute(pet_owner_area_query).fetchone()[0]
-    print(pet_owner_area)
-    query_for_fulltime = "SELECT username, rating \
-                            FROM caretakers \
-                            NATURAL JOIN Users U \
-                            NATURAL JOIN FullTime \
-                            WHERE area = '{}'".format(pet_owner_area)
-    list_fulltime = db.session.execute(query_for_fulltime)
-    list_fulltime = list(list_fulltime)
-    table = PetOwnerViewFullTime(list_fulltime)
+
+    query = "SELECT username, rating \
+                FROM caretakers NATURAL JOIN Users U NATURAL JOIN FullTime \
+                WHERE area = '{}' \
+                UNION \
+                SELECT username, rating \
+                FROM caretakers NATURAL JOIN Users U NATURAL JOIN PartTime \
+                WHERE area = '{}'".format(pet_owner_area, pet_owner_area)
+    fulltime_list = db.session.execute(query)
+    fulltime_list = list(fulltime_list)
+    table = PetOwnerViewFullTime(fulltime_list)
     table.border = True
     return render_template("petowner_view_caretakers_samearea.html", table=table)
-"""
+
 @view.route("/caretaker_individual_history", methods = ["POST", "GET"])
 @login_required
 def caretaker_individual_history():
     username = request.args.get('username')
-    history_query = "SELECT pet_name,
-                        FROM BIDS
-                        INNER JOIN PetOwners ON
+    history_query = "SELECT B.CTusername, B.pet_name, O.category, B.review, B.rating, B.start_date, B.end_date \
+                        FROM BIDS B NATURAL JOIN OwnedPets O \
+                        WHERE B.CTusername = '{}'".format(username)
+    history_list = db.session.execute(history_query)
+    history_list = list(history_list)
+    table = CareTakerIndividualHistory(history_list)
+    table.border = True
+    return render_template("caretaker_individual_history.html", table=table)
 
-
-    bid_id INTEGER,
-    CTusername VARCHAR,
-    owner VARCHAR,
-    pet_name VARCHAR,
-    FOREIGN KEY(owner, pet_name) REFERENCES OwnedPets(owner, pet_name),
-    review VARCHAR DEFAULT NULL,
-    rating INTEGER DEFAULT NULL, --to be updated after the bid
-    mode_of_transport VARCHAR NOT NULL,
-    mode_of_payment VARCHAR NOT NULL,
-    credit_card VARCHAR,
-    completed BOOLEAN DEFAULT FALSE,
-    start_date DATE NOT NULL,
-    end_date DATE NOT NULL,
-"""
 """
 Set the routes for the admin to see some of the summary pages
 IDEAS LIST DOWN HERE

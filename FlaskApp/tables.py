@@ -129,10 +129,16 @@ class SummaryPetCategoryAndPrice(Table):
 
 class PetOwnerViewFullTime(Table):
     classes = ['table', 'table-bordered', 'table-striped', 'sortable']
-    username = Col('Care Taker name')
+    username = Col('Care Taker Name')
     rating  = Col('Rating')
-    #history = LinkCol('Look at his reviews!', 'view.caretaker_individual_history', url_kwargs = dict(username='username'))
+    history = LinkCol('Look at his reviews!', 'view.caretaker_individual_history', url_kwargs = dict(username='username'))
 
 class CareTakerIndividualHistory(Table):
     classes = ['table', 'table-bordered', 'table-striped', 'sortable']
-    username = Col('Care Taker name')
+    CTusername = Col('Care Taker Name')
+    pet_name = Col('Pet Name')
+    category = Col('Pet Type')
+    review = Col('Review')
+    rating = Col('Rating')
+    start_date = Col('Start Date')
+    end_date = Col('End Date')
