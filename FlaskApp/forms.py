@@ -3,6 +3,7 @@ from wtforms import StringField, SubmitField, PasswordField, RadioField, Boolean
 from wtforms.fields.html5 import DateField
 from wtforms.validators import InputRequired, ValidationError, Length, Email, EqualTo, DataRequired, Optional
 from flask_bootstrap import Bootstrap
+import datetime
 
 def is_valid_name(form, field):
     if not all(map(lambda char: char.isalpha(), field.data)):
@@ -125,10 +126,10 @@ class SearchCareTakerForm(FlaskForm):
     rating = SelectField('Rating', choices=ratings)
     transport = SelectField('Preferred Mode of Transport of Pet', choices=mode_of_transport)
     payment = SelectField('Preferred Mode of Payment to the Care Taker', choices=mode_of_payment)
-    startDate = DateField('Start date',validators=[InputRequired()],format='%Y-%m-%d')
-    endDate = DateField('End date',validators=[InputRequired()],format='%Y-%m-%d')
+    startDate = DateField('Start date',default=datetime.date.today(),validators=[InputRequired()],format='%Y-%m-%d')
+    endDate = DateField('End date',default=datetime.date.today(),validators=[InputRequired()],format='%Y-%m-%d')
     submit = SubmitField('Search Caretaker')
-    
+
 class UpdateAvailabilityForm(FlaskForm):
     leaveDate = DateField('Date to take leave',validators=[InputRequired()],format='%Y-%m-%d')
     submit = SubmitField('Update Availability!')
