@@ -825,6 +825,34 @@ Set a route for a user to delete his account
 """
 Set a route for caretakers to see their salary
 """
+@view.route("/caretaker_profile", methods = ["POST", "GET"])
+@login_required
+def caretaker_profile():
+    if is_user_a_caretaker(current_user) == False:
+        flash("You are not a CareTaker, sign up as one first!", 'error')
+        return redirect(url_for('view.home'))
+    query = "SELECT year, month, petdays, final_salary \
+        FROM CareTakerSalary C \
+        WHERE C.username = '{}' \
+        AND ((SELECT date_part('year', (SELECT current_timestamp)) > C.year) \
+        OR ((SELECT date_part('year', (SELECT current_timestamp)) = C.year) \
+        AND (SELECT date_part('month', (SELECT current_timestamp)) > C.month))) \
+        ORDER BY C.year DESC, C.month DESC \
+        LIMIT 10".format(current_user.username)
+    salary_list = list(db.session.execute(query))
+    table = Caretakersalary(salary_list)
+    table.border = True
+    form = searchsalaryForm()
+    if form.validate_on_submit():
+        search_salary_query = "SELECT year, month, petdays, final_salary \
+        FROM CareTakerSalary \
+        WHERE username = '{}' \
+        AND year = '{}' \
+        AND month = '{}'".format(current_user.username, form.year.data, form.month.data)
+        search_salary = list(db.session.execute(search_salary_query))
+        search_entry_table = Caretakersalary(search_salary)
+        return render_template("search_salary.html", username = current_user.username, search_entry_table = search_entry_table)
+    return render_template("caretaker_profile.html", username = current_user.username, salary_table = table, form = form)
 
 """
 Set the routes for the admin to see some of the summary pages

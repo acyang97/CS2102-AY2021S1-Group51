@@ -138,3 +138,8 @@ class PetOwnerSendReviewForm(FlaskForm):
     review = StringField('Give your review!', validators=[DataRequired()])
     rating = SelectField('Rating', choices=ratings)
     submit = SubmitField('Submit your review!')
+
+class searchsalaryForm(FlaskForm):
+    year = StringField('Year', validators = [DataRequired()])
+    month = StringField('Month', validators = [DataRequired()])
+    submit = SubmitField('Submit')
