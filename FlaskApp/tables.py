@@ -142,3 +142,9 @@ class CareTakerIndividualHistory(Table):
     rating = Col('Rating')
     start_date = Col('Start Date')
     end_date = Col('End Date')
+
+class TotalJobPerMonthSummaryTable(Table):
+    classes = ['table', 'table-bordered', 'table-striped', 'sortable']
+    year = Col('Year')
+    month = Col('Month')
+    job_count = Col('Total number of jobs completed')
