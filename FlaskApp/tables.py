@@ -114,3 +114,13 @@ class PetOwnerCompletedTransactionsWithoutReview(Table):
     end_date = Col('End Date')
     price_per_day = Col('Price Per Day')
     update = LinkCol('Give your review!', 'view.petowner_give_review', url_kwargs=dict(bid_id='bid_id'))
+
+class Caretakersalary(Table):
+    classes = ['table', 'table-bordered', 'table-striped', 'sortable']
+    year = Col('Year')
+    month = Col('Month')
+    petdays = Col('Pet days')
+    final_salary = Col('Salary received')
+
+
+
