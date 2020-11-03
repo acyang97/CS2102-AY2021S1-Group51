@@ -26,10 +26,11 @@ view = Blueprint("view", __name__)
 
 @login_manager.user_loader
 def load_user(username):
-
-    user = Users.query.filter_by(username=username).first()
-    return user or current_user
-    #return current_user
+    if username is not None:
+        return Users.query.filter_by(username=username).first()
+        #return current_user
+    else:
+        return None
 
 ##############################
 # Can get away using the below 3 functions for now, but it would be better to find a better method
@@ -201,11 +202,12 @@ def login():
         print("password entered:", form.password.data)
     if form.validate_on_submit():
         user = Users.query.filter_by(username=form.username.data).first()
-        correct_password = form.password.data == user.password
-        ##user = "SELECT * FROM users WHERE username = '{}'".format(form.username.data)
+        if user is not None:
+            correct_password = form.password.data == user.password
+            ##user = "SELECT * FROM users WHERE username = '{}'".format(form.username.data)
         if user is None:
             flash('Username does not exist, please register for an account first if you have yet to done so.', 'Danger')
-        if user and correct_password:
+        elif user and correct_password:
             # TODO: You may want to verify if password is correct
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
