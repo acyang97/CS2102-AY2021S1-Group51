@@ -36,15 +36,16 @@
 
             </fieldset>
 
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+            
             <br>
             <br>
             <br>
             <p>Here are the statistics!</p>
             {{ table }}
 
-            <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info") }}
-            </div>
         </form>
     </div>
 {% endblock content %}
