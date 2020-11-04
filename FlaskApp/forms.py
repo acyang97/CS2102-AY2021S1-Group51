@@ -144,3 +144,11 @@ class searchsalaryForm(FlaskForm):
     year = StringField('Year', validators = [DataRequired()])
     month = StringField('Month', validators = [DataRequired()])
     submit = SubmitField('Submit')
+
+class AdminViewUnderperformingCareTakerForm(FlaskForm):
+    years = [('2020', '2020'), ('2021', '2021')]
+    months = [('1', 'January'), ('2','February'), ('3', 'March'), ('4','April'), ('5', 'May'), ('6', 'June'),
+                ('7', 'July'), ('8', 'August'), ('9', 'September'), ('10', 'October'), ('11', 'November'), ('12', 'December')]
+    year = SelectField('Year', choices = years)
+    month = SelectField('Month', choices = months)
+    submit = SubmitField('Search Underperformers!')
