@@ -172,3 +172,9 @@ class TotalJobPerMonthSummaryTable(Table):
     year = Col('Year')
     month = Col('Month')
     job_count = Col('Total number of jobs completed')
+
+class UnderperformersTable(Table):
+    classes = ['table', 'table-bordered', 'table-striped', 'sortable']
+    username = Col('CareTaker Name')
+    rating_in_month = Col('Average rating in the month')
+    history = LinkCol('Care Taker Reviews', 'view.selected_filtered_caretaker_history', url_kwargs=dict(username='username'))
