@@ -300,7 +300,7 @@ def petlist():
 def pet_individual_history():
     owner = current_user.username
     pet_name = request.args.get('pet_name')
-    query_history = "SELECT bid_id, Bids.CTusername, pet_name, rating, review, start_date, end_date, completed \
+    query_history = "SELECT bid_id, ctusername, pet_name, rating, review, start_date, end_date, completed \
                         FROM Bids WHERE pet_name = '{}' AND owner = '{}' ORDER BY end_date DESC".format(pet_name, owner)
     pet_history = db.session.execute(query_history)
     pet_history = list(pet_history)
@@ -609,7 +609,7 @@ def selected_filtered_caretaker_history():
 @login_required
 def petowner_bids():
     caretaker = request.args.get('username')
-    ownedpetsquery = "SELECT * FROM ownedpets WHERE owner = '{}' AND category ='{}'".format(current_user.username, session['selectedCaretaker'][1])
+    ownedpetsquery = "SELECT * FROM ownedpets WHERE owner = '{}' AND category ='{}' AND pet_name NOT IN (SELECT pet_name FROM bids where owner = '{}')".format(current_user.username, session['selectedCaretaker'][1], current_user.username)
     ownedpets = db.session.execute(ownedpetsquery)
     ownedpets = list(ownedpets)
     ownedpets = SelectPet(ownedpets)
@@ -934,40 +934,3 @@ def admin_view_jobs_per_month_summary():
     table = TotalJobPerMonthSummaryTable(ls)
     table.border = True
     return render_template("admin_view_jobs_per_month_summary.html", table=table)
-
-
-@view.route("/admin_view_underperforming_caretakers", methods = ["POST", "GET"])
-@login_required
-def admin_view_underperforming_caretakers():
-    form =  AdminViewUnderperformingCareTakerForm()
-    if form.validate_on_submit():
-        year = form.year.data
-        month = form.month.data
-        underperforming_query = "SELECT username, rating_in_month \
-                    FROM (SELECT DISTINCT username, ROUND(AVG(B.rating), 2) AS rating_in_month \
-                        FROM CareTakerSalary S \
-                        INNER JOIN Bids B ON B.CTusername = S.username \
-                        WHERE S.year = '{}' \
-                            AND S.month = '{}' \
-                            AND petdays < 20 AND completed = True \
-                            AND (EXTRACT(YEAR FROM B.start_date) = '{}' OR EXTRACT(YEAR FROM B.end_date) = '{}') \
-                            AND (EXTRACT(MONTH FROM B.start_date) = '{}' OR EXTRACT(MONTH FROM B.end_date) = '{}') \
-                            GROUP BY username) AS DUMMY \
-                    WHERE rating_in_month < 3 \
-                    ORDER BY rating_in_month DESC \
-                    LIMIT 10".format(year, month, year, year, month, month)
-        underperformers = db.session.execute(underperforming_query)
-        underperformers = list(underperformers)
-        table = UnderperformersTable(underperformers)
-        table.border = True
-        return render_template("admin_view_underperforming_caretakers.html", table=table, form=form)
-    return render_template("admin_view_underperforming_caretakers.html", form = form)
-
-
-"""
-IDEAS FOR INTERESTING QUERIES
-1. BEST PERFORMING CARETAKER PER MONTH - CAN DO A GRP BY. Bids table and possibly salary?
-2. highest earner per month
-3. Find all the underperforming full-time caretakers per month (less than 10) AND (another constraint if too ez)
-4. Find number of pet for each pet type taken care for each month (if too hard , overall)
-"""
