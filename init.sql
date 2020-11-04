@@ -107,10 +107,10 @@ CREATE TABLE CaretakerAvailability(
 
 CREATE TABLE Bids (
     bid_id INTEGER,
-    CTusername VARCHAR ON DELETE CASCADE,
-    owner VARCHAR ON DELETE CASCADE,
-    pet_name VARCHAR ON DELETE CASCADE,
-    FOREIGN KEY(owner, pet_name) REFERENCES OwnedPets(owner, pet_name),
+    CTusername VARCHAR,
+    owner VARCHAR,
+    pet_name VARCHAR,
+    FOREIGN KEY(owner, pet_name) REFERENCES OwnedPets(owner, pet_name) ON DELETE CASCADE,
     review VARCHAR DEFAULT NULL,
     rating INTEGER DEFAULT NULL, --to be updated after the bid
     mode_of_transport VARCHAR NOT NULL,
@@ -120,8 +120,8 @@ CREATE TABLE Bids (
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     price_per_day NUMERIC NOT NULL,
-    FOREIGN KEY (CTusername, start_date) REFERENCES CareTakerAvailability(username, date),
-    FOREIGN KEY (CTusername, end_date) REFERENCES CaretakerAvailability(username, date)
+    FOREIGN KEY (CTusername, start_date) REFERENCES CareTakerAvailability(username, date) ON DELETE CASCADE ,
+    FOREIGN KEY (CTusername, end_date) REFERENCES CaretakerAvailability(username, date) ON DELETE CASCADE
 );
 
 CREATE TABLE PartTimePriceList (
@@ -190,18 +190,6 @@ INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 11);
 INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 12);
 
 
-
---TABLES NEEDED FOR THE SUMMARY OF SALARY OF CARETAKER
---FOR FULL TIME - FINAL SALARY IS $3000 for any total pet days <= 60
---              - IF pet days > 60, receive 80% of them as bonus
---              - so i guess, for example, total earnings he got $5000, and
---                his total pet days is 75, he will get $3000 + (5000 - 3000) * 80%?
---FOR PART TIME - FINAL SALARY IN A MONTH IS 75% OF TOTAL EARNINGS. (25% TO PCS)
---####################################################################
---YEAR # MONTH # USERNAME # PETDAYS # TOTAL EARNINGS # FINAL SALARY #
---####################################################################
-
--- auto updates pet count and available
 CREATE OR REPLACE FUNCTION update_caretaker_pet_count_function() RETURNS trigger AS $$
 BEGIN
   UPDATE CareTakerAvailability C set pet_count = pet_count + 1
@@ -300,7 +288,7 @@ DECLARE
   date1 DATE = current_date;
 BEGIN
   --change to 2022-01-01 after finalisation
-  WHILE date1 < date('2021-01-01') LOOP
+  WHILE date1 < date('2022-01-01') LOOP
     INSERT INTO  CaretakerAvailability(date, username) VALUES (date1, NEW.username);
     date1 := date1 + 1;
   END LOOP;
@@ -325,42 +313,7 @@ BEGIN
 END
 $$ LANGUAGE 'plpgsql';
 
-DROP TRIGGER IF EXISTS update_caretaker_rating_after_petowner_give_rating_trigger ON Bids;
-CREATE TRIGGER update_caretaker_rating_after_petowner_give_rating_trigger
-  AFTER UPDATE of rating
-  ON Bids
-  FOR EACH ROW
-  EXECUTE PROCEDURE update_caretaker_rating_after_petowner_give_rating_function();
-
-CREATE OR REPLACE FUNCTION update_salary() RETURNS trigger AS $$
-  DECLARE
-    end_of_month date := (SELECT(date_trunc('month', NEW.start_date::date) + interval '1 month' - interval '1 day')::date);
-  DECLARE
-    start_of_end_date_month date;
-  BEGIN
-  IF NEW.end_date > end_of_month THEN
-  start_of_end_date_month := (SELECT date_trunc('MONTH', NEW.end_date)::DATE);
-
-  UPDATE CareTakerSalary
-  SET earnings = earnings + ((NEW.end_date - start_of_end_date_month + 1) * NEW.price), petdays = petdays + (NEW.end_date - start_of_end_date_month + 1)
-  WHERE
-  username = NEW.ct_username AND
-  year = (SELECT date_part('year', start_of_end_date_month)) AND
-  month = (SELECT date_part('month', start_of_end_date_month));
-
-  NEW.end_date := end_of_month;
-  END IF;
-  UPDATE CareTakerSalary
-  SET earnings = earnings + ((NEW.end_date - NEW.start_date + 1) * NEW.price), petdays = petdays + (NEW.end_date - NEW.start_date + 1)
-  WHERE
-  username = NEW.ct_username AND
-  year = (SELECT date_part('year', NEW.start_date)) AND
-  month = (SELECT date_part('month', NEW.start_date));
-  RETURN NEW;
-END;
-$$
-LANGUAGE plpgsql;
-
+-- trigger to update
 CREATE TRIGGER update_ct_salary
   AFTER INSERT
   ON "bids"
@@ -369,18 +322,6 @@ CREATE TRIGGER update_ct_salary
 
 -- NEED HELP FOR THIS!!
 -- procedure that is excuted by the trigger below
---CREATE OR REPLACE FUNCTION check_if_fulltime_can_take_leave_function()  RETURNS trigger AS $$
-
-
--- trigger to check if the full time can take leave (if it affects the 2 x 150 days thing)
---DROP TRIGGER IF EXISTS check_if_fulltime_can_take_leave_trigger ON CareTakerAvailability;
---CREATE TRIGGER check_if_fulltime_can_take_leave_trigger
---  BEFORE UPDATE OF leave
---  ON CareTakerAvailability
---  FOR EACH ROW
---  EXECUTE PROCEDURE check_if_fulltime_can_take_leave_function();
-
-
 
 
 --- create a function to automate insertion into salary and availabilit tables
