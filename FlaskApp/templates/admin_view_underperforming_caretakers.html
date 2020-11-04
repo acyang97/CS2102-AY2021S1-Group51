@@ -5,6 +5,7 @@
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Check out the top 10 underperforming caretakers here!</legend>
+                <p>Underperforming caretakers are those with less than 20 petdays and have an average rating of less than 3 in a month</p>
                 <div class="form-group">
                     {{ form.year.label(class="form-control-label") }}
                     {% if form.year.errors %}
