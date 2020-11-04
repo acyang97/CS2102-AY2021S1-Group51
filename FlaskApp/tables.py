@@ -9,6 +9,18 @@ class petList(Table):
     age = Col('Age')
     delete = LinkCol('Delete Pet', 'view.deletepet', url_kwargs=dict(pet_name='pet_name'))
     view_special_care = LinkCol('Special Care', 'view.view_special_care', url_kwargs=dict(pet_name='pet_name'))
+    view_history = LinkCol('Pet History', 'view.pet_individual_history', url_kwargs=dict(pet_name='pet_name'))
+
+class PetIndividualHistory(Table):
+    classes = ['table', 'table-bordered', 'table-striped', "sortable"]
+    bid_id = Col('Bid ID')
+    ctusername = Col('Care Taker Name')
+    pet_name = Col('Pet Name')
+    rating = Col('Rating you gave')
+    review = Col('Review you gave')
+    start_date = Col('Start Date')
+    end_date = Col('End Date')
+    completed = Col('Completed?')
 
 class specialCarePet(Table):
     classes = ['table', 'table-bordered', 'table-striped']

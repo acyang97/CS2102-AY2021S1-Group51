@@ -295,6 +295,19 @@ def petlist():
     table.border = True
     return render_template("petlist.html", table=table)
 
+@view.route("/pet_individual_history", methods=["POST","GET"])
+@login_required
+def pet_individual_history():
+    owner = current_user.username
+    pet_name = request.args.get('pet_name')
+    query_history = "SELECT bid_id, ctusername, pet_name, rating, review, start_date, end_date, completed \
+                        FROM Bids WHERE pet_name = '{}' AND owner = '{}' ORDER BY end_date DESC".format(pet_name, owner)
+    pet_history = db.session.execute(query_history)
+    pet_history = list(pet_history)
+    table = PetIndividualHistory(pet_history)
+    table.border = True
+    return render_template("pet_individual_history.html", table=table)
+
 @view.route("/pet-special-care", methods=["POST","GET"])
 @login_required
 def view_special_care():
