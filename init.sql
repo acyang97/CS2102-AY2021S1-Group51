@@ -344,13 +344,12 @@ BEGIN
       date2 := date2 + 1;
     END LOOP;
   END IF;
-  IF counter < 2 THEN  --MEANS HE ONLY HAVE 2 X 150 DAYS, CANNOT TAKE LAVE ALREADY
+  IF counter < 2 THEN
     RAISE EXCEPTION 'You cannot take leave on this date';
   END IF;
   RETURN NEW;
 END
 $$ LANGUAGE 'plpgsql';
-
 
 DROP TRIGGER IF EXISTS check_if_fulltime_can_take_leave_trigger ON CareTakerAvailability;
 CREATE TRIGGER check_if_fulltime_can_take_leave_trigger
@@ -358,3 +357,25 @@ CREATE TRIGGER check_if_fulltime_can_take_leave_trigger
   ON CareTakerAvailability
   FOR EACH ROW
   EXECUTE PROCEDURE check_if_fulltime_can_take_leave_function();
+
+CREATE OR REPLACE FUNCTION check_caretaker_petcount_before_allow_leave_function() RETURNS trigger AS $$
+DECLARE
+  pet_count_on_selected_date BOOLEAN;
+BEGIN
+  SELECT (0 < (SELECT SUM(pet_count)
+              FROM CareTakerAvailability
+              WHERE NEW.username = username
+              AND NEW.date = date)) INTO pet_count_on_selected_date;
+  IF pet_count_on_selected_date = True THEN
+    RAISE EXCEPTION 'You cannot take leave on this date';
+  END IF;
+  RETURN NEW;
+END
+$$ LANGUAGE 'plpgsql';
+
+DROP TRIGGER IF EXISTS check_caretaker_petcount_before_allow_leave_trigger ON CareTakerAvailability;
+CREATE TRIGGER check_caretaker_petcount_before_allow_leave_trigger
+  BEFORE UPDATE OF leave
+  ON CareTakerAvailability
+  FOR EACH ROW
+  EXECUTE PROCEDURE check_caretaker_petcount_before_allow_leave_function();

@@ -481,17 +481,15 @@ def caretaker_update_availability():
 
     if form.validate_on_submit():
         leaveDate = form.leaveDate.data
-        query1 = "SELECT pet_count FROM CaretakerAvailability WHERE username = '{}' AND date = '{}'".format(current_user.username, leaveDate)
-        pet_count_on_selected_date = db.session.execute(query1).fetchone()[0]
-        if pet_count_on_selected_date > 0:
-            flash("You cannot take leave on that '{}' because you have pets to take care of on that date".format(leaveDate), 'Danger')
-        else:
-            ## AVAILABLE = FALSE AUTOMATED USING TRIGGER
+        try:
             query2 = "UPDATE CareTakerAvailability SET leave = true WHERE username = '{}' AND date = '{}'"\
                 .format(current_user.username, leaveDate)
             db.session.execute(query2)
             db.session.commit()
             flash('You have successfully udpdated your availability', 'Success')
+        except Exception:
+            flash ('You cannot take leave on this day')
+            db.session.rollback()
     display_query = "SELECT date, pet_count, leave, available FROM CareTakerAvailability WHERE username = '{}' ORDER BY date".format(current_user.username)
     display = db.session.execute(display_query)
     display = list(display)
