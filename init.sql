@@ -105,13 +105,11 @@ CREATE TABLE CaretakerAvailability(
     PRIMARY KEY(username, date)
 );
 
--- is bid_date)time actually necessary? dosent seem liek so (not necessary)
---if you want we can rename owner with POusername also like what i've done with caretaker so both are same format)
 CREATE TABLE Bids (
     bid_id INTEGER,
-    CTusername VARCHAR,
-    owner VARCHAR,
-    pet_name VARCHAR,
+    CTusername VARCHAR ON DELETE CASCADE,
+    owner VARCHAR ON DELETE CASCADE,
+    pet_name VARCHAR ON DELETE CASCADE,
     FOREIGN KEY(owner, pet_name) REFERENCES OwnedPets(owner, pet_name),
     review VARCHAR DEFAULT NULL,
     rating INTEGER DEFAULT NULL, --to be updated after the bid
@@ -259,10 +257,6 @@ CREATE TRIGGER update_TotalJobPerMonthSummary_trigger
   FOR EACH ROW
   EXECUTE PROCEDURE update_TotalJobPerMonthSummary_function();
 
-SELECT (2020 = EXTRACT(YEAR FROM DATE '2020-11-20'));
-SELECT (11 = EXTRACT(MONTH FROM DATE '2020-11-20')) ;
-
-
 -- function that makes use of the trigger below to automates this process
 CREATE OR REPLACE FUNCTION update_caretaker_availability_after_take_leave_function() RETURNS trigger AS $$
 BEGIN
@@ -300,6 +294,7 @@ CREATE TRIGGER insert_into_salary_after_caretaker_insertion_trigger
   FOR EACH ROW
   EXECUTE PROCEDURE insert_into_salary_after_caretaker_insertion_function();
 
+-- automates the insertion into the CareTakerAvailability table, satisfying the total participation constraint
 CREATE OR REPLACE FUNCTION insert_into_CareTakerAvailability_after_caretaker_insertion_function() RETURNS trigger AS $$
 DECLARE
   date1 DATE = current_date;
@@ -320,6 +315,7 @@ CREATE TRIGGER insert_into_CareTakerAvailability_after_caretaker_insertion_trigg
   FOR EACH ROW
   EXECUTE PROCEDURE insert_into_CareTakerAvailability_after_caretaker_insertion_function();
 
+-- automates the update of rating in the caretakers table.
 CREATE OR REPLACE FUNCTION update_caretaker_rating_after_petowner_give_rating_function() RETURNS trigger AS $$
 BEGIN
   UPDATE Caretakers C
