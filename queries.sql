@@ -259,3 +259,64 @@ CREATE TRIGGER check_if_fulltime_can_take_leave_trigger
   ON CareTakerAvailability
   FOR EACH ROW
   EXECUTE PROCEDURE check_if_fulltime_can_take_leave_function();
+
+--3. Find all the underperforming full-time caretakers per month (less than 10) AND (another constraint if too ez)
+
+CREATE TABLE CareTakers (
+      username VARCHAR;
+      rating NUMERIC DEFAULT 0
+);
+
+CREATE TABLE CareTakerSalary (
+  year INTEGER,
+  month INTEGER,
+  username VARCHAR,
+  petdays INTEGER NOT NULL DEFAULT 0,
+  earnings NUMERIC NOT NULL DEFAULT 0,
+  final_salary NUMERIC NOT NULL DEFAULT 0
+);
+
+CREATE TABLE Bids (
+    CTusername VARCHAR,
+    rating INTEGER DEFAULT NULL, --to be updated after the bid
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL
+);
+
+INSERT INTO CareTakerSalary(year, month, username, petdays) VALUES (2020, 12, 'abc', 8);
+INSERT INTO CareTakerSalary(year, month, username, petdays) VALUES (2020, 12, '123', 14);
+INSERT INTO CareTakerSalary(year, month, username, petdays) VALUES (2020, 12, 'xyz', 20);
+INSERT INTO CareTakerSalary(year, month, username, petdays) VALUES (2020, 12, '456', 19);
+
+INSERT INTO Bids(CTusername, rating, start_date, end_date) VALUES ('abc', 2, date('2020-11-25'), date('2020-12-01'));
+INSERT INTO Bids(CTusername, rating, start_date, end_date) VALUES ('abc', 3, date('2020-12-02'), date('2020-12-05'));
+INSERT INTO Bids(CTusername, rating, start_date, end_date) VALUES ('abc', 4, date('2020-12-02'), date('2020-12-03'));
+INSERT INTO Bids(CTusername, rating, start_date, end_date) VALUES ('abc', 2, date('2020-11-25'), date('2020-12-01'));
+
+INSERT INTO Bids(CTusername, rating, start_date, end_date) VALUES ('123', 2, date('2020-11-25'), date('2020-12-01'));
+INSERT INTO Bids(CTusername, rating, start_date, end_date) VALUES ('123', 3, date('2020-12-02'), date('2020-12-05'));
+INSERT INTO Bids(CTusername, rating, start_date, end_date) VALUES ('123', 4, date('2020-12-02'), date('2020-12-03'));
+INSERT INTO Bids(CTusername, rating, start_date, end_date) VALUES ('123', 4, date('2020-11-25'), date('2020-12-01'));
+
+INSERT INTO Bids(CTusername, rating, start_date, end_date) VALUES ('xyz', 2, date('2020-11-25'), date('2020-12-01'));
+INSERT INTO Bids(CTusername, rating, start_date, end_date) VALUES ('xyz', 3, date('2020-12-02'), date('2020-12-05'));
+INSERT INTO Bids(CTusername, rating, start_date, end_date) VALUES ('xyz', 4, date('2020-12-02'), date('2020-12-03'));
+INSERT INTO Bids(CTusername, rating, start_date, end_date) VALUES ('xyz', 2, date('2020-11-25'), date('2020-12-01'));
+
+INSERT INTO Bids(CTusername, rating, start_date, end_date) VALUES ('456', 0, date('2020-12-02'), date('2020-12-03'));
+INSERT INTO Bids(CTusername, rating, start_date, end_date) VALUES ('456', 0, date('2020-11-25'), date('2020-12-01'));
+
+
+SELECT username, rating_in_month
+FROM (SELECT DISTINCT username, ROUND(AVG(B.rating), 2) AS rating_in_month
+      FROM CareTakerSalary S
+      INNER JOIN Bids B ON B.CTusername = S.username
+      WHERE S.year = 2020
+        AND S.month = 12
+        AND petdays < 20
+        AND (EXTRACT(YEAR FROM B.start_date) = 2020 OR EXTRACT(YEAR FROM B.end_date) = 2020)
+        AND (EXTRACT(MONTH FROM B.start_date) = 12 OR EXTRACT(MONTH FROM B.end_date) = 12)
+      GROUP BY username) AS DUMMY
+WHERE rating_in_month < 3
+ORDER BY rating_in_month DESC
+LIMIT 10;
