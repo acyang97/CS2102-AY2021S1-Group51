@@ -43,7 +43,19 @@ class FilteredCaretakers(Table):
     gender = Col('Gender')
     price = Col('Price ($)')
     rating = Col('Rating')
+    history = LinkCol('Care Taker Reviews', 'view.selected_filtered_caretaker_history', url_kwargs=dict(username='username'))
     select = LinkCol('Select', 'view.petowner_bids', url_kwargs=dict(username='username'))
+
+class SelectedCareTakerIndividualHistory(Table):
+    classes = ['table', 'table-bordered', 'table-striped', 'sortable']
+    CTusername = Col('Care Taker Name')
+    owner = Col('Owner')
+    pet_name = Col('Pet Name')
+    category = Col('Pet Type')
+    review = Col('Review')
+    rating = Col('Rating')
+    start_date = Col('Start Date')
+    end_date = Col('End Date')
 
 class SelectedCaretaker(Table):
     classes = ['table', 'table-bordered', 'table-striped']

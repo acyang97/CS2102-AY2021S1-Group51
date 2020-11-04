@@ -595,9 +595,18 @@ def search_caretaker():
             return render_template("filtered-available-caretakers.html", table=table, startDate=startDate, endDate=endDate)
     return render_template('search-caretaker.html', form=form)
 
-"""
-Set a route for the pet owners to bid for a care taker (works hand in hand with searchCaretaker route at line 429)
-"""
+@view.route("/selected_filtered_caretaker_history", methods=["POST", "GET"])
+@login_required
+def selected_filtered_caretaker_history():
+    caretaker = request.args.get('username')
+    history_query = "SELECT ctusername, O.owner, O.pet_name, category, review, rating, start_date, end_date \
+                        FROM Bids NATURAL JOIN OwnedPets O WHERE ctusername = '{}'".format(caretaker)
+    history = db.session.execute(history_query)
+    history = list(history)
+    table = SelectedCareTakerIndividualHistory(history)
+    table.border = True
+    return render_template("selected_filtered_caretaker_history.html", table=table)
+
 @view.route("/petowner-bids", methods=["POST", "GET"])
 @login_required
 def petowner_bids():
