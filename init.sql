@@ -1,5 +1,5 @@
 --dbname protest
-DROP TABLE IF EXISTS CareTakerSalary, dummy, FullTimePriceList, PartTimePriceList, DefaultPriceList, Bids, CareTakerAvailability, RequireSpecialCare, SpecialCare, OwnedPets, Category;
+DROP TABLE IF EXISTS TotalJobPerMonthSummary, CareTakerSalary, FullTimePriceList, PartTimePriceList, DefaultPriceList, Bids, CareTakerAvailability, RequireSpecialCare, SpecialCare, OwnedPets, Category;
 DROP TABLE IF EXISTS PreferredModeOfPayment, ModeOfPayment, PreferredTransport, ModeOfTransport, PCSAdmin, PetOwners, PartTime, FullTime, CareTakers, users;
 
 CREATE TABLE users(
@@ -59,11 +59,6 @@ CREATE TABLE FullTime (
 CREATE TABLE PartTime (
     username VARCHAR PRIMARY KEY REFERENCES CareTakers(username) ON DELETE CASCADE
 );
-
---INSERT INTO users VALUES ('abc', 'abc@abc.com', 'North', 'Male', 'abc');
---INSERT INTO PetOwners VALUES ('abc');
---INSERT INTO CareTakers VALUES ('abc');
---INSERT INTO FullTime VALUES ('abc');
 
 -- TO INSERT INTO HERE WHENEVER THERE IS A NEW CATEGORY IN OWNED PETS
 CREATE TABLE Category (
@@ -154,17 +149,12 @@ INSERT INTO DefaultPriceList VALUES ('Mice', 50);
 INSERT INTO DefaultPriceList VALUES ('Terrapin', 80);
 INSERT INTO DefaultPriceList VALUES ('Bird', 80);
 
-
 CREATE TABLE FullTimePriceList(
   username VARCHAR REFERENCES CareTakers(username) ON DELETE CASCADE,
   price NUMERIC,
   pettype VARCHAR,
   FOREIGN KEY (pettype, price) REFERENCES DefaultPriceList(pettype, price),
   PRIMARY KEY (pettype, username, price)
-);
-
-CREATE TABLE dummy(
-  date DATE
 );
 
 -- THIS TABLE WILL BE USEFUL TO GET SOME OF THE SUMMARY INFORMATION AT POINT 4 OF THE PROJECT REQUIREMENTS.
@@ -212,25 +202,6 @@ INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 12);
 --####################################################################
 --YEAR # MONTH # USERNAME # PETDAYS # TOTAL EARNINGS # FINAL SALARY #
 --####################################################################
-
-
---CREATE OR REPLACE FUNCTION give_cust_points_func() RETURNS trigger AS $$
---BEGIN
---  UPDATE Orders set totalcost = foodcost + deliveryfee;
---  UPDATE customers C SET ctpoints = ctpoints + FLOOR(O.totalcost::money::numeric::float8)
---  From Orders O
---  WHERE C.user_id = NEW.user_id
---  AND O.orderid = NEW.orderid;
---  RETURN NEW;
---END;
---$$ LANGUAGE 'plpgsql';
-
---DROP TRIGGER IF EXISTS update_cust_points_trig ON orders;
---CREATE TRIGGER update_cust_points_trig
---  AFTER UPDATE of foodcost OR INSERT
---  ON orders
---  FOR EACH ROW
---  EXECUTE PROCEDURE give_cust_points_func();
 
 -- auto updates pet count and available
 CREATE OR REPLACE FUNCTION update_caretaker_pet_count_function() RETURNS trigger AS $$
@@ -348,6 +319,22 @@ CREATE TRIGGER insert_into_CareTakerAvailability_after_caretaker_insertion_trigg
   ON CareTakers
   FOR EACH ROW
   EXECUTE PROCEDURE insert_into_CareTakerAvailability_after_caretaker_insertion_function();
+
+CREATE OR REPLACE FUNCTION update_caretaker_rating_after_petowner_give_rating_function() RETURNS trigger AS $$
+BEGIN
+  UPDATE Caretakers C
+    set rating = ROUND((SELECT AVG(B.rating) FROM Bids B WHERE B.CTusername = NEW.CTusername),2)
+    WHERE C.username = NEW.CTusername;
+  RETURN NEW;
+END
+$$ LANGUAGE 'plpgsql';
+
+DROP TRIGGER IF EXISTS update_caretaker_rating_after_petowner_give_rating_trigger ON Bids;
+CREATE TRIGGER update_caretaker_rating_after_petowner_give_rating_trigger
+  AFTER UPDATE of rating
+  ON Bids
+  FOR EACH ROW
+  EXECUTE PROCEDURE update_caretaker_rating_after_petowner_give_rating_function();
 
 -- NEED HELP FOR THIS!!
 -- procedure that is excuted by the trigger below
