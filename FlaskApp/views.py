@@ -812,6 +812,15 @@ def caretaker_complete_transaction():
 """
 Set a route for a user to delete his account
 """
+@view.route("/deleteusers", methods = ["POST", "GET"])
+@login_required
+def delete_users():
+    username = current_user.username
+    logout_user()
+    query = "DELETE FROM users WHERE username = '{}'".format(username)
+    db.session.execute(query)
+    db.session.commit()
+    return redirect(url_for('view.home'))
 
 """
 Set a route for caretakers to see their salary
