@@ -313,21 +313,48 @@ BEGIN
 END
 $$ LANGUAGE 'plpgsql';
 
--- trigger to update
-CREATE TRIGGER update_ct_salary
-  AFTER INSERT
-  ON "bids"
+-- trigger to check if the full time can take a leave
+CREATE OR REPLACE FUNCTION check_if_fulltime_can_take_leave_function() RETURNS trigger AS $$
+DECLARE
+  counter INTEGER := 0;
+  full_time BOOLEAN;
+  consecutive BOOLEAN;
+  leave_date_in_non_consecutive BOOLEAN := False;
+  date1 DATE := date('2021-01-01');
+  date2 DATE := date('2021-05-30'); --someone help check if this is 150 days afer 2021-01-01
+BEGIN
+  SELECT (NEW.username IN (SELECT username FROM FullTime)) INTO full_time;
+  IF EXTRACT(YEAR FROM NEW.date) = 2020 AND full_time = TRUE THEN
+    RAISE EXCEPTION 'You cannot take leave on this date';
+  END IF;
+  IF full_time = True THEN
+    WHILE date2 <= date('2021-12-31') LOOP
+      SELECT (150 = (SELECT COUNT(*)
+                    FROM CareTakerAvailability
+                    WHERE date >= date1
+                      AND date <= date2
+                      AND NEW.username = CareTakerAvailability.username
+                      AND leave is False)) INTO consecutive;
+      IF consecutive = True THEN
+        counter := counter + 1;
+        date1 := date1 + 150;
+        date2 := date2 + 150;
+      END IF;
+      date1 := date1 + 1;
+      date2 := date2 + 1;
+    END LOOP;
+  END IF;
+  IF counter < 2 THEN  --MEANS HE ONLY HAVE 2 X 150 DAYS, CANNOT TAKE LAVE ALREADY
+    RAISE EXCEPTION 'You cannot take leave on this date';
+  END IF;
+  RETURN NEW;
+END
+$$ LANGUAGE 'plpgsql';
+
+
+DROP TRIGGER IF EXISTS check_if_fulltime_can_take_leave_trigger ON CareTakerAvailability;
+CREATE TRIGGER check_if_fulltime_can_take_leave_trigger
+  AFTER UPDATE OF leave
+  ON CareTakerAvailability
   FOR EACH ROW
-  EXECUTE PROCEDURE update_salary();
-
--- NEED HELP FOR THIS!!
--- procedure that is excuted by the trigger below
-
-
---- create a function to automate insertion into salary and availabilit tables
--- after inseting into caretaker
---DROP TRIGGER IF EXISTS insert_into_salary_trigger ON CareTakerSalary;
---CREATE TRIGGER insert_into_salary_trigger
---  AFTER INSERT
---  ON CareTakers
---  EXECUTE PROCEDURE insert_into_salary_function();
+  EXECUTE PROCEDURE check_if_fulltime_can_take_leave_function();

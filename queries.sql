@@ -214,6 +214,7 @@ DECLARE
   counter INTEGER := 0;
   full_time BOOLEAN;
   consecutive BOOLEAN;
+  leave_date_in_non_consecutive BOOLEAN := False;
   date1 DATE := date('2021-01-01');
   date2 DATE := date('2021-05-30'); --someone help check if this is 150 days afer 2021-01-01
 BEGIN
@@ -229,6 +230,11 @@ BEGIN
                       AND date <= date2
                       AND NEW.username = CareTakerAvailability.username
                       AND leave is False)) INTO consecutive;
+      --IF NEW.date >= date1 AND NEW.date <= date2 AND consecutive = FALSE THEN
+      --  leave_date_in_non_consecutive := True;
+      --  date2 := date('2021-12-31');
+      --  counter := 2; -- just to break the loop and not hit exception
+      --END IF;
       IF consecutive = True THEN
         counter := counter + 1;
         date1 := date1 + 150;
