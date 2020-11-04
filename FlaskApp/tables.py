@@ -14,7 +14,7 @@ class petList(Table):
 class PetIndividualHistory(Table):
     classes = ['table', 'table-bordered', 'table-striped', "sortable"]
     bid_id = Col('Bid ID')
-    ctusername = Col('Care Taker Name')
+    CTusername = Col('Care Taker Name')
     pet_name = Col('Pet Name')
     rating = Col('Rating you gave')
     review = Col('Review you gave')
@@ -48,7 +48,7 @@ class FilteredCaretakers(Table):
 
 class SelectedCareTakerIndividualHistory(Table):
     classes = ['table', 'table-bordered', 'table-striped', 'sortable']
-    CTusername = Col('Care Taker Name')
+    ctusername = Col('Care Taker Name')
     owner = Col('Owner')
     pet_name = Col('Pet Name')
     category = Col('Pet Type')

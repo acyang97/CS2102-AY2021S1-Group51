@@ -313,6 +313,13 @@ BEGIN
 END
 $$ LANGUAGE 'plpgsql';
 
+DROP TRIGGER IF EXISTS update_caretaker_rating_after_petowner_give_rating_trigger ON Bids;
+CREATE TRIGGER update_caretaker_rating_after_petowner_give_rating
+  AFTER UPDATE of rating
+  ON Bids
+  FOR EACH ROW
+  EXECUTE PROCEDURE update_caretaker_rating_after_petowner_give_rating_function();
+
 -- trigger to check if the full time can take a leave
 CREATE OR REPLACE FUNCTION check_if_fulltime_can_take_leave_function() RETURNS trigger AS $$
 DECLARE
@@ -379,3 +386,117 @@ CREATE TRIGGER check_caretaker_petcount_before_allow_leave_trigger
   ON CareTakerAvailability
   FOR EACH ROW
   EXECUTE PROCEDURE check_caretaker_petcount_before_allow_leave_function();
+
+
+
+CREATE OR REPLACE FUNCTION
+update_salary() RETURNS trigger AS $$
+DECLARE end_of_month date := (SELECT(date_trunc('month', NEW.start_date::date) + interval '1 month' - interval '1 day')::date);
+DECLARE start_of_end_date_month date;
+DECLARE full_time_count integer := (SELECT COUNT(*) FROM fulltime WHERE username = NEW.ctusername);
+DECLARE curr_pet_day integer;
+DECLARE num_days_exceed_60 integer;
+BEGIN
+IF full_time_count > 0 THEN
+    IF NEW.end_date > end_of_month THEN
+        start_of_end_date_month := (SELECT date_trunc('MONTH', NEW.end_date)::DATE);
+        curr_pet_day := (SELECT petdays FROM CareTakerSalary WHERE
+            username = NEW.ctusername AND
+            year = (SELECT date_part('year', start_of_end_date_month)) AND
+            month = (SELECT date_part('month', start_of_end_date_month)));
+        IF curr_pet_day >= 60 THEN
+            UPDATE CareTakerSalary
+            SET earnings = earnings + ((NEW.end_date - start_of_end_date_month + 1) * NEW.price_per_day), petdays = petdays + (NEW.end_date - start_of_end_date_month + 1),
+            final_salary = final_salary + ((NEW.end_date - start_of_end_date_month + 1) * (NEW.price_per_day * 0.8))
+            WHERE
+            username = NEW.ctusername AND
+            year = (SELECT date_part('year', start_of_end_date_month)) AND
+            month = (SELECT date_part('month', start_of_end_date_month));
+            NEW.end_date := end_of_month;
+        ELSE
+            num_days_exceed_60 := curr_pet_day + (NEW.end_date - start_of_end_date_month + 1) - 60;
+            IF num_days_exceed_60 > 0 THEN
+                UPDATE CareTakerSalary
+                SET earnings = earnings + ((NEW.end_date - start_of_end_date_month + 1) * NEW.price_per_day), petdays = petdays + (NEW.end_date - start_of_end_date_month + 1),
+                final_salary = final_salary + ((60 - curr_pet_day) * 50) + (num_days_exceed_60 * (NEW.price_per_day * 0.8))
+                WHERE
+                username = NEW.ctusername AND
+                year = (SELECT date_part('year', start_of_end_date_month)) AND
+                month = (SELECT date_part('month', start_of_end_date_month));
+                NEW.end_date := end_of_month;
+            ELSE
+                UPDATE CareTakerSalary
+                SET earnings = earnings + ((NEW.end_date - start_of_end_date_month + 1) * NEW.price_per_day), petdays = petdays + (NEW.end_date - start_of_end_date_month + 1),
+                final_salary = final_salary + ((NEW.end_date - start_of_end_date_month + 1) * 50)
+                WHERE
+                username = NEW.ctusername AND
+                year = (SELECT date_part('year', start_of_end_date_month)) AND
+                month = (SELECT date_part('month', start_of_end_date_month));
+                NEW.end_date := end_of_month;
+            END IF;
+        END IF;
+    END IF;
+    curr_pet_day := (SELECT petdays FROM CareTakerSalary WHERE
+            username = NEW.ctusername AND
+            year = (SELECT date_part('year', NEW.start_date)) AND
+            month = (SELECT date_part('month', NEW.start_date)));
+    IF curr_pet_day >= 60 THEN
+        UPDATE CareTakerSalary
+        SET earnings = earnings + ((NEW.end_date - NEW.start_date + 1) * NEW.price_per_day), petdays = petdays + (NEW.end_date - NEW.start_date + 1),
+        final_salary = final_salary + ((NEW.end_date - NEW.start_date + 1) * (NEW.price_per_day * 0.8))
+        WHERE
+        username = NEW.ctusername AND
+        year = (SELECT date_part('year', NEW.start_date)) AND
+        month = (SELECT date_part('month', NEW.start_date));
+    ELSE
+        num_days_exceed_60 := curr_pet_day + (NEW.end_date - NEW.start_date + 1) - 60;
+        IF num_days_exceed_60 > 0 THEN
+            UPDATE CareTakerSalary
+            SET earnings = earnings + ((NEW.end_date - NEW.start_date + 1) * NEW.price_per_day), petdays = petdays + (NEW.end_date - NEW.start_date + 1),
+            final_salary = final_salary + ((60 - curr_pet_day) * 50) + (num_days_exceed_60 * (NEW.price_per_day * 0.8))
+            WHERE
+            username = NEW.ctusername AND
+            year = (SELECT date_part('year', NEW.start_date)) AND
+            month = (SELECT date_part('month', NEW.start_date));
+        ELSE
+            UPDATE CareTakerSalary
+            SET earnings = earnings + ((NEW.end_date - NEW.start_date + 1) * NEW.price_per_day), petdays = petdays + (NEW.end_date - NEW.start_date + 1),
+            final_salary = final_salary + ((NEW.end_date - NEW.start_date + 1) * 50)
+            WHERE
+            username = NEW.ctusername AND
+            year = (SELECT date_part('year', NEW.start_date)) AND
+            month = (SELECT date_part('month', NEW.start_date));
+        END IF;
+    END IF;
+    RETURN NEW;
+ELSE
+    IF NEW.end_date > end_of_month THEN
+    start_of_end_date_month := (SELECT date_trunc('MONTH', NEW.end_date)::DATE);
+    UPDATE CareTakerSalary
+    SET earnings = earnings + ((NEW.end_date - start_of_end_date_month + 1) * NEW.price_per_day), petdays = petdays + (NEW.end_date - start_of_end_date_month + 1),
+    final_salary = (earnings + ((NEW.end_date - start_of_end_date_month + 1) * NEW.price_per_day)) * 0.75
+    WHERE
+    username = NEW.ctusername AND
+    year = (SELECT date_part('year', start_of_end_date_month)) AND
+    month = (SELECT date_part('month', start_of_end_date_month));
+    NEW.end_date := end_of_month;
+    END IF;
+    UPDATE CareTakerSalary
+    SET earnings = earnings + ((NEW.end_date - NEW.start_date + 1) * NEW.price_per_day), petdays = petdays + (NEW.end_date - NEW.start_date + 1),
+    final_salary = (earnings + ((NEW.end_date - NEW.start_date + 1) * NEW.price_per_day)) * 0.75
+    WHERE
+    username = NEW.ctusername AND
+    year = (SELECT date_part('year', NEW.start_date)) AND
+    month = (SELECT date_part('month', NEW.start_date));
+    RETURN NEW;
+  END IF;
+END;
+$$
+LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS update_ct_salary ON bids;
+CREATE TRIGGER update_ct_salary
+AFTER INSERT
+ON "bids"
+FOR EACH ROW
+EXECUTE PROCEDURE update_salary();

@@ -300,7 +300,7 @@ def petlist():
 def pet_individual_history():
     owner = current_user.username
     pet_name = request.args.get('pet_name')
-    query_history = "SELECT bid_id, ctusername, pet_name, rating, review, start_date, end_date, completed \
+    query_history = "SELECT bid_id, Bids.CTusername, pet_name, rating, review, start_date, end_date, completed \
                         FROM Bids WHERE pet_name = '{}' AND owner = '{}' ORDER BY end_date DESC".format(pet_name, owner)
     pet_history = db.session.execute(query_history)
     pet_history = list(pet_history)
@@ -934,3 +934,11 @@ def admin_view_jobs_per_month_summary():
     table = TotalJobPerMonthSummaryTable(ls)
     table.border = True
     return render_template("admin_view_jobs_per_month_summary.html", table=table)
+
+"""
+IDEAS FOR INTERESTING QUERIES
+1. BEST PERFORMING CARETAKER PER MONTH - CAN DO A GRP BY. Bids table and possibly salary?
+2. highest earner per month
+3. Find all the underperforming full-time caretakers per month (less than 10) AND (another constraint if too ez)
+4. Find number of pet for each pet type taken care for each month (if too hard , overall)
+"""
