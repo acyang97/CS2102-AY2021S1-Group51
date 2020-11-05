@@ -311,20 +311,31 @@ CREATE TRIGGER insert_into_CareTakerAvailability_after_caretaker_insertion_trigg
   FOR EACH ROW
   EXECUTE PROCEDURE insert_into_CareTakerAvailability_after_caretaker_insertion_function();
 
--- automates the update of rating in the caretakers table.
 CREATE OR REPLACE FUNCTION update_caretaker_rating_after_petowner_give_rating_function() RETURNS trigger AS $$
 DECLARE
-  rating NUMERIC;
+  old_rating NUMERIC;
+  updated_rating NUMERIC;
+  is_part_time BOOLEAN;
 BEGIN
+  SELECT (NEW.CTusername IN (SELECT username FROM PartTime)) INTO is_part_time;
+  SELECT (SELECT SUM(rating) FROM CareTakers WHERE username = NEW.CTusername) INTO old_rating;
+  SELECT (ROUND((SELECT AVG(B.rating) FROM Bids B WHERE B.CTusername = NEW.CTusername),2)) INTO updated_rating;
   UPDATE Caretakers C
-    set rating = ROUND((SELECT AVG(B.rating) FROM Bids B WHERE B.CTusername = NEW.CTusername),2)
+    SET rating = updated_rating
     WHERE C.username = NEW.CTusername;
+  IF is_part_time = true AND updated_rating >= 4 AND old_rating < 4 THEN
+    UPDATE CareTakerAvailability CA
+      SET available = true
+      WHERE CA.username = NEW.CTusername
+        AND available = False
+        AND pet_count = 2;
+  END IF;
   RETURN NEW;
 END
 $$ LANGUAGE 'plpgsql';
 
 DROP TRIGGER IF EXISTS update_caretaker_rating_after_petowner_give_rating_trigger ON Bids;
-CREATE TRIGGER update_caretaker_rating_after_petowner_give_rating
+CREATE TRIGGER update_caretaker_rating_after_petowner_give_rating_trigger
   AFTER UPDATE of rating
   ON Bids
   FOR EACH ROW
@@ -341,7 +352,7 @@ DECLARE
   date2 DATE := date('2021-05-30');
 BEGIN
   SELECT (NEW.username IN (SELECT username FROM FullTime)) INTO full_time;
-  IF EXTRACT(YEAR FROM NEW.date) = 2020 AND full_time = TRUE THEN
+  IF (EXTRACT(YEAR FROM NEW.date) = 2020) AND (full_time = TRUE) THEN
     RAISE EXCEPTION 'You cannot take leave on this date';
   END IF;
   IF full_time = True THEN
@@ -361,9 +372,9 @@ BEGIN
         date2 := date2 + 1;
       END IF;
     END LOOP;
-  END IF;
-  IF counter < 2 THEN
-    RAISE EXCEPTION 'You cannot take leave on this date';
+    IF counter < 2 THEN
+      RAISE EXCEPTION 'You cannot take leave on this date';
+    END IF;
   END IF;
   RETURN NEW;
 END
