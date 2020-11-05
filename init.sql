@@ -27,10 +27,6 @@ CREATE TABLE ModeOfTransport (
     transport VARCHAR PRIMARY KEY
 );
 
-INSERT INTO ModeOfTransport VALUES ('Pet Owner Deliver');
-INSERT INTO ModeOfTransport VALUES ('Care Taker Pick Up');
-INSERT INTO ModeOfTransport VALUES ('Transfer through PCS Building');
-
 CREATE TABLE PreferredTransport (
     username VARCHAR REFERENCES CareTakers(username) ON DELETE CASCADE,
     transport VARCHAR REFERENCES ModeOfTransport(transport),
@@ -40,11 +36,6 @@ CREATE TABLE PreferredTransport (
 CREATE TABLE ModeOfPayment (
   modeOfPayment VARCHAR PRIMARY KEY
 );
-
-INSERT INTO ModeOfPayment VALUES ('Credit Card');
-INSERT INTO ModeOfPayment VALUES ('Cash');
-INSERT INTO ModeOfPayment VALUES ('Either');
-
 
 CREATE TABLE PreferredModeOfPayment (
   username VARCHAR REFERENCES CareTakers(username) ON DELETE CASCADE,
@@ -65,22 +56,11 @@ CREATE TABLE Category (
     pettype VARCHAR PRIMARY KEY
 );
 
-INSERT INTO Category VALUES ('Dog');
-INSERT INTO Category VALUES ('Cat');
-INSERT INTO Category VALUES ('Rabbit');
-INSERT INTO Category VALUES ('Hamster');
-INSERT INTO Category VALUES ('Guinea Pig');
-INSERT INTO Category VALUES ('Fish');
-INSERT INTO Category VALUES ('Mice');
-INSERT INTO Category VALUES ('Terrapin');
-INSERT INTO Category VALUES ('Bird');
-
 CREATE TABLE OwnedPets (
     owner VARCHAR references PetOwners(username) ON DELETE CASCADE,
     pet_name VARCHAR NOT NULL UNIQUE,
     category VARCHAR NOT NULL,
     age INTEGER NOT NULL,
-    --gender VARCHAR NOT NULL,
     Primary Key(owner, pet_name)
 );
 
@@ -137,16 +117,6 @@ CREATE TABLE DefaultPriceList (
   PRIMARY KEY (pettype, price)
 );
 
-INSERT INTO DefaultPriceList VALUES ('Dog', 100);
-INSERT INTO DefaultPriceList VALUES ('Cat', 80);
-INSERT INTO DefaultPriceList VALUES ('Rabbit', 110);
-INSERT INTO DefaultPriceList VALUES ('Hamster', 70);
-INSERT INTO DefaultPriceList VALUES ('Guinea Pig', 150);
-INSERT INTO DefaultPriceList VALUES ('Fish', 50);
-INSERT INTO DefaultPriceList VALUES ('Mice', 50);
-INSERT INTO DefaultPriceList VALUES ('Terrapin', 80);
-INSERT INTO DefaultPriceList VALUES ('Bird', 80);
-
 CREATE TABLE FullTimePriceList(
   username VARCHAR REFERENCES CareTakers(username) ON DELETE CASCADE,
   price NUMERIC,
@@ -155,7 +125,6 @@ CREATE TABLE FullTimePriceList(
   PRIMARY KEY (pettype, username, price)
 );
 
--- THIS TABLE WILL BE USEFUL TO GET SOME OF THE SUMMARY INFORMATION AT POINT 4 OF THE PROJECT REQUIREMENTS.
 CREATE TABLE CareTakerSalary (
   year INTEGER,
   month INTEGER,
@@ -166,13 +135,41 @@ CREATE TABLE CareTakerSalary (
   PRIMARY KEY (year, month, username)
 );
 
--- to obtain statistics for the total number of jobs in each month for the admin
 CREATE TABLE TotalJobPerMonthSummary (
   year INTEGER,
   month INTEGER,
   job_count INTEGER NOT NULL DEFAULT 0,
   PRIMARY KEY(year, month)
 );
+
+
+INSERT INTO ModeOfTransport VALUES ('Pet Owner Deliver');
+INSERT INTO ModeOfTransport VALUES ('Care Taker Pick Up');
+INSERT INTO ModeOfTransport VALUES ('Transfer through PCS Building');
+
+INSERT INTO ModeOfPayment VALUES ('Credit Card');
+INSERT INTO ModeOfPayment VALUES ('Cash');
+INSERT INTO ModeOfPayment VALUES ('Either');
+
+INSERT INTO Category VALUES ('Dog');
+INSERT INTO Category VALUES ('Cat');
+INSERT INTO Category VALUES ('Rabbit');
+INSERT INTO Category VALUES ('Hamster');
+INSERT INTO Category VALUES ('Guinea Pig');
+INSERT INTO Category VALUES ('Fish');
+INSERT INTO Category VALUES ('Mice');
+INSERT INTO Category VALUES ('Terrapin');
+INSERT INTO Category VALUES ('Bird');
+
+INSERT INTO DefaultPriceList VALUES ('Dog', 100);
+INSERT INTO DefaultPriceList VALUES ('Cat', 80);
+INSERT INTO DefaultPriceList VALUES ('Rabbit', 110);
+INSERT INTO DefaultPriceList VALUES ('Hamster', 70);
+INSERT INTO DefaultPriceList VALUES ('Guinea Pig', 150);
+INSERT INTO DefaultPriceList VALUES ('Fish', 50);
+INSERT INTO DefaultPriceList VALUES ('Mice', 50);
+INSERT INTO DefaultPriceList VALUES ('Terrapin', 80);
+INSERT INTO DefaultPriceList VALUES ('Bird', 80);
 
 INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2020, 11);
 INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2020, 12);
@@ -220,7 +217,6 @@ BEGIN
 END
 $$ LANGUAGE 'plpgsql';
 
--- trigger that makes use of the function above to update pet count and availbaility
 DROP TRIGGER IF EXISTS update_caretaker_petcount_after_bid_trigger ON Bids;
 CREATE TRIGGER update_caretaker_petcount_after_bid_trigger
   AFTER INSERT
@@ -264,13 +260,25 @@ CREATE TRIGGER update_caretaker_availability_after_take_leave_trigger
 
 -- automates the insertion into the CaretakerSalaryTable
 CREATE OR REPLACE FUNCTION insert_into_salary_after_caretaker_insertion_function() RETURNS trigger AS $$
+DECLARE
+  current_month INTEGER := EXTRACT(MONTH FROM current_date);
+  current_year INTEGER := EXTRACT(YEAR FROM current_date);
 BEGIN
-  FOR i in 11..12 LOOP
-    INSERT INTO CareTakerSalary(year, month, username) VALUES (2020, i, NEW.username);
-  END LOOP;
-  FOR i in 1..12 LOOP
-    INSERT INTO CareTakerSalary(year, month, username) VALUES (2021, i, NEW.username);
-  END LOOP;
+  IF current_year = 2020 THEN
+    FOR i in current_month..12 LOOP
+      INSERT INTO CareTakerSalary(year, month, username) VALUES (2020, i, NEW.username);
+    END LOOP;
+  END IF;
+  IF current_year = 2020 THEN
+    FOR i in 1..12 LOOP
+      INSERT INTO CareTakerSalary(year, month, username) VALUES (2021, i, NEW.username);
+    END LOOP;
+  END IF;
+  IF current_year = 2021 THEN
+    FOR i in current_month..12 LOOP
+      INSERT INTO CareTakerSalary(year, month, username) VALUES (2021, i, NEW.username);
+    END LOOP;
+  END IF;
   RETURN NEW;
 END
 $$ LANGUAGE 'plpgsql';
