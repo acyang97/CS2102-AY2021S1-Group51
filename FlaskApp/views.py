@@ -300,7 +300,7 @@ def petlist():
 def pet_individual_history():
     owner = current_user.username
     pet_name = request.args.get('pet_name')
-    query_history = "SELECT bid_id, ctusername, pet_name, rating, review, start_date, end_date, completed \
+    query_history = "SELECT bid_id, Bids.CTusername, pet_name, rating, review, start_date, end_date, completed \
                         FROM Bids WHERE pet_name = '{}' AND owner = '{}' ORDER BY end_date DESC".format(pet_name, owner)
     pet_history = db.session.execute(query_history)
     pet_history = list(pet_history)
