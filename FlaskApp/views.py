@@ -319,7 +319,7 @@ def petlist():
 def pet_individual_history():
     owner = current_user.username
     pet_name = request.args.get('pet_name')
-    query_history = "SELECT bid_id, Bids.CTusername, pet_name, rating, review, start_date, end_date, completed \
+    query_history = "SELECT bid_id, ctusername, pet_name, rating, review, start_date, end_date, completed \
                         FROM Bids WHERE pet_name = '{}' AND owner = '{}' ORDER BY end_date DESC".format(pet_name, owner)
     pet_history = db.session.execute(query_history)
     pet_history = list(pet_history)
@@ -916,7 +916,7 @@ def petowner_view_caretakers_samearea():
 @login_required
 def caretaker_individual_history():
     username = request.args.get('username')
-    history_query = "SELECT B.CTusername, B.pet_name, O.category, B.review, B.rating, B.start_date, B.end_date \
+    history_query = "SELECT ctusername, B.pet_name, O.category, B.review, B.rating, B.start_date, B.end_date \
                         FROM BIDS B NATURAL JOIN OwnedPets O \
                         WHERE B.CTusername = '{}'".format(username)
     history_list = db.session.execute(history_query)

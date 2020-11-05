@@ -159,7 +159,7 @@ class PetOwnerViewFullTime(Table):
 
 class CareTakerIndividualHistory(Table):
     classes = ['table', 'table-bordered', 'table-striped', 'sortable']
-    CTusername = Col('Care Taker Name')
+    ctusername = Col('Care Taker Name')
     pet_name = Col('Pet Name')
     category = Col('Pet Type')
     review = Col('Review')
