@@ -73,7 +73,26 @@ def is_user_a_admin(current_user):
 @view.route("/")
 @view.route("/home")
 def home():
-    return render_template('home.html')
+    if not current_user.is_authenticated:
+        return render_template('home_unauthenticated.html')
+    elif current_user.is_authenticated:
+        checkPO = "SELECT username from PetOwners WHERE username = '{}'".format(current_user.username)
+        checkPT = "SELECT username from PartTime WHERE username = '{}'".format(current_user.username)
+        checkFT = "SELECT username from FullTime WHERE username = '{}'".format(current_user.username)
+        checkAdmin = "SELECT username from PCSAdmin WHERE username = '{}'".format(current_user.username)
+
+        if db.session.execute(checkPO).first() is not None:
+            usertype = "Pet Owner"
+            return render_template('home_petowner.html', usertype=usertype)
+        elif db.session.execute(checkPT).first() is not None:
+            usertype = "Part Time CareTaker"
+            return render_template('home_parttimect.html', usertype=usertype)
+        elif db.session.execute(checkFT).first() is not None:
+            usertype = "Full Time Caretaker"
+            return render_template('home_fulltimect.html', usertype=usertype)
+        elif db.session.execute(checkAdmin).first() is not None:
+            usertype = "PCS Administrator"
+            return render_template('home_admin.html', usertype=usertype)
 
 @view.route("/about")
 def about():
