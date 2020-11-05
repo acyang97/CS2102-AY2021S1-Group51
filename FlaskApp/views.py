@@ -981,7 +981,6 @@ def admin_view_underperforming_caretakers():
         return render_template("admin_view_underperforming_caretakers.html", table=table, form=form)
     return render_template("admin_view_underperforming_caretakers.html", form = form)
 
-
 """
 IDEAS FOR INTERESTING QUERIES
 1. BEST PERFORMING CARETAKER PER MONTH - CAN DO A GRP BY. Bids table and possibly salary?

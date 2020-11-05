@@ -305,6 +305,8 @@ CREATE TRIGGER insert_into_CareTakerAvailability_after_caretaker_insertion_trigg
 
 -- automates the update of rating in the caretakers table.
 CREATE OR REPLACE FUNCTION update_caretaker_rating_after_petowner_give_rating_function() RETURNS trigger AS $$
+DECLARE
+  rating NUMERIC;
 BEGIN
   UPDATE Caretakers C
     set rating = ROUND((SELECT AVG(B.rating) FROM Bids B WHERE B.CTusername = NEW.CTusername),2)
@@ -328,7 +330,7 @@ DECLARE
   consecutive BOOLEAN;
   leave_date_in_non_consecutive BOOLEAN := False;
   date1 DATE := date('2021-01-01');
-  date2 DATE := date('2021-05-30'); --someone help check if this is 150 days afer 2021-01-01
+  date2 DATE := date('2021-05-30');
 BEGIN
   SELECT (NEW.username IN (SELECT username FROM FullTime)) INTO full_time;
   IF EXTRACT(YEAR FROM NEW.date) = 2020 AND full_time = TRUE THEN
@@ -346,9 +348,10 @@ BEGIN
         counter := counter + 1;
         date1 := date1 + 150;
         date2 := date2 + 150;
+      ELSE
+        date1 := date1 + 1;
+        date2 := date2 + 1;
       END IF;
-      date1 := date1 + 1;
-      date2 := date2 + 1;
     END LOOP;
   END IF;
   IF counter < 2 THEN
