@@ -320,3 +320,57 @@ FROM (SELECT DISTINCT username, ROUND(AVG(B.rating), 2) AS rating_in_month
 WHERE rating_in_month < 3
 ORDER BY rating_in_month DESC
 LIMIT 10;
+
+
+
+
+
+
+
+
+
+SELECT C1.year, C1.month, C1.username, C1.petdays, C1.final_salary
+FROM CareTakerSalary C1
+WHERE 
+((SELECT date_part('year', (SELECT current_timestamp)) > C1.year)
+        OR ((SELECT date_part('year', (SELECT current_timestamp)) = C1.year)
+        AND (SELECT date_part('month', (SELECT current_timestamp)) > C1.month)))
+ AND C1.final_salary >= ALL(SELECT final_salary 
+ FROM CareTakerSalary C2 
+ WHERE C2.year = C1.year 
+ AND C2.month = C1.month)
+ORDER BY C1.year DESC, C1.month DESC;
+
+
+SELECT date_part('year', B.start_date) AS year, date_part('month', B.start_date) AS month, O.category, COUNT(*) AS num
+FROM Bids B INNER JOIN OwnedPets O ON (B.owner = O.owner AND B.pet_name = O.pet_name)
+GROUP BY date_part('year', B.start_date), date_part('month', B.start_date), O.category
+ORDER BY year DESC, month DESC, num DESC;
+
+
+INSERT INTO bids VALUES (1, 'gkingmann', 'astather2', 'Common wolf', NULL, NULL, 'Care Taker Pick Up', 'Credit card', '52521', FALSE, '6/25/2020', '6/27/2020', 100);
+INSERT INTO bids VALUES (1, 'gkingmann', 'rpinkerton8', 'Long-billed cockatoo', NULL, NULL, 'Care Taker Pick Up', 'Credit card', '52521', FALSE, '6/25/2020', '6/27/2020', 100);
+INSERT INTO bids VALUES (1, 'gkingmann', 'rpinkerton8', 'Long-billed cockatoo', NULL, NULL, 'Care Taker Pick Up', 'Credit card', '52521', FALSE, '6/25/2020', '6/27/2020', 100);
+INSERT INTO bids VALUES (1, 'gkingmann', 'caisman6', 'Dove, galapagos', NULL, NULL, 'Care Taker Pick Up', 'Credit card', '52521', FALSE, '6/25/2020', '6/27/2020', 100);
+INSERT INTO bids VALUES (1, 'gkingmann', 'caisman6', 'Dove, galapagos', NULL, NULL, 'Care Taker Pick Up', 'Credit card', '52521', FALSE, '6/25/2020', '6/27/2020', 100);
+INSERT INTO bids VALUES (1, 'gkingmann', 'imichelottij', 'Tarantula', NULL, NULL, 'Care Taker Pick Up', 'Credit card', '52521', FALSE, '7/05/2020', '7/05/2020', 100);
+INSERT INTO bids VALUES (1, 'gkingmann', 'imichelottij', 'Tarantula', NULL, NULL, 'Care Taker Pick Up', 'Credit card', '52521', FALSE, '7/05/2020', '7/05/2020', 100);
+INSERT INTO bids VALUES (1, 'gkingmann', 'astather2', 'Common wolf', NULL, NULL, 'Care Taker Pick Up', 'Credit card', '52521', FALSE, '7/05/2020', '7/05/2020', 100);
+
+
+
+
+
+
+
+INSERT INTO CareTakerSalary VALUES (2019, 6, 'ckitleeg', 0, 0, 2000);
+INSERT INTO CareTakerSalary VALUES (2019, 6, 'asconesh', 0, 0, 2500);
+INSERT INTO CareTakerSalary VALUES (2019, 6, 'sgiacomozzoi', 0, 0, 3000);
+INSERT INTO CareTakerSalary VALUES (2019, 6, 'imichelottij', 0, 0, 3500);
+INSERT INTO CareTakerSalary VALUES (2019, 6, 'vstonehewerl', 0, 0, 3500);
+INSERT INTO CareTakerSalary VALUES (2019, 5, 'asconesh', 0, 0, 3000);
+INSERT INTO CareTakerSalary VALUES (2019, 5, 'gkingmann', 0, 0, 2500);
+INSERT INTO CareTakerSalary VALUES (2019, 5, 'dblaymiresp', 0, 0, 2500);
+INSERT INTO CareTakerSalary VALUES (2019, 3, 'sgiacomozzoi', 0, 0, 5000);
+INSERT INTO CareTakerSalary VALUES (2019, 3, 'vstonehewerl', 0, 0, 3000);
+
