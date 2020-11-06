@@ -81,7 +81,13 @@ def home():
         checkFT = "SELECT username from FullTime WHERE username = '{}'".format(current_user.username)
         checkAdmin = "SELECT username from PCSAdmin WHERE username = '{}'".format(current_user.username)
 
-        if db.session.execute(checkPO).first() is not None:
+        if db.session.execute(checkPO).first() is not None and db.session.execute(checkPT).first() is not None:
+            usertype = "Pet Owner and Part Time CareTaker"
+            return render_template('home_po_ptct.html', usertype=usertype)
+        elif db.session.execute(checkPO).first() is not None and db.session.execute(checkFT).first() is not None:
+            usertype = "Pet Owner and Full Time CareTaker"
+            return render_template('home_po_ftct.html', usertype=usertype)
+        elif db.session.execute(checkPO).first() is not None:
             usertype = "Pet Owner"
             return render_template('home_petowner.html', usertype=usertype)
         elif db.session.execute(checkPT).first() is not None:
@@ -114,8 +120,136 @@ def bid():
     table.border = True
     return render_template('bid.html', table=table)
 
+@view.route("/reg_poct", methods=["GET", "POST"])
+def reg_poct():
+    form = PetOwnerCareTakerRegistrationForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        email = form.email.data
+        password = form.password.data
+        area = form.area.data
+        gender = form.gender.data
+        select = form.select.data
+        mode = form.mode_of_transport.data
+        payment = form.mode_of_payment.data
+        queryusername = "SELECT * FROM users WHERE username = '{}'".format(username)
+        exists_user = db.session.execute(queryusername).fetchone()
+        queryemail = "SELECT * FROM users WHERE email = '{}'".format(email)
+        exists_email = db.session.execute(queryemail).fetchone()
+        if exists_user:
+            form.username.errors.append("Username {} is already taken.".format(username))
+        elif exists_email:
+            form.email.errors.append("Email {} is already in use.".format(email))
+        else:
+            query = "INSERT INTO users(username, email, area, gender, password) VALUES ('{}', '{}', '{}', '{}', '{}')"\
+                .format(username, email, area, gender, password)
+            db.session.execute(query)
+            insertct = "INSERT INTO CareTakers(username) VALUES ('{}')".format(username)
+            db.session.execute(insertct)
+            insertpt = "INSERT INTO PartTime(username) VALUES ('{}')".format(username)
+            insertft = "INSERT INTO FullTime(username) VALUES ('{}')".format(username)
+            if (select == '1'):
+                db.session.execute(insertpt)
+            elif (select == '2'):
+                db.session.execute(insertft)
+            query2 = "INSERT INTO PetOwners(username) VALUES ('{}')".format(username)
+            db.session.execute(query2)
+            query5 = "INSERT INTO PreferredTransport(username, transport) VALUES ('{}', '{}')".format(username, mode)
+            db.session.execute(query5)
+            query6 = "INSERT INTO PreferredModeOfPayment(username, modeOfPayment) VALUES ('{}', '{}')".format(username, payment)
+            db.session.execute(query6)
+            ## Automatically inserted stuff into CareTakerSalary table using insert_into_salary_after_caretaker_insertion_trigger
+            ## Automatically inserted stuff into CareTakerAvailability using insert_into_CareTakerAvailability_after_caretaker_insertion_trigger
+            db.session.commit()
+            flash("You have successfully signed up as a Pet Owner and CareTaker!", 'success')
+            return redirect(url_for('view.home'))
+    return render_template("reg_poct.html", form=form)
+
+@view.route("/reg_ct", methods=["GET", "POST"])
+def reg_ct():
+    form = CareTakerRegistrationForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        email = form.email.data
+        password = form.password.data
+        area = form.area.data
+        gender = form.gender.data
+        select = form.select.data
+        mode = form.mode_of_transport.data
+        payment = form.mode_of_payment.data
+        queryusername = "SELECT * FROM users WHERE username = '{}'".format(username)
+        exists_user = db.session.execute(queryusername).fetchone()
+        queryemail = "SELECT * FROM users WHERE email = '{}'".format(email)
+        exists_email = db.session.execute(queryemail).fetchone()
+        if exists_user:
+            form.username.errors.append("Username {} is already taken.".format(username))
+        elif exists_email:
+            form.email.errors.append("Email {} is already in use.".format(email))
+        else:
+            query = "INSERT INTO users(username, email, area, gender, password) VALUES ('{}', '{}', '{}', '{}', '{}')"\
+                .format(username, email, area, gender, password)
+            db.session.execute(query)
+            insertct = "INSERT INTO CareTakers(username) VALUES ('{}')".format(username)
+            db.session.execute(insertct)
+            insertpt = "INSERT INTO PartTime(username) VALUES ('{}')".format(username)
+            insertft = "INSERT INTO FullTime(username) VALUES ('{}')".format(username)
+            if (select == '1'):
+                db.session.execute(insertpt)
+            elif (select == '2'):
+                db.session.execute(insertft)
+            query5 = "INSERT INTO PreferredTransport(username, transport) VALUES ('{}', '{}')".format(username, mode)
+            db.session.execute(query5)
+            query6 = "INSERT INTO PreferredModeOfPayment(username, modeOfPayment) VALUES ('{}', '{}')".format(username, payment)
+            db.session.execute(query6)
+            ## Automatically inserted stuff into CareTakerSalary table using insert_into_salary_after_caretaker_insertion_trigger
+            ## Automatically inserted stuff into CareTakerAvailability using insert_into_CareTakerAvailability_after_caretaker_insertion_trigger
+            db.session.commit()
+            flash("You have successfully signed up as a CareTaker!", 'success')
+            return redirect(url_for('view.home'))
+    return render_template("reg_ct.html", form=form)
+
+@view.route("/reg_po", methods=["GET", "POST"])
+def reg_po():
+    form = PetOwnerRegistrationForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        email = form.email.data
+        password = form.password.data
+        area = form.area.data
+        gender = form.gender.data
+        queryusername = "SELECT * FROM users WHERE username = '{}'".format(username)
+        exists_user = db.session.execute(queryusername).fetchone()
+        queryemail = "SELECT * FROM users WHERE email = '{}'".format(email)
+        exists_email = db.session.execute(queryemail).fetchone()
+        if exists_user:
+            form.username.errors.append("Username {} is already taken.".format(username))
+        elif exists_email:
+            form.email.errors.append("Email {} is already in use.".format(email))
+        else:
+            query1 = "INSERT INTO users(username, email, area, gender, password) VALUES ('{}', '{}', '{}', '{}', '{}')"\
+                .format(username, email, area, gender, password)
+            db.session.execute(query1)
+            query2 = "INSERT INTO PetOwners(username) VALUES ('{}')".format(username)
+            db.session.execute(query2)
+            db.session.commit()
+            flash("You have successfully signed up as a Pet Owner!", 'success')
+            return redirect(url_for('view.home'))
+    return render_template("reg_po.html", form=form)
 
 # Will be inserted into the caretaker table
+@view.route("/registration", methods=["GET", "POST"])
+def registration():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        if 'po' in request.form:
+            return redirect(url_for('view.reg_po'))
+        elif 'ct' in request.form:
+            return redirect(url_for('view.reg_ct'))
+        elif 'poct' in request.form:
+            return redirect(url_for('view.reg_poct'))
+    return render_template("registration.html", form=form)
+
+""" # old registration for reference
 @view.route("/registration", methods=["GET", "POST"])
 def registration():
     form = RegistrationForm()
@@ -169,6 +303,7 @@ def registration():
             flash("You have successfully signed up!", 'success')
             return redirect(url_for('view.home'))
     return render_template("registration.html", form=form)
+"""
 
 @view.route("/registration_admin", methods=["GET", "POST"])
 def registration_admin():

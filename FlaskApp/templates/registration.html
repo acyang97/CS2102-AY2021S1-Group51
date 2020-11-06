@@ -4,144 +4,17 @@
         <form method="POST" action="">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Join Today!</legend>
-                <div class="form-group">
-                    {{ form.username.label(class="form-control-label") }}
-
-                    {% if form.username.errors %}
-                        {{ form.username(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.username.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.username(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    {{ form.email.label(class="form-control-label") }}
-                    {% if form.email.errors %}
-                        {{ form.email(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.email.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.email(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    {{ form.password.label(class="form-control-label") }}
-                    {% if form.password.errors %}
-                        {{ form.password(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.password.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.password(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    {{ form.confirm_password.label(class="form-control-label") }}
-                    {% if form.confirm_password.errors %}
-                        {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.confirm_password.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.confirm_password(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                  {{ form.area.label(class="form-control-label") }}
-                  {% if form.area.errors %}
-                      {{ form.area(class="form-control form-control-lg is-invalid") }}
-                      <div class="invalid-feedback">
-                          {% for error in form.area.errors %}
-                              <span>{{ error }}</span>
-                          {% endfor %}
-                      </div>
-                  {% else %}
-                      {{ form.area(class="form-control form-control-lg") }}
-                  {% endif %}
-                </div>
-                <div class="form-group">
-                  {{ form.gender.label(class="form-control-label") }}
-                  {% if form.gender.errors %}
-                      {{ form.gender(class="form-control form-control-lg is-invalid") }}
-                      <div class="invalid-feedback">
-                          {% for error in form.gender.errors %}
-                              <span>{{ error }}</span>
-                          {% endfor %}
-                      </div>
-                  {% else %}
-                      {{ form.gender(class="form-control form-control-lg") }}
-                  {% endif %}
-                </div>
-                <div class="form-group">
-                  {{ form.select1.label(class="form-control-label") }}
-                  {% if form.select1.errors %}
-                      {{ form.select1(class="form-control form-control-lg is-invalid") }}
-                      <div class="invalid-feedback">
-                          {% for error in form.select1.errors %}
-                              <span>{{ error }}</span>
-                          {% endfor %}
-                      </div>
-                  {% else %}
-                      {{ form.select1(class="form-control form-control-lg") }}
-                  {% endif %}
-                </div>
-                <div class="form-group">
-                  {{ form.select2.label(class="form-control-label") }}
-                  {% if form.select2.errors %}
-                      {{ form.select2(class="form-control form-control-lg is-invalid") }}
-                      <div class="invalid-feedback">
-                          {% for error in form.select2.errors %}
-                              <span>{{ error }}</span>
-                          {% endfor %}
-                      </div>
-                  {% else %}
-                      {{ form.select2(class="form-control form-control-lg") }}
-                  {% endif %}
-                </div>
-
-                <div class="form-group">
-                  {{ form.mode_of_transport.label(class="form-control-label") }}
-                  {% if form.mode_of_transport.errors %}
-                      {{ form.mode_of_transport(class="form-control form-control-lg is-invalid") }}
-                      <div class="invalid-feedback">
-                          {% for error in form.mode_of_transport.errors %}
-                              <span>{{ error }}</span>
-                          {% endfor %}
-                      </div>
-                  {% else %}
-                      {{ form.mode_of_transport(class="form-control form-control-lg") }}
-                  {% endif %}
-                </div>
-
-                <div class="form-group">
-                  {{ form.mode_of_payment.label(class="form-control-label") }}
-                  {% if form.mode_of_payment.errors %}
-                      {{ form.mode_of_payment(class="form-control form-control-lg is-invalid") }}
-                      <div class="invalid-feedback">
-                          {% for error in form.mode_of_payment.errors %}
-                              <span>{{ error }}</span>
-                          {% endfor %}
-                      </div>
-                  {% else %}
-                      {{ form.mode_of_payment(class="form-control form-control-lg") }}
-                  {% endif %}
-                </div>
+                <legend class="border-bottom mb-4">Who would you like to join us as?</legend>
 
             </fieldset>
             <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info") }}
+                {{ form.po(class="btn btn-outline-info") }}
+            </div>
+            <div class="form-group">
+                {{ form.ct(class="btn btn-outline-info") }}
+            </div>
+            <div class="form-group">
+                {{ form.poct(class="btn btn-outline-info") }}
             </div>
         </form>
     </div>
