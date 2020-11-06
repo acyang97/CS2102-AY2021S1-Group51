@@ -108,21 +108,21 @@ CREATE TABLE PartTimePriceList (
   pettype VARCHAR REFERENCES Category(pettype),
   username VARCHAR REFERENCES CareTakers(username) ON DELETE CASCADE,
   price NUMERIC,
-  PRIMARY KEY (pettype, username, price)
+  PRIMARY KEY (pettype, username)
 );
 
 CREATE TABLE DefaultPriceList (
   pettype VARCHAR REFERENCES Category(pettype),
   price NUMERIC,
-  PRIMARY KEY (pettype, price)
+  PRIMARY KEY (pettype)
 );
 
 CREATE TABLE FullTimePriceList(
   username VARCHAR REFERENCES CareTakers(username) ON DELETE CASCADE,
   price NUMERIC,
   pettype VARCHAR,
-  FOREIGN KEY (pettype, price) REFERENCES DefaultPriceList(pettype, price),
-  PRIMARY KEY (pettype, username, price)
+  FOREIGN KEY (pettype) REFERENCES DefaultPriceList(pettype),
+  PRIMARY KEY (pettype, username)
 );
 
 CREATE TABLE CareTakerSalary (

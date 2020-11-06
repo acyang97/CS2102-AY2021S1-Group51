@@ -738,6 +738,7 @@ def search_caretaker():
                             AND C.date >= '{}' \
                             AND C.date <= '{}') \
                             ".format(category, rating, transport, payment, current_user.username, startDate, endDate)
+
                 filtered = db.session.execute(searchquery)
                 filtered = list(filtered)
                 table = FilteredCaretakers(filtered)
@@ -1096,6 +1097,7 @@ def admin_view_underperforming_caretakers():
     if form.validate_on_submit():
         year = form.year.data
         month = form.month.data
+
         underperforming_query = "SELECT username, rating_in_month \
                     FROM (SELECT DISTINCT username, ROUND(AVG(B.rating), 2) AS rating_in_month \
                         FROM CareTakerSalary S \
@@ -1107,8 +1109,9 @@ def admin_view_underperforming_caretakers():
                             AND (EXTRACT(MONTH FROM B.start_date) = '{}' OR EXTRACT(MONTH FROM B.end_date) = '{}') \
                             GROUP BY username) AS DUMMY \
                     WHERE rating_in_month < 3.5 \
-                    ORDER BY rating_in_month DESC \
+                    ORDER BY rating_in_month \
                     LIMIT 10".format(year, month, year, year, month, month)
+
         underperformers = db.session.execute(underperforming_query)
         underperformers = list(underperformers)
         table = UnderperformersTable(underperformers)
