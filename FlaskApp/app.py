@@ -26,7 +26,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://{username}:{password}@{hos
         port=5432,
         database="flaskk"
     )
-app.config["SECRET_KEY"] = os.random(32)
+app.config["SECRET_KEY"] = "SECRET_KEY"
 #port = int(os.environ.get("PORT", 5000))
 # Initialize other components
 db.init_app(app)

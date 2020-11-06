@@ -285,9 +285,9 @@ CREATE TRIGGER insert_into_salary_after_caretaker_insertion_trigger
 CREATE OR REPLACE FUNCTION insert_into_CareTakerAvailability_after_caretaker_insertion_function() RETURNS trigger AS $$
 DECLARE
   date1 DATE = current_date;
+  limit_year INTEGER := EXTRACT(YEAR FROM current_date) + 2;
 BEGIN
-  --change to 2022-01-01 after finalisation
-  WHILE date1 < date('2022-01-01') LOOP
+  WHILE EXTRACT(YEAR FROM date1) < limit_year LOOP
     INSERT INTO  CaretakerAvailability(date, username) VALUES (date1, NEW.username);
     date1 := date1 + 1;
   END LOOP;
