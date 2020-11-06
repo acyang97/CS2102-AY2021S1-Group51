@@ -266,10 +266,10 @@ DECLARE
 BEGIN
   FOR i in current_month..12 LOOP
     INSERT INTO CareTakerSalary(year, month, username) VALUES (current_year, i, NEW.username);
-  END FOR;
+  END LOOP;
   FOR i in 1..12 LOOP
     INSERT INTO CareTakerSalary(year, month, username) VALUES (current_year + 1, i, NEW.username);
-  END FOR;
+  END LOOP;
   RETURN NEW;
 END
 $$ LANGUAGE 'plpgsql';
@@ -346,6 +346,9 @@ BEGIN
   IF (EXTRACT(YEAR FROM NEW.date) = 2020) AND (full_time = TRUE) THEN
     RAISE EXCEPTION 'You cannot take leave on this date';
   END IF;
+  IF NEW.date < current_date THEN
+    RAISE EXCEPTION 'You cannot take leave on a date that has passed.';
+  END IF;
   IF full_time = True THEN
     WHILE date2 <= date('2021-12-31') LOOP
       SELECT (150 = (SELECT COUNT(*)
@@ -400,7 +403,32 @@ CREATE TRIGGER check_caretaker_petcount_before_allow_leave_trigger
   FOR EACH ROW
   EXECUTE PROCEDURE check_caretaker_petcount_before_allow_leave_function();
 
+CREATE OR REPLACE FUNCTION insert_more_entries_into_caretakeravailability_and_salary_function() RETURNS trigger AS $$
+DECLARE
+  current_year INTEGER := EXTRACT(YEAR FROM current_date);
+  latest_date DATE;
+BEGIN
+  SELECT (SELECT MAX(date) FROM CareTakerAvailability WHERE username = NEW.username) INTO latest_date;
+  latest_date := latest_date + 1;
+  IF current_year = EXTRACT(YEAR FROM (SELECT MAX(date) FROM CareTakerAvailability WHERE username = NEW.username)) THEN
+    FOR i in 1..12 LOOP
+      INSERT INTO CareTakerSalary(year, month, username) VALUES (current_year + 1, i, NEW.username);
+    END LOOP;
+    WHILE EXTRACT(year FROM latest_date) < current_year + 2 LOOP
+      INSERT INTO CareTakerAvailability(date, username) VALUES (latest_date, NEW.username);
+      latest_date := latest_date + 1;
+    END LOOP;
+  END IF;
+  RETURN NEW;
+END
+$$ LANGUAGE 'plpgsql';
 
+DROP TRIGGER IF EXISTS insert_more_entries_into_caretakeravailability_and_salary_trigger ON CareTakerAvailability;
+CREATE TRIGGER insert_more_entries_into_caretakeravailability_and_salary_trigger
+  AFTER UPDATE
+  ON CareTakerAvailability
+  FOR EACH ROW
+  EXECUTE PROCEDURE insert_more_entries_into_caretakeravailability_and_salary_function();
 
 CREATE OR REPLACE FUNCTION
 update_salary() RETURNS trigger AS $$
