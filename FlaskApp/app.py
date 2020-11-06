@@ -7,6 +7,8 @@ from __init__ import db, login_manager
 from views import view
 from models import Users
 
+import os
+
 app = Flask(__name__)
 #admin = Admin(app)
 #admin.add_view(ModelView(Users, db.session))
@@ -24,8 +26,8 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://{username}:{password}@{hos
         port=5432,
         database="flaskk"
     )
-app.config["SECRET_KEY"] = "A random key to use flask extensions that require encryption"
-
+app.config["SECRET_KEY"] = os.random(32)
+#port = int(os.environ.get("PORT", 5000))
 # Initialize other components
 db.init_app(app)
 login_manager.init_app(app)
@@ -35,5 +37,6 @@ if __name__ == "__main__":
     app.run(
         debug=True,
         host="localhost",
-        port=5000
+        #port=5000
+        port = int(os.environ.get("PORT", 5000))
     )
