@@ -264,21 +264,12 @@ DECLARE
   current_month INTEGER := EXTRACT(MONTH FROM current_date);
   current_year INTEGER := EXTRACT(YEAR FROM current_date);
 BEGIN
-  IF current_year = 2020 THEN
-    FOR i in current_month..12 LOOP
-      INSERT INTO CareTakerSalary(year, month, username) VALUES (2020, i, NEW.username);
-    END LOOP;
-  END IF;
-  IF current_year = 2020 THEN
-    FOR i in 1..12 LOOP
-      INSERT INTO CareTakerSalary(year, month, username) VALUES (2021, i, NEW.username);
-    END LOOP;
-  END IF;
-  IF current_year = 2021 THEN
-    FOR i in current_month..12 LOOP
-      INSERT INTO CareTakerSalary(year, month, username) VALUES (2021, i, NEW.username);
-    END LOOP;
-  END IF;
+  FOR i in current_month..12 LOOP
+    INSERT INTO CareTakerSalary(year, month, username) VALUES (current_year, i, NEW.username);
+  END FOR;
+  FOR i in 1..12 LOOP
+    INSERT INTO CareTakerSalary(year, month, username) VALUES (current_year + 1, i, NEW.username);
+  END FOR;
   RETURN NEW;
 END
 $$ LANGUAGE 'plpgsql';
