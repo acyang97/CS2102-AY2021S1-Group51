@@ -28,7 +28,73 @@ class AdminRegistrationForm(FlaskForm):
                                      validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Sign Up as an Admin!')
 
+class PetOwnerCareTakerRegistrationForm(FlaskForm):
+    gender = [('Male', 'Male'), ('Female', 'Female')]
+    choice = [('1', 'Part Time'), ('2', 'Full Time')]
+    areachoice = [('North', 'North'), ('East', 'East'), ('South', 'South'), ('West', 'West'), ('Central', 'Central')]
+    mode_of_transport = [('Pet Owner Deliver', 'Pet Owner Deliver'), ('Care Taker Pick Up', 'Care Taker Pick Up'),
+                        ('Transfer through PCS Building', 'Transfer through PCS Building')]
+    mode_of_payment = [('Credit Card', 'Credit Card'), ('Cash', 'Cash')]
+    username = StringField('Username',
+                           validators=[DataRequired(), Length(min=2, max=20)])
+    email = StringField('Email',
+                        validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password',
+                                     validators=[DataRequired(), EqualTo('password')])
+    gender = SelectField('Select your gender', choices=gender)
+    area = SelectField('Which area do you stay at?', choices=areachoice)
+    select = SelectField('Do you wish to work part time or full time?', choices=choice)
+    mode_of_transport = SelectField('Preferred mode of transport for incoming pets',
+                                    choices=mode_of_transport)
+    mode_of_payment = SelectField('Preferred mode of payment from pet owners',
+                                    choices=mode_of_payment)
+    submit = SubmitField('Sign Up')
+
+class CareTakerRegistrationForm(FlaskForm):
+    gender = [('Male', 'Male'), ('Female', 'Female')]
+    choice = [('1', 'Part Time'), ('2', 'Full Time')]
+    areachoice = [('North', 'North'), ('East', 'East'), ('South', 'South'), ('West', 'West'), ('Central', 'Central')]
+    mode_of_transport = [('Pet Owner Deliver', 'Pet Owner Deliver'), ('Care Taker Pick Up', 'Care Taker Pick Up'),
+                        ('Transfer through PCS Building', 'Transfer through PCS Building')]
+    mode_of_payment = [('Credit Card', 'Credit Card'), ('Cash', 'Cash')]
+    username = StringField('Username',
+                           validators=[DataRequired(), Length(min=2, max=20)])
+    email = StringField('Email',
+                        validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password',
+                                     validators=[DataRequired(), EqualTo('password')])
+    gender = SelectField('Select your gender', choices=gender)
+    area = SelectField('Which area do you stay at?', choices=areachoice)
+    select = SelectField('Do you wish to work part time or full time?', choices=choice)
+    mode_of_transport = SelectField('Preferred mode of transport for incoming pets',
+                                    choices=mode_of_transport)
+    mode_of_payment = SelectField('Preferred mode of payment from pet owners',
+                                    choices=mode_of_payment)
+    submit = SubmitField('Sign Up')
+
+class PetOwnerRegistrationForm(FlaskForm):
+    gender = [('Male', 'Male'), ('Female', 'Female')]
+    areachoice = [('North', 'North'), ('East', 'East'), ('South', 'South'), ('West', 'West'), ('Central', 'Central')]
+    username = StringField('Username',
+                           validators=[DataRequired(), Length(min=2, max=20)])
+    email = StringField('Email',
+                        validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password',
+                                     validators=[DataRequired(), EqualTo('password')])
+    gender = SelectField('Select your gender', choices=gender)
+    area = SelectField('Which area do you stay at?', choices=areachoice)
+    submit = SubmitField('Sign Up')
+
 class RegistrationForm(FlaskForm):
+    po = SubmitField('Pet Owner')
+    ct = SubmitField('CareTaker')
+    poct = SubmitField('Pet Owner and CareTaker')
+
+"""
+class OldRegistrationForm(FlaskForm):
     gender = [('Male', 'Male'), ('Female', 'Female')]
     choice1 = [('1', 'Pet Owner'), ('2', 'Care Taker'), ('3', 'Both')]
     choice2 = [('1', 'Part Time'), ('2', 'Full Time'), ('3', 'N.A')]
@@ -52,6 +118,7 @@ class RegistrationForm(FlaskForm):
     mode_of_payment = SelectField('If you have chosen to sign up as a Care Taker, select how your prefer mode of payment from pet owners. Select N.A if you are signing up as a pet owner',
                                     choices=mode_of_payment)
     submit = SubmitField('Sign Up')
+"""
 
 class LoginForm(FlaskForm):
     ##email = StringField('Email',
