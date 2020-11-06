@@ -1106,7 +1106,7 @@ def admin_view_underperforming_caretakers():
                             AND (EXTRACT(YEAR FROM B.start_date) = '{}' OR EXTRACT(YEAR FROM B.end_date) = '{}') \
                             AND (EXTRACT(MONTH FROM B.start_date) = '{}' OR EXTRACT(MONTH FROM B.end_date) = '{}') \
                             GROUP BY username) AS DUMMY \
-                    WHERE rating_in_month < 3 \
+                    WHERE rating_in_month < 3.5 \
                     ORDER BY rating_in_month DESC \
                     LIMIT 10".format(year, month, year, year, month, month)
         underperformers = db.session.execute(underperforming_query)
@@ -1115,7 +1115,6 @@ def admin_view_underperforming_caretakers():
         table.border = True
         return render_template("admin_view_underperforming_caretakers.html", table=table, form=form)
     return render_template("admin_view_underperforming_caretakers.html", form = form)
-
 
 """
 IDEAS FOR INTERESTING QUERIES

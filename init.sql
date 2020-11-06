@@ -27,10 +27,6 @@ CREATE TABLE ModeOfTransport (
     transport VARCHAR PRIMARY KEY
 );
 
-INSERT INTO ModeOfTransport VALUES ('Pet Owner Deliver');
-INSERT INTO ModeOfTransport VALUES ('Care Taker Pick Up');
-INSERT INTO ModeOfTransport VALUES ('Transfer through PCS Building');
-
 CREATE TABLE PreferredTransport (
     username VARCHAR REFERENCES CareTakers(username) ON DELETE CASCADE,
     transport VARCHAR REFERENCES ModeOfTransport(transport),
@@ -40,11 +36,6 @@ CREATE TABLE PreferredTransport (
 CREATE TABLE ModeOfPayment (
   modeOfPayment VARCHAR PRIMARY KEY
 );
-
-INSERT INTO ModeOfPayment VALUES ('Credit Card');
-INSERT INTO ModeOfPayment VALUES ('Cash');
-INSERT INTO ModeOfPayment VALUES ('Either');
-
 
 CREATE TABLE PreferredModeOfPayment (
   username VARCHAR REFERENCES CareTakers(username) ON DELETE CASCADE,
@@ -65,22 +56,11 @@ CREATE TABLE Category (
     pettype VARCHAR PRIMARY KEY
 );
 
-INSERT INTO Category VALUES ('Dog');
-INSERT INTO Category VALUES ('Cat');
-INSERT INTO Category VALUES ('Rabbit');
-INSERT INTO Category VALUES ('Hamster');
-INSERT INTO Category VALUES ('Guinea Pig');
-INSERT INTO Category VALUES ('Fish');
-INSERT INTO Category VALUES ('Mice');
-INSERT INTO Category VALUES ('Terrapin');
-INSERT INTO Category VALUES ('Bird');
-
 CREATE TABLE OwnedPets (
     owner VARCHAR references PetOwners(username) ON DELETE CASCADE,
     pet_name VARCHAR NOT NULL UNIQUE,
     category VARCHAR NOT NULL,
     age INTEGER NOT NULL,
-    --gender VARCHAR NOT NULL,
     Primary Key(owner, pet_name)
 );
 
@@ -137,16 +117,6 @@ CREATE TABLE DefaultPriceList (
   PRIMARY KEY (pettype, price)
 );
 
-INSERT INTO DefaultPriceList VALUES ('Dog', 100);
-INSERT INTO DefaultPriceList VALUES ('Cat', 80);
-INSERT INTO DefaultPriceList VALUES ('Rabbit', 110);
-INSERT INTO DefaultPriceList VALUES ('Hamster', 70);
-INSERT INTO DefaultPriceList VALUES ('Guinea Pig', 150);
-INSERT INTO DefaultPriceList VALUES ('Fish', 50);
-INSERT INTO DefaultPriceList VALUES ('Mice', 50);
-INSERT INTO DefaultPriceList VALUES ('Terrapin', 80);
-INSERT INTO DefaultPriceList VALUES ('Bird', 80);
-
 CREATE TABLE FullTimePriceList(
   username VARCHAR REFERENCES CareTakers(username) ON DELETE CASCADE,
   price NUMERIC,
@@ -155,7 +125,6 @@ CREATE TABLE FullTimePriceList(
   PRIMARY KEY (pettype, username, price)
 );
 
--- THIS TABLE WILL BE USEFUL TO GET SOME OF THE SUMMARY INFORMATION AT POINT 4 OF THE PROJECT REQUIREMENTS.
 CREATE TABLE CareTakerSalary (
   year INTEGER,
   month INTEGER,
@@ -166,13 +135,41 @@ CREATE TABLE CareTakerSalary (
   PRIMARY KEY (year, month, username)
 );
 
--- to obtain statistics for the total number of jobs in each month for the admin
 CREATE TABLE TotalJobPerMonthSummary (
   year INTEGER,
   month INTEGER,
   job_count INTEGER NOT NULL DEFAULT 0,
   PRIMARY KEY(year, month)
 );
+
+
+INSERT INTO ModeOfTransport VALUES ('Pet Owner Deliver');
+INSERT INTO ModeOfTransport VALUES ('Care Taker Pick Up');
+INSERT INTO ModeOfTransport VALUES ('Transfer through PCS Building');
+
+INSERT INTO ModeOfPayment VALUES ('Credit Card');
+INSERT INTO ModeOfPayment VALUES ('Cash');
+INSERT INTO ModeOfPayment VALUES ('Either');
+
+INSERT INTO Category VALUES ('Dog');
+INSERT INTO Category VALUES ('Cat');
+INSERT INTO Category VALUES ('Rabbit');
+INSERT INTO Category VALUES ('Hamster');
+INSERT INTO Category VALUES ('Guinea Pig');
+INSERT INTO Category VALUES ('Fish');
+INSERT INTO Category VALUES ('Mice');
+INSERT INTO Category VALUES ('Terrapin');
+INSERT INTO Category VALUES ('Bird');
+
+INSERT INTO DefaultPriceList VALUES ('Dog', 100);
+INSERT INTO DefaultPriceList VALUES ('Cat', 80);
+INSERT INTO DefaultPriceList VALUES ('Rabbit', 110);
+INSERT INTO DefaultPriceList VALUES ('Hamster', 70);
+INSERT INTO DefaultPriceList VALUES ('Guinea Pig', 150);
+INSERT INTO DefaultPriceList VALUES ('Fish', 50);
+INSERT INTO DefaultPriceList VALUES ('Mice', 50);
+INSERT INTO DefaultPriceList VALUES ('Terrapin', 80);
+INSERT INTO DefaultPriceList VALUES ('Bird', 80);
 
 INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2020, 11);
 INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2020, 12);
@@ -220,7 +217,6 @@ BEGIN
 END
 $$ LANGUAGE 'plpgsql';
 
--- trigger that makes use of the function above to update pet count and availbaility
 DROP TRIGGER IF EXISTS update_caretaker_petcount_after_bid_trigger ON Bids;
 CREATE TRIGGER update_caretaker_petcount_after_bid_trigger
   AFTER INSERT
@@ -264,12 +260,15 @@ CREATE TRIGGER update_caretaker_availability_after_take_leave_trigger
 
 -- automates the insertion into the CaretakerSalaryTable
 CREATE OR REPLACE FUNCTION insert_into_salary_after_caretaker_insertion_function() RETURNS trigger AS $$
+DECLARE
+  current_month INTEGER := EXTRACT(MONTH FROM current_date);
+  current_year INTEGER := EXTRACT(YEAR FROM current_date);
 BEGIN
-  FOR i in 11..12 LOOP
-    INSERT INTO CareTakerSalary(year, month, username) VALUES (2020, i, NEW.username);
+  FOR i in current_month..12 LOOP
+    INSERT INTO CareTakerSalary(year, month, username) VALUES (current_year, i, NEW.username);
   END LOOP;
   FOR i in 1..12 LOOP
-    INSERT INTO CareTakerSalary(year, month, username) VALUES (2021, i, NEW.username);
+    INSERT INTO CareTakerSalary(year, month, username) VALUES (current_year + 1, i, NEW.username);
   END LOOP;
   RETURN NEW;
 END
@@ -286,9 +285,9 @@ CREATE TRIGGER insert_into_salary_after_caretaker_insertion_trigger
 CREATE OR REPLACE FUNCTION insert_into_CareTakerAvailability_after_caretaker_insertion_function() RETURNS trigger AS $$
 DECLARE
   date1 DATE = current_date;
+  limit_year INTEGER := EXTRACT(YEAR FROM current_date) + 2;
 BEGIN
-  --change to 2022-01-01 after finalisation
-  WHILE date1 < date('2022-01-01') LOOP
+  WHILE EXTRACT(YEAR FROM date1) < limit_year LOOP
     INSERT INTO  CaretakerAvailability(date, username) VALUES (date1, NEW.username);
     date1 := date1 + 1;
   END LOOP;
@@ -303,39 +302,62 @@ CREATE TRIGGER insert_into_CareTakerAvailability_after_caretaker_insertion_trigg
   FOR EACH ROW
   EXECUTE PROCEDURE insert_into_CareTakerAvailability_after_caretaker_insertion_function();
 
--- automates the update of rating in the caretakers table.
 CREATE OR REPLACE FUNCTION update_caretaker_rating_after_petowner_give_rating_function() RETURNS trigger AS $$
+DECLARE
+  old_rating NUMERIC;
+  updated_rating NUMERIC;
+  is_part_time BOOLEAN;
 BEGIN
+  SELECT (NEW.CTusername IN (SELECT username FROM PartTime)) INTO is_part_time;
+  SELECT (SELECT SUM(rating) FROM CareTakers WHERE username = NEW.CTusername) INTO old_rating;
+  SELECT (ROUND((SELECT AVG(B.rating) FROM Bids B WHERE B.CTusername = NEW.CTusername),2)) INTO updated_rating;
   UPDATE Caretakers C
-    set rating = ROUND((SELECT AVG(B.rating) FROM Bids B WHERE B.CTusername = NEW.CTusername),2)
+    SET rating = updated_rating
     WHERE C.username = NEW.CTusername;
+  IF is_part_time = true AND updated_rating >= 4 AND old_rating < 4 THEN
+    UPDATE CareTakerAvailability CA
+      SET available = true
+      WHERE CA.username = NEW.CTusername
+        AND available = False
+        AND pet_count = 2;
+  END IF;
   RETURN NEW;
 END
 $$ LANGUAGE 'plpgsql';
 
 DROP TRIGGER IF EXISTS update_caretaker_rating_after_petowner_give_rating_trigger ON Bids;
-CREATE TRIGGER update_caretaker_rating_after_petowner_give_rating
+CREATE TRIGGER update_caretaker_rating_after_petowner_give_rating_trigger
   AFTER UPDATE of rating
   ON Bids
   FOR EACH ROW
   EXECUTE PROCEDURE update_caretaker_rating_after_petowner_give_rating_function();
 
--- trigger to check if the full time can take a leave
 CREATE OR REPLACE FUNCTION check_if_fulltime_can_take_leave_function() RETURNS trigger AS $$
 DECLARE
   counter INTEGER := 0;
   full_time BOOLEAN;
   consecutive BOOLEAN;
   leave_date_in_non_consecutive BOOLEAN := False;
-  date1 DATE := date('2021-01-01');
-  date2 DATE := date('2021-05-30'); --someone help check if this is 150 days afer 2021-01-01
+  date1 DATE;
+  date2 DATE;
+  year_of_new_date INTEGER := EXTRACT(YEAR FROM NEW.date);
 BEGIN
-  SELECT (NEW.username IN (SELECT username FROM FullTime)) INTO full_time;
-  IF EXTRACT(YEAR FROM NEW.date) = 2020 AND full_time = TRUE THEN
+  IF EXTRACT(YEAR FROM NEW.date) > (EXTRACT(YEAR FROM current_date) + 1) THEN
     RAISE EXCEPTION 'You cannot take leave on this date';
   END IF;
+  SELECT (SELECT MIN(date) FROM CareTakerAvailability CA
+          WHERE CA.username = NEW.username
+          AND EXTRACT(YEAR from NEW.date) = EXTRACT(year FROM CA.date)) INTO date1;
+  date2 := date1 + 149;
+  SELECT (NEW.username IN (SELECT username FROM FullTime)) INTO full_time;
+  IF (EXTRACT(YEAR FROM NEW.date) = 2020) AND (full_time = TRUE) THEN
+    RAISE EXCEPTION 'You cannot take leave on this date';
+  END IF;
+  IF NEW.date < current_date THEN
+    RAISE EXCEPTION 'You cannot take leave on a date that has passed.';
+  END IF;
   IF full_time = True THEN
-    WHILE date2 <= date('2021-12-31') LOOP
+    WHILE EXTRACT(YEAR from date2) < (year_of_new_date + 1) LOOP
       SELECT (150 = (SELECT COUNT(*)
                     FROM CareTakerAvailability
                     WHERE date >= date1
@@ -346,13 +368,14 @@ BEGIN
         counter := counter + 1;
         date1 := date1 + 150;
         date2 := date2 + 150;
+      ELSE
+        date1 := date1 + 1;
+        date2 := date2 + 1;
       END IF;
-      date1 := date1 + 1;
-      date2 := date2 + 1;
     END LOOP;
-  END IF;
-  IF counter < 2 THEN
-    RAISE EXCEPTION 'You cannot take leave on this date';
+    IF counter < 2 THEN
+      RAISE EXCEPTION 'You cannot take leave on this date';
+    END IF;
   END IF;
   RETURN NEW;
 END
@@ -387,7 +410,32 @@ CREATE TRIGGER check_caretaker_petcount_before_allow_leave_trigger
   FOR EACH ROW
   EXECUTE PROCEDURE check_caretaker_petcount_before_allow_leave_function();
 
+CREATE OR REPLACE FUNCTION insert_more_entries_into_caretakeravailability_and_salary_function() RETURNS trigger AS $$
+DECLARE
+  current_year INTEGER := EXTRACT(YEAR FROM current_date);
+  latest_date DATE;
+BEGIN
+  SELECT (SELECT MAX(date) FROM CareTakerAvailability WHERE username = NEW.username) INTO latest_date;
+  latest_date := latest_date + 1;
+  IF current_year = EXTRACT(YEAR FROM (SELECT MAX(date) FROM CareTakerAvailability WHERE username = NEW.username)) THEN
+    FOR i in 1..12 LOOP
+      INSERT INTO CareTakerSalary(year, month, username) VALUES (current_year + 1, i, NEW.username);
+    END LOOP;
+    WHILE EXTRACT(year FROM latest_date) < current_year + 2 LOOP
+      INSERT INTO CareTakerAvailability(date, username) VALUES (latest_date, NEW.username);
+      latest_date := latest_date + 1;
+    END LOOP;
+  END IF;
+  RETURN NEW;
+END
+$$ LANGUAGE 'plpgsql';
 
+DROP TRIGGER IF EXISTS insert_more_entries_into_caretakeravailability_and_salary_trigger ON CareTakerAvailability;
+CREATE TRIGGER insert_more_entries_into_caretakeravailability_and_salary_trigger
+  AFTER UPDATE
+  ON CareTakerAvailability
+  FOR EACH ROW
+  EXECUTE PROCEDURE insert_more_entries_into_caretakeravailability_and_salary_function();
 
 CREATE OR REPLACE FUNCTION
 update_salary() RETURNS trigger AS $$
