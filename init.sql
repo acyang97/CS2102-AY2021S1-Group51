@@ -333,15 +333,62 @@ CREATE TRIGGER update_caretaker_rating_after_petowner_give_rating_trigger
   EXECUTE PROCEDURE update_caretaker_rating_after_petowner_give_rating_function();
 
 -- trigger to check if the full time can take a leave
+--CREATE OR REPLACE FUNCTION check_if_fulltime_can_take_leave_function() RETURNS trigger AS $$
+--DECLARE
+--  counter INTEGER := 0;
+--  full_time BOOLEAN;
+--  consecutive BOOLEAN;
+--  leave_date_in_non_consecutive BOOLEAN := False;
+--  date1 DATE := date('2021-01-01');
+--  date2 DATE := date('2021-05-30');
+--BEGIN
+--  SELECT (NEW.username IN (SELECT username FROM FullTime)) INTO full_time;
+--  IF (EXTRACT(YEAR FROM NEW.date) = 2020) AND (full_time = TRUE) THEN
+--    RAISE EXCEPTION 'You cannot take leave on this date';
+--  END IF;
+--  IF NEW.date < current_date THEN
+--    RAISE EXCEPTION 'You cannot take leave on a date that has passed.';
+--  END IF;
+--  IF full_time = True THEN
+--    WHILE date2 <= date('2021-12-31') LOOP
+--      SELECT (150 = (SELECT COUNT(*)
+  --                  FROM CareTakerAvailability
+    --                WHERE date >= date1
+    --                  AND date <= date2
+      --                AND NEW.username = CareTakerAvailability.username
+      --                AND leave is False)) INTO consecutive;
+    --  IF consecutive = True THEN
+    --    counter := counter + 1;
+    --    date1 := date1 + 150;
+    --    date2 := date2 + 150;
+  --    ELSE
+  --      date1 := date1 + 1;
+  --      date2 := date2 + 1;
+  --    END IF;
+  --  END LOOP;
+  --  IF counter < 2 THEN
+  --    RAISE EXCEPTION 'You cannot take leave on this date';
+  --  END IF;
+  --END IF;
+--  RETURN NEW;
+--END
+--$$ LANGUAGE 'plpgsql';
+--------------------------------------
+
 CREATE OR REPLACE FUNCTION check_if_fulltime_can_take_leave_function() RETURNS trigger AS $$
 DECLARE
   counter INTEGER := 0;
   full_time BOOLEAN;
   consecutive BOOLEAN;
   leave_date_in_non_consecutive BOOLEAN := False;
-  date1 DATE := date('2021-01-01');
-  date2 DATE := date('2021-05-30');
+  date1 DATE;
+  date2 DATE;
+  year_of_new_date INTEGER := EXTRACT(YEAR FROM NEW.date);
 BEGIN
+  SELECT (SELECT MIN(date) FROM CareTakerAvailability CA
+          WHERE CA.username = NEW.username
+          AND EXTRACT(YEAR from NEW.date) = EXTRACT(year FROM CA.date)) INTO date1;
+  date2 := date1 + 149;
   SELECT (NEW.username IN (SELECT username FROM FullTime)) INTO full_time;
   IF (EXTRACT(YEAR FROM NEW.date) = 2020) AND (full_time = TRUE) THEN
     RAISE EXCEPTION 'You cannot take leave on this date';
@@ -350,7 +397,7 @@ BEGIN
     RAISE EXCEPTION 'You cannot take leave on a date that has passed.';
   END IF;
   IF full_time = True THEN
-    WHILE date2 <= date('2021-12-31') LOOP
+    WHILE EXTRACT(YEAR from date2) < (year_of_new_date + 1) LOOP
       SELECT (150 = (SELECT COUNT(*)
                     FROM CareTakerAvailability
                     WHERE date >= date1
