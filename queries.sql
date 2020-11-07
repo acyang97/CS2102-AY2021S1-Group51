@@ -852,3 +852,93 @@ WITH cte(year, month, dog, cat, bird, terrapin, rabbit, hamster, fish, mice) AS 
       table = NuumberOfJobsByPetTypeTable(summary)
       table.border = True
       return render_template("admin_view_jobs_by_pet_type_summary.html", table=table)
+
+
+
+underperforming_query =
+"SELECT username, rating_in_month FROM (SELECT DISTINCT username, ROUND(AVG(B.rating), 2) AS rating_in_month \
+  FROM CareTakerSalary S \
+  INNER JOIN Bids B ON B.CTusername = S.username \
+  WHERE S.year = '{}' AND S.month = '{}' AND petdays < 20 AND completed = True \
+  AND (EXTRACT(YEAR FROM B.start_date) = '{}' OR EXTRACT(YEAR FROM B.end_date) = '{}') \
+  AND (EXTRACT(MONTH FROM B.start_date) = '{}' OR EXTRACT(MONTH FROM B.end_date) = '{}') \
+  GROUP BY username) AS DUMMY \
+  WHERE rating_in_month < 3.5 \
+  ORDER BY rating_in_month \
+  LIMIT 10".format(year, month, year, year, month, month)
+
+searchquery =
+"SELECT DISTINCT username, gender, CASE WHEN rating >= 4.5 THEN price * 1.5 WHEN rating >=4 THEN price * 1.25 ELSE price END price, rating \
+  FROM users U\
+  NATURAL JOIN FullTimePriceList NATURAL JOIN CareTakers NATURAL JOIN PreferredTransport NATURAL JOIN PreferredModeOfPayment \
+  NATURAL JOIN CareTakerAvailability \
+  WHERE pettype = '{}' AND rating >= '{}' AND transport = '{}' AND modeofpayment = '{}' \
+  AND U.username <> '{}' AND True = ALL(SELECT available FROM CaretakerAvailability C \
+                                          WHERE C.username = U.username \
+                                          AND C.date >= '{}' \
+                                          AND C.date <= '{}')"
+    .format(category, rating, transport, payment, current_user.username, startDate, endDate)
+
+
+query =
+"WITH cte(year, month, dog, cat, bird, terrapin, rabbit, hamster, fish, mice) AS ( \
+  SELECT CTS.year, CTS.month, CASE WHEN dog IS NULL THEN 0 ELSE dog END dog, \
+                                    CASE WHEN cat IS NULL THEN 0 ELSE cat END cat, \
+                                    CASE WHEN bird IS NULL THEN 0 ELSE bird END bird, \
+                                    CASE WHEN terrapin IS NULL THEN 0 ELSE terrapin END terrapin, \
+                                    CASE WHEN rabbit IS NULL THEN 0 ELSE rabbit END rabbit, \
+                                    CASE WHEN hamster IS NULL THEN 0 ELSE hamster END hamster, \
+                                    CASE WHEN fish IS NULL THEN 0 ELSE fish END fish, \
+                                    CASE WHEN mice IS NULL THEN 0 ELSE mice END mice \
+  FROM CareTakerSalary CTS \
+  LEFT JOIN \
+  (SELECT C.year, C.month, COUNT(*) AS dog \
+  FROM CareTakerSalary C RIGHT JOIN Bids B ON C.username = B.CTusername NATURAL JOIN OwnedPets O\
+  WHERE (C.year = EXTRACT(YEAR FROM B.start_date) AND C.month = EXTRACT(MONTH FROM B.start_date)) \
+  AND O.category = 'Dog' \
+  GROUP BY C.year, C.month) AS dummy1 ON CTS.year = dummy1.year AND CTS.month = dummy1.month \
+  LEFT JOIN \
+  (SELECT C.year, C.month, COUNT(*) AS cat \
+  FROM CareTakerSalary C RIGHT JOIN Bids B ON C.username = B.CTusername NATURAL JOIN OwnedPets O \
+  WHERE (C.year = EXTRACT(YEAR FROM B.start_date) AND C.month = EXTRACT(MONTH FROM B.start_date)) \
+  AND O.category = 'Cat' \
+  GROUP BY C.year, C.month) AS dummy2 ON dummy2.year = CTS.year AND dummy2.month = CTS.month \
+  LEFT JOIN \
+  (SELECT C.year, C.month, COUNT(*) AS bird \
+  FROM CareTakerSalary C RIGHT JOIN Bids B ON C.username = B.CTusername NATURAL JOIN OwnedPets O \
+  WHERE (C.year = EXTRACT(YEAR FROM B.start_date) AND C.month = EXTRACT(MONTH FROM B.start_date)) \
+  AND O.category = 'Bird' \
+  GROUP BY C.year, C.month) AS dummy3 ON dummy3.year = CTS.year AND dummy3.month = CTS.month \
+  LEFT JOIN \
+  (SELECT C.year, C.month, COUNT(*) AS terrapin \
+  FROM CareTakerSalary C RIGHT JOIN Bids B ON C.username = B.CTusername NATURAL JOIN OwnedPets O \
+  WHERE (C.year = EXTRACT(YEAR FROM B.start_date) AND C.month = EXTRACT(MONTH FROM B.start_date)) \
+  AND O.category = 'Terrapin' \
+  GROUP BY C.year, C.month) AS dummy8 ON CTS.year = dummy8.year AND CTS.month = dummy8.month \
+  LEFT JOIN \
+  (SELECT C.year, C.month, COUNT(*) AS rabbit \
+  FROM CareTakerSalary C RIGHT JOIN Bids B ON C.username = B.CTusername NATURAL JOIN OwnedPets O \
+  WHERE (C.year = EXTRACT(YEAR FROM B.start_date) AND C.month = EXTRACT(MONTH FROM B.start_date)) \
+  AND O.category = 'Rabbit' \
+  GROUP BY C.year, C.month) AS dummy4 ON CTS.year = dummy4.year AND CTS.month = dummy4.month \
+  LEFT JOIN \
+  (SELECT C.year, C.month, COUNT(*) AS hamster \
+  FROM CareTakerSalary C RIGHT JOIN Bids B ON C.username = B.CTusername NATURAL JOIN OwnedPets O \
+  WHERE (C.year = EXTRACT(YEAR FROM B.start_date) AND C.month = EXTRACT(MONTH FROM B.start_date)) \
+  AND O.category = 'Hamster' \
+  GROUP BY C.year, C.month) AS dummy5 ON CTS.year = dummy5.year AND CTS.month = dummy5.month \
+  LEFT JOIN \
+  (SELECT C.year, C.month, COUNT(*) AS fish \
+  FROM CareTakerSalary C RIGHT JOIN Bids B ON C.username = B.CTusername NATURAL JOIN OwnedPets O \
+  WHERE (C.year = EXTRACT(YEAR FROM B.start_date) AND C.month = EXTRACT(MONTH FROM B.start_date)) \
+  AND O.category = 'Fish' \
+  GROUP BY C.year, C.month) AS dummy6 ON CTS.year = dummy6.year AND CTS.month = dummy6.month \
+  LEFT JOIN \
+  (SELECT C.year, C.month, COUNT(*) AS mice \
+  FROM CareTakerSalary C RIGHT JOIN Bids B ON C.username = B.CTusername NATURAL JOIN OwnedPets O \
+  WHERE (C.year = EXTRACT(YEAR FROM B.start_date) AND C.month = EXTRACT(MONTH FROM B.start_date)) \
+  AND O.category = 'Mice' \
+  GROUP BY C.year, C.month) AS dummy7 ON CTS.year = dummy7.year AND CTS.month = dummy7.month) \
+SELECT year, month, dog, cat, bird, terrapin, rabbit, hamster, fish, mice, \
+      (dog + cat + bird + terrapin + rabbit + hamster + fish + mice) AS total FROM cte \
+      ORDER BY year, month"

@@ -28,9 +28,8 @@ CREATE TABLE ModeOfTransport (
 );
 
 CREATE TABLE PreferredTransport (
-    username VARCHAR REFERENCES CareTakers(username) ON DELETE CASCADE,
-    transport VARCHAR REFERENCES ModeOfTransport(transport),
-    PRIMARY KEY (username, transport)
+    username VARCHAR PRIMARY KEY REFERENCES CareTakers(username) ON DELETE CASCADE,
+    transport VARCHAR REFERENCES ModeOfTransport(transport)
 );
 
 CREATE TABLE ModeOfPayment (
@@ -38,9 +37,8 @@ CREATE TABLE ModeOfPayment (
 );
 
 CREATE TABLE PreferredModeOfPayment (
-  username VARCHAR REFERENCES CareTakers(username) ON DELETE CASCADE,
-  modeOfPayment VARCHAR REFERENCES ModeOfPayment(modeOfPayment),
-  PRIMARY KEY (username, modeOfPayment)
+  username VARCHAR PRIMARY KEY REFERENCES CareTakers(username) ON DELETE CASCADE,
+  modeOfPayment VARCHAR REFERENCES ModeOfPayment(modeOfPayment)
 );
 
 CREATE TABLE FullTime (
