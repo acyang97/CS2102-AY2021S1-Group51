@@ -1119,10 +1119,15 @@ def admin_view_underperforming_caretakers():
         return render_template("admin_view_underperforming_caretakers.html", table=table, form=form)
     return render_template("admin_view_underperforming_caretakers.html", form = form)
 
-"""
-IDEAS FOR INTERESTING QUERIES
-1. BEST PERFORMING CARETAKER PER MONTH - CAN DO A GRP BY. Bids table and possibly salary?
-2. highest earner per month
-3. Find all the underperforming full-time caretakers per month (less than 10) AND (another constraint if too ez)
-4. Find number of pet for each pet type taken care for each month (if too hard , overall)
-"""
+@view.route("/user_update_password", methods = ["POST", "GET"])
+@login_required
+def user_update_password():
+    form = ChangePasswordForm()
+    if form.validate_on_submit:
+        new_password = form.new_password.data
+        query = "UPDATE Users SET password = '{}' WHERE username = '{}'".format(new_password, current_user.username)
+        db.session.execute(query)
+        db.session.commit()
+        flash('Successfully changed password!', 'success')
+        return redirect(url_for('view.home'))
+    return render_template("update_password.html", form=form)
