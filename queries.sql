@@ -323,6 +323,82 @@ LIMIT 10;
 
 
 
+WITH cte(year, month, full_time_earnings, part_time_earnings) AS (
+  SELECT Dummy1.year, Dummy1.month, Dummy1.full_time_earnings, Dummy2.part_time_earnings
+  FROM (SELECT year, month, SUM(earnings) AS full_time_earnings
+        FROM CareTakerSalary C
+        WHERE C.username in (SELECT username FROM FullTime)
+        GROUP BY C.year, C.month) AS Dummy1
+        INNER JOIN
+        (SELECT year, month, SUM(earnings) AS part_time_earnings
+        FROM CareTakerSalary C
+        WHERE C.username in (SELECT username FROM PartTime)
+        GROUP BY C.year, C.month) AS Dummy2
+        ON Dummy1.year = Dummy2.year AND Dummy1.month = Dummy2.month
+  ORDER BY year, month
+)
+SELECT month, ROUND(AVG(full_time_earnings),2) AS full_time_earnings_avg,
+              ROUND(AVG(part_time_earnings),2) AS part_time_earnings_avg,
+              ROUND(AVG(full_time_earnings) + AVG(part_time_earnings), 2) AS total_earnings_avg
+FROM cte
+GROUP BY month;
+
+
+INSERT INTO Users(username, email, area, gender, password) VALUES ('abc1', 'a', 'a', 'a', 'a');
+INSERT INTO Users(username, email, area, gender, password) VALUES ('xyz1', 'a', 'a', 'a', 'a');
+INSERT INTO Users(username, email, area, gender, password) VALUES ('abc2', 'a', 'a', 'a', 'a');
+INSERT INTO Users(username, email, area, gender, password) VALUES ('xyz2', 'a', 'a', 'a', 'a');
+INSERT INTO Users(username, email, area, gender, password) VALUES ('abc3', 'a', 'a', 'a', 'a');
+INSERT INTO Users(username, email, area, gender, password) VALUES ('xyz3', 'a', 'a', 'a', 'a');
+INSERT INTO Users(username, email, area, gender, password) VALUES ('abc4', 'a', 'a', 'a', 'a');
+INSERT INTO Users(username, email, area, gender, password) VALUES ('xyz4', 'a', 'a', 'a', 'a');
+INSERT INTO Users(username, email, area, gender, password) VALUES ('abc5', 'a', 'a', 'a', 'a');
+INSERT INTO Users(username, email, area, gender, password) VALUES ('xyz5', 'a', 'a', 'a', 'a');
+
+INSERT INTO Caretakers(username) VALUES ('abc1');
+INSERT INTO Caretakers(username) VALUES ('abc2');
+INSERT INTO Caretakers(username) VALUES ('abc3');
+INSERT INTO Caretakers(username) VALUES ('abc4');
+INSERT INTO Caretakers(username) VALUES ('abc5');
+INSERT INTO Caretakers(username) VALUES ('xyz1');
+INSERT INTO Caretakers(username) VALUES ('xyz2');
+INSERT INTO Caretakers(username) VALUES ('xyz3');
+INSERT INTO Caretakers(username) VALUES ('xyz4');
+INSERT INTO Caretakers(username) VALUES ('xyz5');
+
+INSERT INTO FullTime(username) VALUES ('abc1');
+INSERT INTO FullTime(username) VALUES ('abc2');
+INSERT INTO FullTime(username) VALUES ('abc3');
+INSERT INTO FullTime(username) VALUES ('abc4');
+INSERT INTO FullTime(username) VALUES ('abc5');
+
+INSERT INTO PartTime(username) VALUES ('xyz1');
+INSERT INTO PartTime(username) VALUES ('xyz2');
+INSERT INTO PartTime(username) VALUES ('xyz3');
+INSERT INTO PartTime(username) VALUES ('xyz4');
+INSERT INTO PartTime(username) VALUES ('xyz5');
+
+UPDATE CaretakerSalary SET earnings = 10 WHERE username = 'abc1' AND year = 2020 AND month = 11;
+UPDATE CaretakerSalary SET earnings = 11 WHERE username = 'abc2' AND year = 2020 AND month = 11;
+UPDATE CaretakerSalary SET earnings = 12 WHERE username = 'abc3' AND year = 2020 AND month = 11;
+UPDATE CaretakerSalary SET earnings = 13 WHERE username = 'abc4' AND year = 2020 AND month = 11;
+UPDATE CaretakerSalary SET earnings = 14 WHERE username = 'abc5' AND year = 2020 AND month = 11;
+
+UPDATE CaretakerSalary SET earnings = 15 WHERE username = 'xyz1' AND year = 2020 AND month = 11;
+UPDATE CaretakerSalary SET earnings = 16 WHERE username = 'xyz2' AND year = 2020 AND month = 11;
+UPDATE CaretakerSalary SET earnings = 17 WHERE username = 'xyz3' AND year = 2020 AND month = 11;
+UPDATE CaretakerSalary SET earnings = 18 WHERE username = 'xyz4' AND year = 2020 AND month = 11;
+UPDATE CaretakerSalary SET earnings = 19 WHERE username = 'xyz5' AND year = 2020 AND month = 11;
+
+
+INSERT INTO CareTakerSalary(year, month, username, petdays) VALUES (2020, 12, 'abc', 8);
+INSERT INTO CareTakerSalary(year, month, username, petdays) VALUES (2020, 12, '123', 14);
+INSERT INTO CareTakerSalary(year, month, username, petdays) VALUES (2020, 12, 'xyz', 20);
+INSERT INTO CareTakerSalary(year, month, username, petdays) VALUES (2020, 12, '456', 19);
+
+
+
+
 
 
 
@@ -331,13 +407,13 @@ LIMIT 10;
 
 SELECT C1.year, C1.month, C1.username, C1.petdays, C1.final_salary
 FROM CareTakerSalary C1
-WHERE 
+WHERE
 ((SELECT date_part('year', (SELECT current_timestamp)) > C1.year)
         OR ((SELECT date_part('year', (SELECT current_timestamp)) = C1.year)
         AND (SELECT date_part('month', (SELECT current_timestamp)) > C1.month)))
- AND C1.final_salary >= ALL(SELECT final_salary 
- FROM CareTakerSalary C2 
- WHERE C2.year = C1.year 
+ AND C1.final_salary >= ALL(SELECT final_salary
+ FROM CareTakerSalary C2
+ WHERE C2.year = C1.year
  AND C2.month = C1.month)
 ORDER BY C1.year DESC, C1.month DESC;
 
@@ -360,9 +436,6 @@ INSERT INTO bids VALUES (1, 'gkingmann', 'astather2', 'Common wolf', NULL, NULL,
 
 
 
-
-
-
 INSERT INTO CareTakerSalary VALUES (2019, 6, 'ckitleeg', 0, 0, 2000);
 INSERT INTO CareTakerSalary VALUES (2019, 6, 'asconesh', 0, 0, 2500);
 INSERT INTO CareTakerSalary VALUES (2019, 6, 'sgiacomozzoi', 0, 0, 3000);
@@ -373,4 +446,3 @@ INSERT INTO CareTakerSalary VALUES (2019, 5, 'gkingmann', 0, 0, 2500);
 INSERT INTO CareTakerSalary VALUES (2019, 5, 'dblaymiresp', 0, 0, 2500);
 INSERT INTO CareTakerSalary VALUES (2019, 3, 'sgiacomozzoi', 0, 0, 5000);
 INSERT INTO CareTakerSalary VALUES (2019, 3, 'vstonehewerl', 0, 0, 3000);
-

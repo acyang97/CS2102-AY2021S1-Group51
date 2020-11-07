@@ -219,3 +219,10 @@ class AdminViewUnderperformingCareTakerForm(FlaskForm):
     year = SelectField('Year', choices = years)
     month = SelectField('Month', choices = months)
     submit = SubmitField('Search Underperformers!')
+
+class ChangePasswordForm(FlaskForm):
+    old_password = PasswordField('Old Password', validators=[DataRequired()])
+    new_password = PasswordField('New Passwrod', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password',
+                                     validators=[DataRequired(), EqualTo('new_assword')])
+    submit = SubmitField('Change Password!')
