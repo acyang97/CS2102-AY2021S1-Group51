@@ -178,3 +178,24 @@ class UnderperformersTable(Table):
     username = Col('CareTaker Name')
     rating_in_month = Col('Average rating in the month')
     history = LinkCol('Care Taker Reviews', 'view.selected_filtered_caretaker_history', url_kwargs=dict(username='username'))
+
+class NuumberOfJobsByPetTypeTable(Table):
+    classes = ['table', 'table-bordered', 'table-striped', 'sortable']
+    year = Col('Year')
+    month = Col('Month')
+    dog = Col('Dog')
+    cat = Col('Cat')
+    bird = Col('Bird')
+    terrapin = Col('Terrapin')
+    rabbit = Col('Rabbit')
+    hamster = Col('Hamster')
+    fish = Col('Fish')
+    mice = Col('Mice')
+    total = Col('Total')
+
+class AdminViewEarningsSummary(Table):
+    classes = ['table', 'table-bordered', 'table-striped', 'sortable']
+    year = Col('Year')
+    month = Col('Month')
+    full_time_earnings = Col('Full Time Earnings')
+    part_time_earnings = Col('Part Time Earnings')

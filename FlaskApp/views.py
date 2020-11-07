@@ -1119,15 +1119,116 @@ def admin_view_underperforming_caretakers():
         return render_template("admin_view_underperforming_caretakers.html", table=table, form=form)
     return render_template("admin_view_underperforming_caretakers.html", form = form)
 
+@view.route("/admin_view_jobs_by_pet_type_summary", methods = ["POST", "GET"])
+@login_required
+def admin_view_jobs_by_pet_type_summary():
+    query = "WITH cte(year, month, dog, cat, bird, terrapin, rabbit, hamster, fish, mice) AS ( \
+        SELECT CTS.year, CTS.month, CASE WHEN dog IS NULL THEN 0 ELSE dog END dog, \
+                                    CASE WHEN cat IS NULL THEN 0 ELSE cat END cat, \
+                                    CASE WHEN bird IS NULL THEN 0 ELSE bird END bird, \
+                                    CASE WHEN terrapin IS NULL THEN 0 ELSE terrapin END terrapin, \
+                                    CASE WHEN rabbit IS NULL THEN 0 ELSE rabbit END rabbit, \
+                                    CASE WHEN hamster IS NULL THEN 0 ELSE hamster END hamster, \
+                                    CASE WHEN fish IS NULL THEN 0 ELSE fish END fish, \
+                                    CASE WHEN mice IS NULL THEN 0 ELSE mice END mice \
+        FROM CareTakerSalary CTS \
+        LEFT JOIN \
+        (SELECT C.year, C.month, COUNT(*) AS dog \
+        FROM CareTakerSalary C RIGHT JOIN Bids B ON C.username = B.CTusername NATURAL JOIN OwnedPets O\
+        WHERE (C.year = EXTRACT(YEAR FROM B.start_date) AND C.month = EXTRACT(MONTH FROM B.start_date)) \
+        AND O.category = 'Dog' \
+        GROUP BY C.year, C.month) AS dummy1 ON CTS.year = dummy1.year AND CTS.month = dummy1.month \
+        LEFT JOIN \
+        (SELECT C.year, C.month, COUNT(*) AS cat \
+        FROM CareTakerSalary C RIGHT JOIN Bids B ON C.username = B.CTusername NATURAL JOIN OwnedPets O \
+        WHERE (C.year = EXTRACT(YEAR FROM B.start_date) AND C.month = EXTRACT(MONTH FROM B.start_date)) \
+        AND O.category = 'Cat' \
+        GROUP BY C.year, C.month) AS dummy2 ON dummy2.year = CTS.year AND dummy2.month = CTS.month \
+        LEFT JOIN \
+        (SELECT C.year, C.month, COUNT(*) AS bird \
+        FROM CareTakerSalary C RIGHT JOIN Bids B ON C.username = B.CTusername NATURAL JOIN OwnedPets O \
+        WHERE (C.year = EXTRACT(YEAR FROM B.start_date) AND C.month = EXTRACT(MONTH FROM B.start_date)) \
+        AND O.category = 'Bird' \
+        GROUP BY C.year, C.month) AS dummy3 ON dummy3.year = CTS.year AND dummy3.month = CTS.month \
+        LEFT JOIN \
+        (SELECT C.year, C.month, COUNT(*) AS terrapin \
+        FROM CareTakerSalary C RIGHT JOIN Bids B ON C.username = B.CTusername NATURAL JOIN OwnedPets O \
+        WHERE (C.year = EXTRACT(YEAR FROM B.start_date) AND C.month = EXTRACT(MONTH FROM B.start_date)) \
+        AND O.category = 'Terrapin' \
+        GROUP BY C.year, C.month) AS dummy8 ON CTS.year = dummy8.year AND CTS.month = dummy8.month \
+        LEFT JOIN \
+        (SELECT C.year, C.month, COUNT(*) AS rabbit \
+        FROM CareTakerSalary C RIGHT JOIN Bids B ON C.username = B.CTusername NATURAL JOIN OwnedPets O \
+        WHERE (C.year = EXTRACT(YEAR FROM B.start_date) AND C.month = EXTRACT(MONTH FROM B.start_date)) \
+        AND O.category = 'Rabbit' \
+        GROUP BY C.year, C.month) AS dummy4 ON CTS.year = dummy4.year AND CTS.month = dummy4.month \
+        LEFT JOIN \
+        (SELECT C.year, C.month, COUNT(*) AS hamster \
+        FROM CareTakerSalary C RIGHT JOIN Bids B ON C.username = B.CTusername NATURAL JOIN OwnedPets O \
+        WHERE (C.year = EXTRACT(YEAR FROM B.start_date) AND C.month = EXTRACT(MONTH FROM B.start_date)) \
+        AND O.category = 'Hamster' \
+        GROUP BY C.year, C.month) AS dummy5 ON CTS.year = dummy5.year AND CTS.month = dummy5.month \
+        LEFT JOIN \
+        (SELECT C.year, C.month, COUNT(*) AS fish \
+        FROM CareTakerSalary C RIGHT JOIN Bids B ON C.username = B.CTusername NATURAL JOIN OwnedPets O \
+        WHERE (C.year = EXTRACT(YEAR FROM B.start_date) AND C.month = EXTRACT(MONTH FROM B.start_date)) \
+        AND O.category = 'Fish' \
+        GROUP BY C.year, C.month) AS dummy6 ON CTS.year = dummy6.year AND CTS.month = dummy6.month \
+        LEFT JOIN \
+        (SELECT C.year, C.month, COUNT(*) AS mice \
+        FROM CareTakerSalary C RIGHT JOIN Bids B ON C.username = B.CTusername NATURAL JOIN OwnedPets O \
+        WHERE (C.year = EXTRACT(YEAR FROM B.start_date) AND C.month = EXTRACT(MONTH FROM B.start_date)) \
+        AND O.category = 'Mice' \
+        GROUP BY C.year, C.month) AS dummy7 ON CTS.year = dummy7.year AND CTS.month = dummy7.month \
+      ) \
+      select year, month, dog, cat, bird, terrapin, rabbit, hamster, fish, mice, \
+      (dog + cat + bird + terrapin + rabbit + hamster + fish + mice) AS total \
+      FROM cte \
+      ORDER BY year, month"
+    summary = db.session.execute(query)
+    summary = list(summary)
+    table = NuumberOfJobsByPetTypeTable(summary)
+    table.border = True
+    return render_template("admin_view_jobs_by_pet_type_summary.html", table=table)
+
+@view.route("/admin_view_earnings", methods = ["POST", "GET"])
+@login_required
+def admin_view_earnings():
+    query = "WITH cte(year, month, full_time_earnings, part_time_earnings) AS ( \
+      SELECT Dummy1.year, Dummy1.month, Dummy1.full_time_earnings, Dummy2.part_time_earnings \
+      FROM (SELECT year, month, SUM(earnings) AS full_time_earnings \
+            FROM CareTakerSalary C \
+            WHERE C.username in (SELECT username FROM FullTime) \
+            GROUP BY C.year, C.month) AS Dummy1 \
+            NATURAL JOIN \
+            (SELECT year, month, SUM(earnings) AS part_time_earnings \
+            FROM CareTakerSalary C \
+            WHERE C.username in (SELECT username FROM PartTime) \
+            GROUP BY C.year, C.month) AS Dummy2 \
+      ORDER BY year, month \
+    ) \
+    SELECT month, ROUND(AVG(full_time_earnings),2) AS full_time_earnings_avg, \
+                  ROUND(AVG(part_time_earnings),2) AS part_time_earnings_avg, \
+                  ROUND(AVG(full_time_earnings) + AVG(part_time_earnings), 2) AS total_earnings_avg \
+    FROM cte \
+    GROUP BY month"
+    summary = db.session.execute(query)
+    summary = list(summary)
+    table = AdminViewEarningsSummary(summary)
+    table.border = True
+    return render_template("admin_view_earnings.html", table=table)
+
+
+
 @view.route("/user_update_password", methods = ["POST", "GET"])
 @login_required
 def user_update_password():
     form = ChangePasswordForm()
-    if form.validate_on_submit:
+    if form.validate_on_submit():
+        old_password = form.old_password.data
         new_password = form.new_password.data
         query = "UPDATE Users SET password = '{}' WHERE username = '{}'".format(new_password, current_user.username)
         db.session.execute(query)
         db.session.commit()
-        flash('Successfully changed password!', 'success')
-        return redirect(url_for('view.home'))
+    flash('Successfully changed password!', 'success')
     return render_template("update_password.html", form=form)
