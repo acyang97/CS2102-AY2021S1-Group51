@@ -37,7 +37,7 @@ app.register_blueprint(view)
 #        database="flaskk"
 #    )
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgres://geqxkvcbsuuwun:f4e765364abd812812aa44e295025c6fe1913472052afd38fd31fd1bfbbd0680@ec2-3-228-114-251.compute-1.amazonaws.com:5432/dde6dck5qd281f"
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgres://ekelwriinaourw:2dcd9c0d5e5484916d65716d7d9d564906575e79cda625fa5e727a6ae36f61c9@ec2-3-211-176-230.compute-1.amazonaws.com:5432/dd7o7a5cfo2utd"
 
 app.config["SECRET_KEY"] = "SECRET_KEY"
 #port = int(os.environ.get("PORT", 5000))
