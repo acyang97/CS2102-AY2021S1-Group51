@@ -29,7 +29,6 @@ app.register_blueprint(view)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "postgres://geqxkvcbsuuwun:f4e765364abd812812aa44e295025c6fe1913472052afd38fd31fd1bfbbd0680@ec2-3-228-114-251.compute-1.amazonaws.com:5432/dde6dck5qd281f"
 
-
 app.config["SECRET_KEY"] = "SECRET_KEY"
 #port = int(os.environ.get("PORT", 5000))
 # Initialize other components
@@ -44,7 +43,8 @@ login_manager.init_app(app)
 #        #port=5000
 #        port = int(os.environ.get("PORT", 5000))
 #    )
-port = int(os.environ.get("PORT", 5000))
+port = int(os.environ.get('PORT', 33507))
 
 if __name__ == "__main__":
+    app.debug = True
     app.run(host='0.0.0.0', port=port)
