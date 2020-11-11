@@ -37,10 +37,13 @@ db.init_app(app)
 login_manager.init_app(app)
 
 
+#if __name__ == "__main__":
+#    app.run(
+#        debug=True,
+#        host="localhost",
+#        #port=5000
+#        port = int(os.environ.get("PORT", 5000))
+#    )
+
 if __name__ == "__main__":
-    app.run(
-        debug=True,
-        host="localhost",
-        #port=5000
-        port = int(os.environ.get("PORT", 5000))
-    )
+    app.run()
