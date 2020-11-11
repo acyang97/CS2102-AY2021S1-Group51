@@ -4,7 +4,6 @@ from flask_login import current_user, login_required, login_user, UserMixin, log
 from flask_bootstrap import Bootstrap
 from wtforms.fields import DateField
 
-
 from forms import *
 from tables import *
 from models import Users
