@@ -18,14 +18,18 @@ app = Flask(__name__)
 app.register_blueprint(view)
 
 # Config
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://{username}:{password}@{host}:{port}/{database}"\
-    .format(
-        username="postgres",
-        password="S0hyun97!",
-        host="localhost",
-        port=5432,
-        database="flaskk"
-    )
+#    .format(
+#app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://{username}:{password}@{host}:{port}/{database}"\
+#        username="postgres",
+#        password="S0hyun97!",
+#        host="localhost",
+#        port=5432,
+#        database="flaskk"
+#    )
+
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgres://geqxkvcbsuuwun:f4e765364abd812812aa44e295025c6fe1913472052afd38fd31fd1bfbbd0680@ec2-3-228-114-251.compute-1.amazonaws.com:5432/dde6dck5qd281f"
+
+
 app.config["SECRET_KEY"] = "SECRET_KEY"
 #port = int(os.environ.get("PORT", 5000))
 # Initialize other components
