@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, flash, url_for, request, session
+from flask import Blueprint, redirect, render_template, flash, url_for, request, session, send_from_directory
 from flask_login import current_user, login_required, login_user, UserMixin, logout_user
 from flask_bootstrap import Bootstrap
 from wtforms.fields import DateField
@@ -15,6 +15,7 @@ import math
 from decimal import *
 from datetime import date, timedelta
 import datetime
+import os
 
 import sqlalchemy
 from sqlalchemy import create_engine
@@ -99,6 +100,11 @@ def home():
         elif db.session.execute(checkAdmin).first() is not None:
             usertype = "PCS Administrator"
             return render_template('home_admin.html', usertype=usertype)
+
+@view.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join('static', 'images'),
+                               'favicon.ico', mimetype='image/png')
 
 @view.route("/about")
 def about():
