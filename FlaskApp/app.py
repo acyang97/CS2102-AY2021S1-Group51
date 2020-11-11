@@ -1,4 +1,4 @@
-from __init__ import db, login_manager
+#from __init__ import db, login_manager
 from views import view
 from models import Users
 
@@ -8,6 +8,16 @@ from flask_login import UserMixin
 #from flask_admin import Admin
 
 import os
+
+
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+
+db = SQLAlchemy()
+login_manager = LoginManager()
+login_manager.login_view = 'view.login' # must login to access the account route.
+login_manager.login_message_category = 'info'
+
 
 app = Flask(__name__)
 #admin = Admin(app)
