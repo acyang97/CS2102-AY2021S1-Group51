@@ -1,24 +1,49 @@
-\COPY users FROM 'mock_data/users_mock.csv' WITH DELIMITER ',' CSV HEADER;
+\COPY users FROM 'generate_mock/combine_users.csv' WITH DELIMITER ',' CSV HEADER;
 
-\COPY petowners FROM 'mock_data/petowner_mock.csv' WITH DELIMITER ',' CSV HEADER;
+\COPY pcsadmin FROM 'generate_mock/admin_mock.csv' WITH DELIMITER ',' CSV HEADER;
 
-\COPY ownedpets FROM 'mock_data/pet_owned.csv' WITH DELIMITER ',' CSV HEADER;
+\COPY petowners FROM 'generate_mock/combine_po.csv' WITH DELIMITER ',' CSV HEADER;
 
-\COPY caretakers FROM 'mock_data/caretaker_mock.csv' WITH DELIMITER ',' CSV HEADER;
+\COPY caretakers FROM 'generate_mock/combine_ct.csv' WITH DELIMITER ',' CSV HEADER;
 
-\COPY fulltime FROM 'mock_data/fulltime_mock.csv' WITH DELIMITER ',' CSV HEADER;
+\COPY modeoftransport FROM 'generate_mock/transport_mode.csv' WITH DELIMITER ',' CSV HEADER;
 
-\COPY parttime FROM 'mock_data/parttime_mock.csv' WITH DELIMITER ',' CSV HEADER;
+\COPY preferredtransport FROM 'generate_mock/preferred_transport_mock.csv' WITH DELIMITER ',' CSV HEADER;
 
--- \COPY modeoftransport FROM 'mock_data/transport_mode.csv' WITH DELIMITER ',' CSV HEADER;
+\COPY modeofpayment FROM 'generate_mock/payment_mode.csv' WITH DELIMITER ',' CSV HEADER;
 
-\COPY preferredtransport FROM 'mock_data/prefer_transport_mock.csv' WITH DELIMITER ',' CSV HEADER;
+\COPY preferredmodeofpayment FROM 'generate_mock/preferred_payment_mock.csv' WITH DELIMITER ',' CSV HEADER;
 
-\COPY CaretakerAvailability FROM 'mock_data/availability.csv' WITH DELIMITER ',' CSV HEADER;
+\COPY fulltime FROM 'generate_mock/full_time_mock.csv' WITH DELIMITER ',' CSV HEADER;
 
-\COPY PartTimePriceList FROM 'mock_data/parttime_price.csv' WITH DELIMITER ',' CSV HEADER;
+\COPY parttime FROM 'generate_mock/part_time_mock.csv' WITH DELIMITER ',' CSV HEADER;
 
-\COPY FullTimePriceList FROM 'mock_data/fulltime_price.csv' WITH DELIMITER ',' CSV HEADER;
+\COPY category FROM 'generate_mock/pet_category.csv' WITH DELIMITER ',' CSV HEADER;
+
+\COPY ownedpets FROM 'generate_mock/pet_owned.csv' WITH DELIMITER ',' CSV HEADER;
+
+\COPY specialcare FROM 'generate_mock/special_care.csv' WITH DELIMITER ',' CSV HEADER;
+
+\COPY requirespecialcare FROM 'generate_mock/require_special_care.csv' WITH DELIMITER ',' CSV HEADER;
+
+\COPY caretakeravailability FROM 'generate_mock/availability.csv' WITH DELIMITER ',' CSV HEADER;
+
+\COPY bids FROM 'generate_mock/bids.csv' WITH DELIMITER ',' CSV HEADER;
+
+\COPY parttimepricelist FROM 'generate_mock/part_time_price.csv' WITH DELIMITER ',' CSV HEADER;
+
+\COPY defaultpricelist FROM 'generate_mock/default_price.csv' WITH DELIMITER ',' CSV HEADER;
+
+\COPY fulltimepricelist FROM 'generate_mock/full_time_price.csv' WITH DELIMITER ',' CSV HEADER;
+
+\COPY caretakersalary FROM 'generate_mock/salary.csv' WITH DELIMITER ',' CSV HEADER;
+
+\COPY totaljobpermonthsummary FROM 'generate_mock/job_summary.csv' WITH DELIMITER ',' CSV HEADER;
+
+
+
+/**
+
 
 CREATE OR REPLACE FUNCTION
 update_salary() RETURNS trigger AS $$
@@ -135,6 +160,8 @@ EXECUTE PROCEDURE update_salary();
 
 \COPY bids FROM 'mock_data/bid.csv' WITH DELIMITER ',' CSV HEADER;
 
+**/
+
 
 
 
@@ -197,6 +224,8 @@ $$
 LANGUAGE plpgsql;
 **/
 
+/**
+
 INSERT INTO caretakeravailability VALUES ('6/30/2020', 0, False, 'ckitleeg', TRUE);
 INSERT INTO caretakeravailability VALUES ('7/01/2020', 0, False, 'ckitleeg', TRUE);
 INSERT INTO caretakeravailability VALUES ('7/02/2020', 0, False, 'ckitleeg', TRUE);
@@ -210,3 +239,5 @@ INSERT INTO caretakeravailability VALUES ('7/02/2020', 0, False, 'gkingmann', TR
 INSERT INTO caretakeravailability VALUES ('7/03/2020', 0, False, 'gkingmann', TRUE);
 INSERT INTO caretakeravailability VALUES ('7/04/2020', 0, False, 'gkingmann', TRUE);
 INSERT INTO caretakeravailability VALUES ('7/05/2020', 0, False, 'gkingmann', TRUE);
+
+**/

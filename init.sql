@@ -142,49 +142,7 @@ CREATE TABLE TotalJobPerMonthSummary (
   PRIMARY KEY(year, month)
 );
 
-
-INSERT INTO ModeOfTransport VALUES ('Pet Owner Deliver');
-INSERT INTO ModeOfTransport VALUES ('Care Taker Pick Up');
-INSERT INTO ModeOfTransport VALUES ('Transfer through PCS Building');
-
-INSERT INTO ModeOfPayment VALUES ('Credit Card');
-INSERT INTO ModeOfPayment VALUES ('Cash');
-INSERT INTO ModeOfPayment VALUES ('Either');
-
-INSERT INTO Category VALUES ('Dog');
-INSERT INTO Category VALUES ('Cat');
-INSERT INTO Category VALUES ('Rabbit');
-INSERT INTO Category VALUES ('Hamster');
-INSERT INTO Category VALUES ('Guinea Pig');
-INSERT INTO Category VALUES ('Fish');
-INSERT INTO Category VALUES ('Mice');
-INSERT INTO Category VALUES ('Terrapin');
-INSERT INTO Category VALUES ('Bird');
-
-INSERT INTO DefaultPriceList VALUES ('Dog', 100);
-INSERT INTO DefaultPriceList VALUES ('Cat', 80);
-INSERT INTO DefaultPriceList VALUES ('Rabbit', 110);
-INSERT INTO DefaultPriceList VALUES ('Hamster', 70);
-INSERT INTO DefaultPriceList VALUES ('Guinea Pig', 150);
-INSERT INTO DefaultPriceList VALUES ('Fish', 50);
-INSERT INTO DefaultPriceList VALUES ('Mice', 50);
-INSERT INTO DefaultPriceList VALUES ('Terrapin', 80);
-INSERT INTO DefaultPriceList VALUES ('Bird', 80);
-
-INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2020, 11);
-INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2020, 12);
-INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 1);
-INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 2);
-INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 3);
-INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 4);
-INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 5);
-INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 6);
-INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 7);
-INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 8);
-INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 9);
-INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 10);
-INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 11);
-INSERT INTO TotalJobPerMonthSummary(year, month) VALUES (2021, 12);
+\i read_data.sql
 
 
 CREATE OR REPLACE FUNCTION update_caretaker_pet_count_function() RETURNS trigger AS $$

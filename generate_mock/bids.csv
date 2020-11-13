@@ -1,0 +1,387 @@
+bid_id,CTusername,owner,pet_name,review,rating,mode_of_transport,mode_of_payment,credit_card,completed,start_date,end_date,price_per_day
+1,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,0,Transfer through PCS Building,Cash,credit card,FALSE,06/01/2018,06/01/2018,100
+2,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,0,Transfer through PCS Building,Cash,credit card,FALSE,06/01/2018,06/01/2018,50
+3,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Can improve,1,Transfer through PCS Building,Cash,credit card,TRUE,06/02/2018,06/02/2018,50
+4,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Very good,0,Transfer through PCS Building,Cash,credit card,TRUE,06/02/2018,06/02/2018,100
+5,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,3,Transfer through PCS Building,Cash,credit card,FALSE,06/04/2018,06/04/2018,100
+6,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Still okay,4,Transfer through PCS Building,Cash,credit card,TRUE,06/19/2018,06/19/2018,50
+7,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,3,Transfer through PCS Building,Cash,credit card,FALSE,06/30/2018,06/30/2018,50
+8,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,1,Transfer through PCS Building,Cash,credit card,FALSE,07/07/2018,07/07/2018,50
+9,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,3,Transfer through PCS Building,Cash,credit card,FALSE,07/15/2018,07/15/2018,50
+10,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Will approach caretaker to take care of my pet again,2,Transfer through PCS Building,Cash,credit card,TRUE,07/15/2018,07/15/2018,100
+11,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Will approach caretaker to take care of my pet again,2,Transfer through PCS Building,Cash,credit card,TRUE,07/16/2018,07/16/2018,100
+12,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,1,Transfer through PCS Building,Cash,credit card,FALSE,07/17/2018,07/17/2018,50
+13,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,07/18/2018,07/18/2018,50
+14,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,0,Transfer through PCS Building,Cash,credit card,FALSE,07/19/2018,07/19/2018,50
+15,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,07/27/2018,07/27/2018,100
+16,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,07/29/2018,07/29/2018,100
+17,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,0,Transfer through PCS Building,Cash,credit card,FALSE,07/29/2018,07/29/2018,50
+18,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Very caring,1,Transfer through PCS Building,Cash,credit card,TRUE,08/04/2018,08/04/2018,100
+19,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,08/09/2018,08/09/2018,100
+20,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Still okay,0,Transfer through PCS Building,Cash,credit card,TRUE,08/09/2018,08/09/2018,50
+21,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Can improve,2,Transfer through PCS Building,Cash,credit card,TRUE,08/16/2018,08/16/2018,100
+22,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Still okay,4,Transfer through PCS Building,Cash,credit card,TRUE,08/25/2018,08/25/2018,100
+23,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,1,Transfer through PCS Building,Cash,credit card,FALSE,08/29/2018,08/29/2018,100
+24,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Can improve,0,Transfer through PCS Building,Cash,credit card,TRUE,08/29/2018,08/29/2018,50
+25,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Very caring,0,Transfer through PCS Building,Cash,credit card,TRUE,09/06/2018,09/06/2018,50
+26,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Very good,3,Transfer through PCS Building,Cash,credit card,TRUE,09/13/2018,09/13/2018,50
+27,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,1,Transfer through PCS Building,Cash,credit card,FALSE,09/15/2018,09/15/2018,100
+28,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Will approach caretaker to take care of my pet again,4,Transfer through PCS Building,Cash,credit card,TRUE,09/16/2018,09/16/2018,100
+29,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Very caring,0,Transfer through PCS Building,Cash,credit card,TRUE,09/16/2018,09/16/2018,50
+30,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Will approach caretaker to take care of my pet again,2,Transfer through PCS Building,Cash,credit card,TRUE,09/20/2018,09/20/2018,50
+31,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Can improve,4,Transfer through PCS Building,Cash,credit card,TRUE,09/25/2018,09/25/2018,50
+32,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Will approach caretaker to take care of my pet again,2,Transfer through PCS Building,Cash,credit card,TRUE,09/27/2018,09/27/2018,50
+33,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Very good,1,Transfer through PCS Building,Cash,credit card,TRUE,10/13/2018,10/13/2018,100
+34,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Can improve,0,Transfer through PCS Building,Cash,credit card,TRUE,10/15/2018,10/15/2018,100
+35,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,10/16/2018,10/16/2018,50
+36,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Very caring,2,Transfer through PCS Building,Cash,credit card,TRUE,10/16/2018,10/16/2018,100
+37,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Very good,4,Transfer through PCS Building,Cash,credit card,TRUE,10/20/2018,10/20/2018,100
+38,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Still okay,2,Transfer through PCS Building,Cash,credit card,TRUE,10/25/2018,10/25/2018,100
+39,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,10/25/2018,10/25/2018,50
+40,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,3,Transfer through PCS Building,Cash,credit card,FALSE,11/01/2018,11/01/2018,50
+41,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Still okay,3,Transfer through PCS Building,Cash,credit card,TRUE,11/07/2018,11/07/2018,100
+42,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Can improve,1,Transfer through PCS Building,Cash,credit card,TRUE,11/12/2018,11/12/2018,100
+43,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Still okay,0,Transfer through PCS Building,Cash,credit card,TRUE,11/15/2018,11/15/2018,100
+44,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Will approach caretaker to take care of my pet again,2,Transfer through PCS Building,Cash,credit card,TRUE,11/15/2018,11/15/2018,50
+45,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Still okay,0,Transfer through PCS Building,Cash,credit card,TRUE,11/19/2018,11/19/2018,50
+46,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,11/19/2018,11/19/2018,100
+47,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Still okay,4,Transfer through PCS Building,Cash,credit card,TRUE,12/04/2018,12/04/2018,100
+48,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,3,Transfer through PCS Building,Cash,credit card,FALSE,12/04/2018,12/04/2018,50
+49,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,12/07/2018,12/07/2018,50
+50,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,12/14/2018,12/14/2018,50
+51,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,3,Transfer through PCS Building,Cash,credit card,FALSE,12/15/2018,12/15/2018,100
+52,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,3,Transfer through PCS Building,Cash,credit card,FALSE,12/15/2018,12/15/2018,50
+53,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Will approach caretaker to take care of my pet again,4,Transfer through PCS Building,Cash,credit card,TRUE,12/17/2018,12/17/2018,50
+54,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,01/01/2019,01/01/2019,50
+55,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,01/01/2019,01/01/2019,100
+56,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,01/12/2019,01/12/2019,100
+57,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,0,Transfer through PCS Building,Cash,credit card,FALSE,01/15/2019,01/15/2019,50
+58,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Can improve,2,Transfer through PCS Building,Cash,credit card,TRUE,01/15/2019,01/15/2019,100
+59,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,01/17/2019,01/17/2019,50
+60,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,01/20/2019,01/20/2019,50
+61,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Will approach caretaker to take care of my pet again,2,Transfer through PCS Building,Cash,credit card,TRUE,01/27/2019,01/27/2019,50
+62,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,3,Transfer through PCS Building,Cash,credit card,FALSE,02/03/2019,02/03/2019,50
+63,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Will approach caretaker to take care of my pet again,1,Transfer through PCS Building,Cash,credit card,TRUE,02/04/2019,02/04/2019,100
+64,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Can improve,3,Transfer through PCS Building,Cash,credit card,TRUE,02/05/2019,02/05/2019,100
+65,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Will approach caretaker to take care of my pet again,2,Transfer through PCS Building,Cash,credit card,TRUE,02/09/2019,02/09/2019,100
+66,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,02/09/2019,02/09/2019,50
+67,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,02/23/2019,02/23/2019,100
+68,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,1,Transfer through PCS Building,Cash,credit card,FALSE,02/23/2019,02/23/2019,50
+69,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,0,Transfer through PCS Building,Cash,credit card,FALSE,02/27/2019,02/27/2019,100
+70,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,3,Transfer through PCS Building,Cash,credit card,FALSE,03/07/2019,03/07/2019,100
+71,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,1,Transfer through PCS Building,Cash,credit card,FALSE,03/08/2019,03/08/2019,100
+72,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Will approach caretaker to take care of my pet again,0,Transfer through PCS Building,Cash,credit card,TRUE,03/08/2019,03/08/2019,50
+73,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Can improve,4,Transfer through PCS Building,Cash,credit card,TRUE,03/11/2019,03/11/2019,100
+74,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,0,Transfer through PCS Building,Cash,credit card,FALSE,03/14/2019,03/14/2019,50
+75,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Will approach caretaker to take care of my pet again,1,Transfer through PCS Building,Cash,credit card,TRUE,03/14/2019,03/14/2019,100
+76,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Can improve,1,Transfer through PCS Building,Cash,credit card,TRUE,03/17/2019,03/17/2019,50
+77,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Will approach caretaker to take care of my pet again,4,Transfer through PCS Building,Cash,credit card,TRUE,03/17/2019,03/17/2019,100
+78,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Very caring,3,Transfer through PCS Building,Cash,credit card,TRUE,04/04/2019,04/04/2019,50
+79,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,04/07/2019,04/07/2019,50
+80,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,3,Transfer through PCS Building,Cash,credit card,FALSE,04/08/2019,04/08/2019,50
+81,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,3,Transfer through PCS Building,Cash,credit card,FALSE,04/08/2019,04/08/2019,100
+82,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Will approach caretaker to take care of my pet again,2,Transfer through PCS Building,Cash,credit card,TRUE,04/11/2019,04/11/2019,50
+83,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,04/11/2019,04/11/2019,100
+84,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Still okay,4,Transfer through PCS Building,Cash,credit card,TRUE,04/20/2019,04/20/2019,100
+85,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Will approach caretaker to take care of my pet again,1,Transfer through PCS Building,Cash,credit card,TRUE,04/23/2019,04/23/2019,50
+86,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,0,Transfer through PCS Building,Cash,credit card,FALSE,05/05/2019,05/05/2019,50
+87,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,05/12/2019,05/12/2019,50
+88,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,05/14/2019,05/14/2019,50
+89,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,0,Transfer through PCS Building,Cash,credit card,FALSE,05/22/2019,05/22/2019,100
+90,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Can improve,4,Transfer through PCS Building,Cash,credit card,TRUE,05/27/2019,05/27/2019,100
+91,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Very good,4,Transfer through PCS Building,Cash,credit card,TRUE,05/27/2019,05/27/2019,50
+92,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,0,Transfer through PCS Building,Cash,credit card,FALSE,06/02/2019,06/02/2019,50
+93,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,1,Transfer through PCS Building,Cash,credit card,FALSE,06/08/2019,06/08/2019,100
+94,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,0,Transfer through PCS Building,Cash,credit card,FALSE,06/19/2019,06/19/2019,100
+95,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,07/05/2019,07/05/2019,50
+96,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Will approach caretaker to take care of my pet again,2,Transfer through PCS Building,Cash,credit card,TRUE,07/05/2019,07/05/2019,100
+97,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,0,Transfer through PCS Building,Cash,credit card,FALSE,07/09/2019,07/09/2019,100
+98,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Will approach caretaker to take care of my pet again,0,Transfer through PCS Building,Cash,credit card,TRUE,07/10/2019,07/10/2019,100
+99,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,07/19/2019,07/19/2019,50
+100,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,07/19/2019,07/19/2019,100
+101,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Can improve,0,Transfer through PCS Building,Cash,credit card,TRUE,07/23/2019,07/23/2019,50
+102,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,1,Transfer through PCS Building,Cash,credit card,FALSE,07/24/2019,07/24/2019,50
+103,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Very caring,4,Transfer through PCS Building,Cash,credit card,TRUE,07/24/2019,07/24/2019,100
+104,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Will approach caretaker to take care of my pet again,0,Transfer through PCS Building,Cash,credit card,TRUE,07/27/2019,07/27/2019,50
+105,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Can improve,3,Transfer through PCS Building,Cash,credit card,TRUE,07/27/2019,07/27/2019,100
+106,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,07/29/2019,07/29/2019,50
+107,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,07/30/2019,07/30/2019,50
+108,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Can improve,1,Transfer through PCS Building,Cash,credit card,TRUE,07/30/2019,07/30/2019,100
+109,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Will approach caretaker to take care of my pet again,0,Transfer through PCS Building,Cash,credit card,TRUE,07/31/2019,07/31/2019,50
+110,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,07/31/2019,07/31/2019,100
+111,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,3,Transfer through PCS Building,Cash,credit card,FALSE,08/07/2019,08/07/2019,50
+112,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,1,Transfer through PCS Building,Cash,credit card,FALSE,08/08/2019,08/08/2019,100
+113,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Very caring,4,Transfer through PCS Building,Cash,credit card,TRUE,08/15/2019,08/15/2019,50
+114,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Very caring,0,Transfer through PCS Building,Cash,credit card,TRUE,08/15/2019,08/15/2019,100
+115,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,08/18/2019,08/18/2019,100
+116,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Very good,4,Transfer through PCS Building,Cash,credit card,TRUE,08/18/2019,08/18/2019,50
+117,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Very caring,3,Transfer through PCS Building,Cash,credit card,TRUE,08/22/2019,08/22/2019,100
+118,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,0,Transfer through PCS Building,Cash,credit card,FALSE,08/22/2019,08/22/2019,50
+119,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,3,Transfer through PCS Building,Cash,credit card,FALSE,08/23/2019,08/23/2019,100
+120,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,3,Transfer through PCS Building,Cash,credit card,FALSE,08/24/2019,08/24/2019,100
+121,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Will approach caretaker to take care of my pet again,3,Transfer through PCS Building,Cash,credit card,TRUE,08/25/2019,08/25/2019,100
+122,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Very good,1,Transfer through PCS Building,Cash,credit card,TRUE,08/28/2019,08/28/2019,50
+123,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,1,Transfer through PCS Building,Cash,credit card,FALSE,08/31/2019,08/31/2019,100
+124,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,08/31/2019,08/31/2019,50
+125,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,09/04/2019,09/04/2019,100
+126,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Very good,2,Transfer through PCS Building,Cash,credit card,TRUE,09/04/2019,09/04/2019,50
+127,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,09/08/2019,09/08/2019,50
+128,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Very good,1,Transfer through PCS Building,Cash,credit card,TRUE,09/15/2019,09/15/2019,50
+129,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Still okay,2,Transfer through PCS Building,Cash,credit card,TRUE,09/20/2019,09/20/2019,50
+130,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,09/23/2019,09/23/2019,50
+131,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Very good,0,Transfer through PCS Building,Cash,credit card,TRUE,09/24/2019,09/24/2019,50
+132,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Still okay,4,Transfer through PCS Building,Cash,credit card,TRUE,09/27/2019,09/27/2019,100
+133,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,09/29/2019,09/29/2019,100
+134,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,10/01/2019,10/01/2019,100
+135,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Still okay,1,Transfer through PCS Building,Cash,credit card,TRUE,10/04/2019,10/04/2019,50
+136,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,10/04/2019,10/04/2019,100
+137,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Very good,3,Transfer through PCS Building,Cash,credit card,TRUE,10/05/2019,10/05/2019,100
+138,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,10/05/2019,10/05/2019,50
+139,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,3,Transfer through PCS Building,Cash,credit card,FALSE,10/06/2019,10/06/2019,50
+140,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,1,Transfer through PCS Building,Cash,credit card,FALSE,10/06/2019,10/06/2019,100
+141,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Can improve,2,Transfer through PCS Building,Cash,credit card,TRUE,10/08/2019,10/08/2019,50
+142,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,3,Transfer through PCS Building,Cash,credit card,FALSE,10/13/2019,10/13/2019,100
+143,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Still okay,4,Transfer through PCS Building,Cash,credit card,TRUE,10/13/2019,10/13/2019,50
+144,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Can improve,2,Transfer through PCS Building,Cash,credit card,TRUE,10/26/2019,10/26/2019,50
+145,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,10/26/2019,10/26/2019,100
+146,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Can improve,3,Transfer through PCS Building,Cash,credit card,TRUE,10/27/2019,10/27/2019,50
+147,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,10/27/2019,10/27/2019,100
+148,mgreenhow4,rlongmuire,"Bandicoot, southern brown",Very good,0,Transfer through PCS Building,Cash,credit card,TRUE,10/28/2019,10/28/2019,100
+149,mgreenhow4,rlongmuire,"Bandicoot, southern brown",NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,10/29/2019,10/29/2019,100
+150,mgreenhow4,dviccars0,Southern hairy-nosed wombat,NULL,0,Transfer through PCS Building,Cash,credit card,FALSE,11/16/2019,11/16/2019,50
+151,mgreenhow4,dviccars0,Southern hairy-nosed wombat,Can improve,4,Transfer through PCS Building,Cash,credit card,TRUE,11/19/2019,11/19/2019,50
+152,astather2,sdobinson3,Desert kangaroo rat,NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,06/04/2018,06/04/2018,50
+153,astather2,sdobinson3,Desert kangaroo rat,NULL,1,Transfer through PCS Building,Cash,credit card,FALSE,06/06/2018,06/06/2018,50
+154,astather2,sdobinson3,Desert kangaroo rat,Can improve,1,Transfer through PCS Building,Cash,credit card,TRUE,06/17/2018,06/17/2018,50
+155,astather2,sdobinson3,Desert kangaroo rat,NULL,0,Transfer through PCS Building,Cash,credit card,FALSE,06/22/2018,06/22/2018,50
+156,astather2,sdobinson3,Desert kangaroo rat,NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,07/01/2018,07/01/2018,50
+157,astather2,sdobinson3,Desert kangaroo rat,Very good,3,Transfer through PCS Building,Cash,credit card,TRUE,07/14/2018,07/14/2018,50
+158,astather2,sdobinson3,Desert kangaroo rat,NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,07/16/2018,07/16/2018,50
+159,astather2,sdobinson3,Desert kangaroo rat,Very caring,3,Transfer through PCS Building,Cash,credit card,TRUE,07/29/2018,07/29/2018,50
+160,astather2,sdobinson3,Desert kangaroo rat,Can improve,3,Transfer through PCS Building,Cash,credit card,TRUE,08/20/2018,08/20/2018,50
+161,astather2,sdobinson3,Desert kangaroo rat,Very good,4,Transfer through PCS Building,Cash,credit card,TRUE,09/17/2018,09/17/2018,50
+162,astather2,sdobinson3,Desert kangaroo rat,Will approach caretaker to take care of my pet again,0,Transfer through PCS Building,Cash,credit card,TRUE,09/21/2018,09/21/2018,50
+163,astather2,sdobinson3,Desert kangaroo rat,Still okay,2,Transfer through PCS Building,Cash,credit card,TRUE,09/26/2018,09/26/2018,50
+164,astather2,sdobinson3,Desert kangaroo rat,Very good,1,Transfer through PCS Building,Cash,credit card,TRUE,09/28/2018,09/28/2018,50
+165,astather2,sdobinson3,Desert kangaroo rat,Very good,1,Transfer through PCS Building,Cash,credit card,TRUE,09/30/2018,09/30/2018,50
+166,astather2,sdobinson3,Desert kangaroo rat,NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,10/01/2018,10/01/2018,50
+167,astather2,sdobinson3,Desert kangaroo rat,Will approach caretaker to take care of my pet again,1,Transfer through PCS Building,Cash,credit card,TRUE,10/04/2018,10/04/2018,50
+168,astather2,sdobinson3,Desert kangaroo rat,Very caring,0,Transfer through PCS Building,Cash,credit card,TRUE,10/14/2018,10/14/2018,50
+169,astather2,sdobinson3,Desert kangaroo rat,NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,10/23/2018,10/23/2018,50
+170,astather2,sdobinson3,Desert kangaroo rat,NULL,3,Transfer through PCS Building,Cash,credit card,FALSE,10/30/2018,10/30/2018,50
+171,astather2,sdobinson3,Desert kangaroo rat,NULL,1,Transfer through PCS Building,Cash,credit card,FALSE,12/02/2018,12/02/2018,50
+172,astather2,sdobinson3,Desert kangaroo rat,Very good,3,Transfer through PCS Building,Cash,credit card,TRUE,12/14/2018,12/14/2018,50
+173,astather2,sdobinson3,Desert kangaroo rat,Still okay,2,Transfer through PCS Building,Cash,credit card,TRUE,01/03/2019,01/03/2019,50
+174,astather2,sdobinson3,Desert kangaroo rat,Still okay,2,Transfer through PCS Building,Cash,credit card,TRUE,01/15/2019,01/15/2019,50
+175,astather2,sdobinson3,Desert kangaroo rat,Still okay,2,Transfer through PCS Building,Cash,credit card,TRUE,01/18/2019,01/18/2019,50
+176,astather2,sdobinson3,Desert kangaroo rat,Very good,1,Transfer through PCS Building,Cash,credit card,TRUE,01/23/2019,01/23/2019,50
+177,astather2,sdobinson3,Desert kangaroo rat,NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,01/31/2019,01/31/2019,50
+178,astather2,sdobinson3,Desert kangaroo rat,Still okay,4,Transfer through PCS Building,Cash,credit card,TRUE,02/01/2019,02/01/2019,50
+179,astather2,sdobinson3,Desert kangaroo rat,Still okay,1,Transfer through PCS Building,Cash,credit card,TRUE,02/03/2019,02/03/2019,50
+180,astather2,sdobinson3,Desert kangaroo rat,NULL,1,Transfer through PCS Building,Cash,credit card,FALSE,02/13/2019,02/13/2019,50
+181,astather2,sdobinson3,Desert kangaroo rat,NULL,0,Transfer through PCS Building,Cash,credit card,FALSE,02/19/2019,02/19/2019,50
+182,astather2,sdobinson3,Desert kangaroo rat,Still okay,0,Transfer through PCS Building,Cash,credit card,TRUE,02/20/2019,02/20/2019,50
+183,astather2,sdobinson3,Desert kangaroo rat,Can improve,4,Transfer through PCS Building,Cash,credit card,TRUE,02/24/2019,02/24/2019,50
+184,astather2,sdobinson3,Desert kangaroo rat,NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,02/27/2019,02/27/2019,50
+185,astather2,sdobinson3,Desert kangaroo rat,Still okay,3,Transfer through PCS Building,Cash,credit card,TRUE,03/06/2019,03/06/2019,50
+186,astather2,sdobinson3,Desert kangaroo rat,Still okay,0,Transfer through PCS Building,Cash,credit card,TRUE,03/25/2019,03/25/2019,50
+187,astather2,sdobinson3,Desert kangaroo rat,Will approach caretaker to take care of my pet again,1,Transfer through PCS Building,Cash,credit card,TRUE,03/27/2019,03/27/2019,50
+188,astather2,sdobinson3,Desert kangaroo rat,NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,03/29/2019,03/29/2019,50
+189,astather2,sdobinson3,Desert kangaroo rat,Very caring,1,Transfer through PCS Building,Cash,credit card,TRUE,03/30/2019,03/30/2019,50
+190,astather2,sdobinson3,Desert kangaroo rat,Still okay,2,Transfer through PCS Building,Cash,credit card,TRUE,04/20/2019,04/20/2019,50
+191,astather2,sdobinson3,Desert kangaroo rat,NULL,0,Transfer through PCS Building,Cash,credit card,FALSE,04/21/2019,04/21/2019,50
+192,astather2,sdobinson3,Desert kangaroo rat,NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,05/03/2019,05/03/2019,50
+193,astather2,sdobinson3,Desert kangaroo rat,NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,05/12/2019,05/12/2019,50
+194,astather2,sdobinson3,Desert kangaroo rat,NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,05/17/2019,05/17/2019,50
+195,astather2,sdobinson3,Desert kangaroo rat,NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,05/31/2019,05/31/2019,50
+196,astather2,sdobinson3,Desert kangaroo rat,Still okay,4,Transfer through PCS Building,Cash,credit card,TRUE,06/06/2019,06/06/2019,50
+197,astather2,sdobinson3,Desert kangaroo rat,Very good,3,Transfer through PCS Building,Cash,credit card,TRUE,06/08/2019,06/08/2019,50
+198,astather2,sdobinson3,Desert kangaroo rat,NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,06/25/2019,06/25/2019,50
+199,astather2,sdobinson3,Desert kangaroo rat,Will approach caretaker to take care of my pet again,3,Transfer through PCS Building,Cash,credit card,TRUE,06/29/2019,06/29/2019,50
+200,astather2,sdobinson3,Desert kangaroo rat,NULL,4,Transfer through PCS Building,Cash,credit card,FALSE,07/04/2019,07/04/2019,50
+201,astather2,sdobinson3,Desert kangaroo rat,NULL,2,Transfer through PCS Building,Cash,credit card,FALSE,07/07/2019,07/07/2019,50
+202,astather2,sdobinson3,Desert kangaroo rat,Can improve,1,Transfer through PCS Building,Cash,credit card,TRUE,07/12/2019,07/12/2019,50
+203,astather2,sdobinson3,Desert kangaroo rat,NULL,0,Transfer through PCS Building,Cash,credit card,FALSE,07/31/2019,07/31/2019,50
+204,astather2,sdobinson3,Desert kangaroo rat,NULL,0,Transfer through PCS Building,Cash,credit card,FALSE,09/29/2019,09/29/2019,50
+205,astather2,sdobinson3,Desert kangaroo rat,NULL,3,Transfer through PCS Building,Cash,credit card,FALSE,10/25/2019,10/25/2019,50
+206,astather2,sdobinson3,Desert kangaroo rat,NULL,3,Transfer through PCS Building,Cash,credit card,FALSE,10/31/2019,10/31/2019,50
+207,astather2,sdobinson3,Desert kangaroo rat,Very caring,1,Transfer through PCS Building,Cash,credit card,TRUE,11/11/2019,11/11/2019,50
+208,astather2,sdobinson3,Desert kangaroo rat,Can improve,4,Transfer through PCS Building,Cash,credit card,TRUE,11/14/2019,11/14/2019,50
+209,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,2,transport,payment,credit card,FALSE,06/03/2018,06/03/2018,60
+210,nkilloughf,rlongmuire,"Bandicoot, southern brown",Will approach caretaker to take care of my pet again,1,transport,payment,credit card,TRUE,06/09/2018,06/09/2018,60
+211,nkilloughf,rlongmuire,"Bandicoot, southern brown",Will approach caretaker to take care of my pet again,4,transport,payment,credit card,TRUE,06/18/2018,06/18/2018,60
+212,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,3,transport,payment,credit card,FALSE,06/29/2018,06/29/2018,60
+213,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,0,transport,payment,credit card,FALSE,07/04/2018,07/04/2018,60
+214,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,1,transport,payment,credit card,FALSE,07/08/2018,07/08/2018,60
+215,nkilloughf,rlongmuire,"Bandicoot, southern brown",Can improve,3,transport,payment,credit card,TRUE,07/17/2018,07/17/2018,60
+216,nkilloughf,rlongmuire,"Bandicoot, southern brown",Will approach caretaker to take care of my pet again,1,transport,payment,credit card,TRUE,08/11/2018,08/11/2018,60
+217,nkilloughf,rlongmuire,"Bandicoot, southern brown",Very good,0,transport,payment,credit card,TRUE,08/13/2018,08/13/2018,60
+218,nkilloughf,rlongmuire,"Bandicoot, southern brown",Very good,2,transport,payment,credit card,TRUE,09/20/2018,09/20/2018,60
+219,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,2,transport,payment,credit card,FALSE,09/21/2018,09/21/2018,60
+220,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,2,transport,payment,credit card,FALSE,09/23/2018,09/23/2018,60
+221,nkilloughf,rlongmuire,"Bandicoot, southern brown",Can improve,2,transport,payment,credit card,TRUE,09/25/2018,09/25/2018,60
+222,nkilloughf,rlongmuire,"Bandicoot, southern brown",Very caring,4,transport,payment,credit card,TRUE,09/26/2018,09/26/2018,60
+223,nkilloughf,rlongmuire,"Bandicoot, southern brown",Still okay,3,transport,payment,credit card,TRUE,09/30/2018,09/30/2018,60
+224,nkilloughf,rlongmuire,"Bandicoot, southern brown",Very good,1,transport,payment,credit card,TRUE,10/27/2018,10/27/2018,60
+225,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,1,transport,payment,credit card,FALSE,10/28/2018,10/28/2018,60
+226,nkilloughf,rlongmuire,"Bandicoot, southern brown",Can improve,2,transport,payment,credit card,TRUE,11/05/2018,11/05/2018,60
+227,nkilloughf,rlongmuire,"Bandicoot, southern brown",Very caring,2,transport,payment,credit card,TRUE,11/06/2018,11/06/2018,60
+228,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,1,transport,payment,credit card,FALSE,11/18/2018,11/18/2018,60
+229,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,1,transport,payment,credit card,FALSE,11/25/2018,11/25/2018,60
+230,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,1,transport,payment,credit card,FALSE,01/03/2019,01/03/2019,60
+231,nkilloughf,rlongmuire,"Bandicoot, southern brown",Will approach caretaker to take care of my pet again,2,transport,payment,credit card,TRUE,01/06/2019,01/06/2019,60
+232,nkilloughf,rlongmuire,"Bandicoot, southern brown",Very caring,2,transport,payment,credit card,TRUE,01/13/2019,01/13/2019,60
+233,nkilloughf,rlongmuire,"Bandicoot, southern brown",Still okay,2,transport,payment,credit card,TRUE,01/31/2019,01/31/2019,60
+234,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,3,transport,payment,credit card,FALSE,02/28/2019,02/28/2019,60
+235,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,4,transport,payment,credit card,FALSE,03/03/2019,03/03/2019,60
+236,nkilloughf,rlongmuire,"Bandicoot, southern brown",Still okay,1,transport,payment,credit card,TRUE,03/15/2019,03/15/2019,60
+237,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,4,transport,payment,credit card,FALSE,03/24/2019,03/24/2019,60
+238,nkilloughf,rlongmuire,"Bandicoot, southern brown",Can improve,0,transport,payment,credit card,TRUE,04/04/2019,04/04/2019,60
+239,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,1,transport,payment,credit card,FALSE,04/09/2019,04/09/2019,60
+240,nkilloughf,rlongmuire,"Bandicoot, southern brown",Very good,4,transport,payment,credit card,TRUE,04/10/2019,04/10/2019,60
+241,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,3,transport,payment,credit card,FALSE,04/18/2019,04/18/2019,60
+242,nkilloughf,rlongmuire,"Bandicoot, southern brown",Still okay,2,transport,payment,credit card,TRUE,04/21/2019,04/21/2019,60
+243,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,0,transport,payment,credit card,FALSE,04/28/2019,04/28/2019,60
+244,nkilloughf,rlongmuire,"Bandicoot, southern brown",Very caring,1,transport,payment,credit card,TRUE,05/05/2019,05/05/2019,60
+245,nkilloughf,rlongmuire,"Bandicoot, southern brown",Still okay,2,transport,payment,credit card,TRUE,05/06/2019,05/06/2019,60
+246,nkilloughf,rlongmuire,"Bandicoot, southern brown",Still okay,0,transport,payment,credit card,TRUE,06/02/2019,06/02/2019,60
+247,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,4,transport,payment,credit card,FALSE,06/03/2019,06/03/2019,60
+248,nkilloughf,rlongmuire,"Bandicoot, southern brown",Still okay,0,transport,payment,credit card,TRUE,06/11/2019,06/11/2019,60
+249,nkilloughf,rlongmuire,"Bandicoot, southern brown",Will approach caretaker to take care of my pet again,2,transport,payment,credit card,TRUE,07/12/2019,07/12/2019,60
+250,nkilloughf,rlongmuire,"Bandicoot, southern brown",Can improve,0,transport,payment,credit card,TRUE,08/02/2019,08/02/2019,60
+251,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,0,transport,payment,credit card,FALSE,08/21/2019,08/21/2019,60
+252,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,2,transport,payment,credit card,FALSE,09/08/2019,09/08/2019,60
+253,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,3,transport,payment,credit card,FALSE,09/09/2019,09/09/2019,60
+254,nkilloughf,rlongmuire,"Bandicoot, southern brown",Very caring,0,transport,payment,credit card,TRUE,09/10/2019,09/10/2019,60
+255,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,4,transport,payment,credit card,FALSE,09/11/2019,09/11/2019,60
+256,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,2,transport,payment,credit card,FALSE,09/13/2019,09/13/2019,60
+257,nkilloughf,rlongmuire,"Bandicoot, southern brown",Very good,1,transport,payment,credit card,TRUE,09/20/2019,09/20/2019,60
+258,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,3,transport,payment,credit card,FALSE,09/26/2019,09/26/2019,60
+259,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,2,transport,payment,credit card,FALSE,10/09/2019,10/09/2019,60
+260,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,0,transport,payment,credit card,FALSE,10/17/2019,10/17/2019,60
+261,nkilloughf,rlongmuire,"Bandicoot, southern brown",NULL,2,transport,payment,credit card,FALSE,11/02/2019,11/02/2019,60
+262,rlongmuire,dviccars0,"Hornbill, red-billed",Will approach caretaker to take care of my pet again,4,Pet Owner Deliver,Cash,credit card,TRUE,06/04/2018,06/04/2018,80
+263,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,2,Pet Owner Deliver,Cash,credit card,FALSE,06/10/2018,06/10/2018,80
+264,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,3,Pet Owner Deliver,Cash,credit card,FALSE,06/15/2018,06/15/2018,80
+265,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,0,Pet Owner Deliver,Cash,credit card,FALSE,06/19/2018,06/19/2018,80
+266,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,3,Pet Owner Deliver,Cash,credit card,FALSE,06/29/2018,06/29/2018,80
+267,rlongmuire,dviccars0,"Hornbill, red-billed",Very good,0,Pet Owner Deliver,Cash,credit card,TRUE,07/05/2018,07/05/2018,80
+268,rlongmuire,dviccars0,"Hornbill, red-billed",Will approach caretaker to take care of my pet again,3,Pet Owner Deliver,Cash,credit card,TRUE,07/14/2018,07/14/2018,80
+269,rlongmuire,dviccars0,"Hornbill, red-billed",Very good,2,Pet Owner Deliver,Cash,credit card,TRUE,07/18/2018,07/18/2018,80
+270,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,3,Pet Owner Deliver,Cash,credit card,FALSE,07/29/2018,07/29/2018,80
+271,rlongmuire,dviccars0,"Hornbill, red-billed",Will approach caretaker to take care of my pet again,2,Pet Owner Deliver,Cash,credit card,TRUE,08/14/2018,08/14/2018,80
+272,rlongmuire,dviccars0,"Hornbill, red-billed",Still okay,2,Pet Owner Deliver,Cash,credit card,TRUE,08/29/2018,08/29/2018,80
+273,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,1,Pet Owner Deliver,Cash,credit card,FALSE,09/07/2018,09/07/2018,80
+274,rlongmuire,dviccars0,"Hornbill, red-billed",Very caring,0,Pet Owner Deliver,Cash,credit card,TRUE,09/18/2018,09/18/2018,80
+275,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,0,Pet Owner Deliver,Cash,credit card,FALSE,09/20/2018,09/20/2018,80
+276,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,0,Pet Owner Deliver,Cash,credit card,FALSE,09/21/2018,09/21/2018,80
+277,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,2,Pet Owner Deliver,Cash,credit card,FALSE,09/27/2018,09/27/2018,80
+278,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,1,Pet Owner Deliver,Cash,credit card,FALSE,09/30/2018,09/30/2018,80
+279,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,3,Pet Owner Deliver,Cash,credit card,FALSE,10/07/2018,10/07/2018,80
+280,rlongmuire,dviccars0,"Hornbill, red-billed",Can improve,4,Pet Owner Deliver,Cash,credit card,TRUE,10/15/2018,10/15/2018,80
+281,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,4,Pet Owner Deliver,Cash,credit card,FALSE,10/16/2018,10/16/2018,80
+282,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,3,Pet Owner Deliver,Cash,credit card,FALSE,10/22/2018,10/22/2018,80
+283,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,1,Pet Owner Deliver,Cash,credit card,FALSE,10/27/2018,10/27/2018,80
+284,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,1,Pet Owner Deliver,Cash,credit card,FALSE,11/02/2018,11/02/2018,80
+285,rlongmuire,dviccars0,"Hornbill, red-billed",Will approach caretaker to take care of my pet again,2,Pet Owner Deliver,Cash,credit card,TRUE,11/04/2018,11/04/2018,80
+286,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,2,Pet Owner Deliver,Cash,credit card,FALSE,11/05/2018,11/05/2018,80
+287,rlongmuire,dviccars0,"Hornbill, red-billed",Very good,0,Pet Owner Deliver,Cash,credit card,TRUE,11/06/2018,11/06/2018,80
+288,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,1,Pet Owner Deliver,Cash,credit card,FALSE,11/19/2018,11/19/2018,80
+289,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,2,Pet Owner Deliver,Cash,credit card,FALSE,11/21/2018,11/21/2018,80
+290,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,3,Pet Owner Deliver,Cash,credit card,FALSE,11/26/2018,11/26/2018,80
+291,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,3,Pet Owner Deliver,Cash,credit card,FALSE,11/27/2018,11/27/2018,80
+292,rlongmuire,dviccars0,"Hornbill, red-billed",Will approach caretaker to take care of my pet again,0,Pet Owner Deliver,Cash,credit card,TRUE,12/29/2018,12/29/2018,80
+293,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,0,Pet Owner Deliver,Cash,credit card,FALSE,01/10/2019,01/10/2019,80
+294,rlongmuire,dviccars0,"Hornbill, red-billed",Will approach caretaker to take care of my pet again,2,Pet Owner Deliver,Cash,credit card,TRUE,01/16/2019,01/16/2019,80
+295,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,0,Pet Owner Deliver,Cash,credit card,FALSE,01/19/2019,01/19/2019,80
+296,rlongmuire,dviccars0,"Hornbill, red-billed",Still okay,4,Pet Owner Deliver,Cash,credit card,TRUE,02/01/2019,02/01/2019,80
+297,rlongmuire,dviccars0,"Hornbill, red-billed",Can improve,3,Pet Owner Deliver,Cash,credit card,TRUE,02/08/2019,02/08/2019,80
+298,rlongmuire,dviccars0,"Hornbill, red-billed",Can improve,4,Pet Owner Deliver,Cash,credit card,TRUE,02/19/2019,02/19/2019,80
+299,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,1,Pet Owner Deliver,Cash,credit card,FALSE,02/27/2019,02/27/2019,80
+300,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,2,Pet Owner Deliver,Cash,credit card,FALSE,03/08/2019,03/08/2019,80
+301,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,4,Pet Owner Deliver,Cash,credit card,FALSE,03/09/2019,03/09/2019,80
+302,rlongmuire,dviccars0,"Hornbill, red-billed",Can improve,2,Pet Owner Deliver,Cash,credit card,TRUE,03/20/2019,03/20/2019,80
+303,rlongmuire,dviccars0,"Hornbill, red-billed",Very caring,4,Pet Owner Deliver,Cash,credit card,TRUE,03/29/2019,03/29/2019,80
+304,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,3,Pet Owner Deliver,Cash,credit card,FALSE,04/01/2019,04/01/2019,80
+305,rlongmuire,dviccars0,"Hornbill, red-billed",Can improve,3,Pet Owner Deliver,Cash,credit card,TRUE,04/05/2019,04/05/2019,80
+306,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,0,Pet Owner Deliver,Cash,credit card,FALSE,04/27/2019,04/27/2019,80
+307,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,3,Pet Owner Deliver,Cash,credit card,FALSE,05/06/2019,05/06/2019,80
+308,rlongmuire,dviccars0,"Hornbill, red-billed",Very good,3,Pet Owner Deliver,Cash,credit card,TRUE,05/13/2019,05/13/2019,80
+309,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,4,Pet Owner Deliver,Cash,credit card,FALSE,05/17/2019,05/17/2019,80
+310,rlongmuire,dviccars0,"Hornbill, red-billed",Very caring,4,Pet Owner Deliver,Cash,credit card,TRUE,05/25/2019,05/25/2019,80
+311,rlongmuire,dviccars0,"Hornbill, red-billed",Can improve,4,Pet Owner Deliver,Cash,credit card,TRUE,05/26/2019,05/26/2019,80
+312,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,0,Pet Owner Deliver,Cash,credit card,FALSE,06/03/2019,06/03/2019,80
+313,rlongmuire,dviccars0,"Hornbill, red-billed",Very caring,4,Pet Owner Deliver,Cash,credit card,TRUE,06/05/2019,06/05/2019,80
+314,rlongmuire,dviccars0,"Hornbill, red-billed",Still okay,0,Pet Owner Deliver,Cash,credit card,TRUE,06/10/2019,06/10/2019,80
+315,rlongmuire,dviccars0,"Hornbill, red-billed",Very good,3,Pet Owner Deliver,Cash,credit card,TRUE,06/24/2019,06/24/2019,80
+316,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,3,Pet Owner Deliver,Cash,credit card,FALSE,07/05/2019,07/05/2019,80
+317,rlongmuire,dviccars0,"Hornbill, red-billed",Can improve,0,Pet Owner Deliver,Cash,credit card,TRUE,08/04/2019,08/04/2019,80
+318,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,2,Pet Owner Deliver,Cash,credit card,FALSE,08/08/2019,08/08/2019,80
+319,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,1,Pet Owner Deliver,Cash,credit card,FALSE,08/11/2019,08/11/2019,80
+320,rlongmuire,dviccars0,"Hornbill, red-billed",Very caring,1,Pet Owner Deliver,Cash,credit card,TRUE,08/29/2019,08/29/2019,80
+321,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,2,Pet Owner Deliver,Cash,credit card,FALSE,09/04/2019,09/04/2019,80
+322,rlongmuire,dviccars0,"Hornbill, red-billed",Very caring,0,Pet Owner Deliver,Cash,credit card,TRUE,10/17/2019,10/17/2019,80
+323,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,1,Pet Owner Deliver,Cash,credit card,FALSE,10/21/2019,10/21/2019,80
+324,rlongmuire,dviccars0,"Hornbill, red-billed",NULL,3,Pet Owner Deliver,Cash,credit card,FALSE,10/27/2019,10/27/2019,80
+325,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,4,transport,payment,credit card,FALSE,06/07/2018,06/07/2018,80
+326,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,0,transport,payment,credit card,FALSE,06/17/2018,06/17/2018,80
+327,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,1,transport,payment,credit card,FALSE,07/04/2018,07/04/2018,80
+328,sbaylyk,dviccars0,"Hornbill, red-billed",Very caring,1,transport,payment,credit card,TRUE,07/12/2018,07/12/2018,80
+329,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,1,transport,payment,credit card,FALSE,08/27/2018,08/27/2018,80
+330,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,2,transport,payment,credit card,FALSE,09/16/2018,09/16/2018,80
+331,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,2,transport,payment,credit card,FALSE,09/17/2018,09/17/2018,80
+332,sbaylyk,dviccars0,"Hornbill, red-billed",Very caring,0,transport,payment,credit card,TRUE,09/22/2018,09/22/2018,80
+333,sbaylyk,dviccars0,"Hornbill, red-billed",Will approach caretaker to take care of my pet again,4,transport,payment,credit card,TRUE,09/28/2018,09/28/2018,80
+334,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,3,transport,payment,credit card,FALSE,10/03/2018,10/03/2018,80
+335,sbaylyk,dviccars0,"Hornbill, red-billed",Will approach caretaker to take care of my pet again,1,transport,payment,credit card,TRUE,10/10/2018,10/10/2018,80
+336,sbaylyk,dviccars0,"Hornbill, red-billed",Will approach caretaker to take care of my pet again,3,transport,payment,credit card,TRUE,10/19/2018,10/19/2018,80
+337,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,0,transport,payment,credit card,FALSE,10/26/2018,10/26/2018,80
+338,sbaylyk,dviccars0,"Hornbill, red-billed",Will approach caretaker to take care of my pet again,0,transport,payment,credit card,TRUE,10/29/2018,10/29/2018,80
+339,sbaylyk,dviccars0,"Hornbill, red-billed",Will approach caretaker to take care of my pet again,1,transport,payment,credit card,TRUE,11/08/2018,11/08/2018,80
+340,sbaylyk,dviccars0,"Hornbill, red-billed",Very caring,0,transport,payment,credit card,TRUE,11/10/2018,11/10/2018,80
+341,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,4,transport,payment,credit card,FALSE,11/24/2018,11/24/2018,80
+342,sbaylyk,dviccars0,"Hornbill, red-billed",Will approach caretaker to take care of my pet again,3,transport,payment,credit card,TRUE,11/25/2018,11/25/2018,80
+343,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,3,transport,payment,credit card,FALSE,12/02/2018,12/02/2018,80
+344,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,3,transport,payment,credit card,FALSE,12/16/2018,12/16/2018,80
+345,sbaylyk,dviccars0,"Hornbill, red-billed",Very good,2,transport,payment,credit card,TRUE,12/23/2018,12/23/2018,80
+346,sbaylyk,dviccars0,"Hornbill, red-billed",Still okay,3,transport,payment,credit card,TRUE,12/26/2018,12/26/2018,80
+347,sbaylyk,dviccars0,"Hornbill, red-billed",Will approach caretaker to take care of my pet again,4,transport,payment,credit card,TRUE,12/27/2018,12/27/2018,80
+348,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,2,transport,payment,credit card,FALSE,01/18/2019,01/18/2019,80
+349,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,1,transport,payment,credit card,FALSE,01/29/2019,01/29/2019,80
+350,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,3,transport,payment,credit card,FALSE,02/05/2019,02/05/2019,80
+351,sbaylyk,dviccars0,"Hornbill, red-billed",Very caring,2,transport,payment,credit card,TRUE,02/17/2019,02/17/2019,80
+352,sbaylyk,dviccars0,"Hornbill, red-billed",Will approach caretaker to take care of my pet again,1,transport,payment,credit card,TRUE,02/26/2019,02/26/2019,80
+353,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,2,transport,payment,credit card,FALSE,03/02/2019,03/02/2019,80
+354,sbaylyk,dviccars0,"Hornbill, red-billed",Will approach caretaker to take care of my pet again,0,transport,payment,credit card,TRUE,03/16/2019,03/16/2019,80
+355,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,2,transport,payment,credit card,FALSE,03/27/2019,03/27/2019,80
+356,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,3,transport,payment,credit card,FALSE,03/31/2019,03/31/2019,80
+357,sbaylyk,dviccars0,"Hornbill, red-billed",Can improve,1,transport,payment,credit card,TRUE,05/11/2019,05/11/2019,80
+358,sbaylyk,dviccars0,"Hornbill, red-billed",Can improve,3,transport,payment,credit card,TRUE,05/12/2019,05/12/2019,80
+359,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,4,transport,payment,credit card,FALSE,05/15/2019,05/15/2019,80
+360,sbaylyk,dviccars0,"Hornbill, red-billed",Will approach caretaker to take care of my pet again,3,transport,payment,credit card,TRUE,05/19/2019,05/19/2019,80
+361,sbaylyk,dviccars0,"Hornbill, red-billed",Very good,4,transport,payment,credit card,TRUE,05/29/2019,05/29/2019,80
+362,sbaylyk,dviccars0,"Hornbill, red-billed",Can improve,3,transport,payment,credit card,TRUE,06/07/2019,06/07/2019,80
+363,sbaylyk,dviccars0,"Hornbill, red-billed",Very good,0,transport,payment,credit card,TRUE,06/14/2019,06/14/2019,80
+364,sbaylyk,dviccars0,"Hornbill, red-billed",Very caring,2,transport,payment,credit card,TRUE,06/15/2019,06/15/2019,80
+365,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,4,transport,payment,credit card,FALSE,06/28/2019,06/28/2019,80
+366,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,1,transport,payment,credit card,FALSE,07/06/2019,07/06/2019,80
+367,sbaylyk,dviccars0,"Hornbill, red-billed",Will approach caretaker to take care of my pet again,4,transport,payment,credit card,TRUE,07/21/2019,07/21/2019,80
+368,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,4,transport,payment,credit card,FALSE,07/26/2019,07/26/2019,80
+369,sbaylyk,dviccars0,"Hornbill, red-billed",Will approach caretaker to take care of my pet again,0,transport,payment,credit card,TRUE,07/29/2019,07/29/2019,80
+370,sbaylyk,dviccars0,"Hornbill, red-billed",Can improve,1,transport,payment,credit card,TRUE,08/07/2019,08/07/2019,80
+371,sbaylyk,dviccars0,"Hornbill, red-billed",Will approach caretaker to take care of my pet again,2,transport,payment,credit card,TRUE,08/13/2019,08/13/2019,80
+372,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,4,transport,payment,credit card,FALSE,08/19/2019,08/19/2019,80
+373,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,3,transport,payment,credit card,FALSE,08/25/2019,08/25/2019,80
+374,sbaylyk,dviccars0,"Hornbill, red-billed",Will approach caretaker to take care of my pet again,1,transport,payment,credit card,TRUE,08/28/2019,08/28/2019,80
+375,sbaylyk,dviccars0,"Hornbill, red-billed",Still okay,0,transport,payment,credit card,TRUE,08/30/2019,08/30/2019,80
+376,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,0,transport,payment,credit card,FALSE,09/09/2019,09/09/2019,80
+377,sbaylyk,dviccars0,"Hornbill, red-billed",Very caring,4,transport,payment,credit card,TRUE,09/13/2019,09/13/2019,80
+378,sbaylyk,dviccars0,"Hornbill, red-billed",Will approach caretaker to take care of my pet again,0,transport,payment,credit card,TRUE,09/28/2019,09/28/2019,80
+379,sbaylyk,dviccars0,"Hornbill, red-billed",Still okay,4,transport,payment,credit card,TRUE,10/08/2019,10/08/2019,80
+380,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,2,transport,payment,credit card,FALSE,10/11/2019,10/11/2019,80
+381,sbaylyk,dviccars0,"Hornbill, red-billed",Very caring,1,transport,payment,credit card,TRUE,10/29/2019,10/29/2019,80
+382,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,3,transport,payment,credit card,FALSE,10/31/2019,10/31/2019,80
+383,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,3,transport,payment,credit card,FALSE,11/04/2019,11/04/2019,80
+384,sbaylyk,dviccars0,"Hornbill, red-billed",NULL,3,transport,payment,credit card,FALSE,11/13/2019,11/13/2019,80
+385,sbaylyk,dviccars0,"Hornbill, red-billed",Can improve,3,transport,payment,credit card,TRUE,11/16/2019,11/16/2019,80
+386,sbaylyk,dviccars0,"Hornbill, red-billed",Can improve,3,transport,payment,credit card,TRUE,11/19/2019,11/19/2019,80
