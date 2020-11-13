@@ -1,0 +1,6 @@
+{% extends "layout.html" %}
+{% block content %}
+  <p>Hi there {{ current_user.username }}</p>
+  <p>Below is the number of jobs in each month for each pet category!.</p>
+{{ table }}
+{% endblock %}

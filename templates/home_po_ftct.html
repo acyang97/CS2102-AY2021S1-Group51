@@ -1,0 +1,103 @@
+{% extends "layout.html" %}
+{% block content %}
+
+  <div class="row">
+  <div class="card" style="width: 18rem;">
+  <img src="static/images/petimage3.jpg" class="img-fluid">
+  <div class="card-body">
+    <h5 class="card-title">If you are new Pet Owner here:</h5>
+    <h5>Register your pets here!</h5>
+    <a href="{{ url_for('view.registerpet') }}" class="btn btn-primary">Register your pet</a>
+  </div>
+  </div>
+  <div class="card" style="width: 18rem;">
+  <img src="static/images/petimage3.jpg" class="img-fluid">
+  <div class="card-body">
+    <h5>Search for a Care Taker here!</h5>
+    <a href="{{ url_for('view.search_caretaker')}}" class="btn btn-primary">Search for a Care Taker</a>
+  </div>
+  </div>
+  </div>
+  <div class="row">
+  <div class="card" style="width: 18rem;">
+  <img src="static/images/petimage3.jpg" class="img-fluid">
+  <div class="card-body">
+    <h5>View your registered pets here!</h5>
+    <a href="{{ url_for('view.petlist')}}" class="btn btn-primary">View registered pets</a>
+  </div>
+  </div>
+  <div class="card" style="width: 18rem;">
+  <img src="static/images/petimage3.jpg" class="img-fluid">
+  <div class="card-body">
+    <h5>Testing</h5>
+    <a href="{{ url_for('view.testing')}}" class="btn btn-primary">Test Button</a>
+  </div>
+  </div>
+  </div>
+  <div class="row">
+  <div class="card" style="width: 18rem;">
+  <img src="static/images/petimage3.jpg" class="img-fluid">
+  <div class="card-body">
+    <h5>Look at your completed reviewed history here!</h5>
+    <a href="{{ url_for('view.petowner_completed_transactions_with_review')}}" class="btn btn-primary">View history</a>
+  </div>
+  </div>
+  <div class="card" style="width: 18rem;">
+  <img src="static/images/petimage3.jpg" class="img-fluid">
+  <div class="card-body">
+    <h5>Look at your unreviewed completed transactions here!</h5>
+    <a href="{{ url_for('view.petowner_completed_transactions_without_review')}}" class="btn btn-primary">Review completed transactions</a>
+  </div>
+  </div>
+  </div>
+  <div class="row">
+  <div class="card" style="width: 18rem;">
+  <img src="static/images/petimage3.jpg" class="img-fluid">
+  <div class="card-body">
+    <h5>Look at your incomplete transactions here!</h5>
+    <a href="{{ url_for('view.petowner_incomplete_transactions')}}" class="btn btn-primary">View incomplete transactions</a>
+  </div>
+  </div>
+  <div class="card" style="width: 18rem;">
+  <img src="static/images/petimage3.jpg" class="img-fluid">
+  <div class="card-body">
+    <h5>Look at the caretakers around your area here!</h5>
+    <a href="{{ url_for('view.petowner_view_caretakers_samearea')}}" class="btn btn-primary">Explore</a>
+  </div>
+  </div>
+  </div>
+  <br>
+  <div class="row">
+  <div class="card" style="width: 18rem;">
+  <img src="static/images/petimage2.jpg" class="img-fluid">
+  <div class="card-body">
+    <h5 class="card-title">For New CareTakers:</h5>
+    <h5>Choose the pet types you want to take care of here!</h5>
+    <a href="{{ url_for('view.full_time_choose_pet')}}" class="btn btn-primary">Choose pet types</a>
+  </div>
+  </div>
+  <div class="card" style="width: 18rem;">
+  <img src="static/images/petimage2.jpg" class="img-fluid">
+  <div class="card-body">
+    <h5>Update your availability dates here!</h5>
+    <a href="{{ url_for('view.caretaker_update_availability')}}" class="btn btn-primary">Update availability</a>
+  </div>
+  </div>
+  </div>
+  <div class="row">
+  <div class="card" style="width: 18rem;">
+  <img src="static/images/petimage2.jpg" class="img-fluid">
+  <div class="card-body">
+    <h5>Look at your incomplete/upcoming transactions here!</h5>
+    <a href="{{ url_for('view.caretaker_incomplete_transactions')}}" class="btn btn-primary">View transactions</a>
+  </div>
+  </div>
+  <div class="card" style="width: 18rem;">
+  <img src="static/images/petimage2.jpg" class="img-fluid">
+  <div class="card-body">
+    <h5>Look at your completed transactions here!</h5>
+    <a href="{{ url_for('view.caretaker_completed_transactions')}}" class="btn btn-primary">Completed transactions</a>
+  </div>
+  </div>
+  </div>
+{% endblock content %}
