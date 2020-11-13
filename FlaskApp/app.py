@@ -1,4 +1,4 @@
-from __init__ import db, login_manager
+from .__init__ import db, login_manager
 from .views import view
 from .models import Users
 #
