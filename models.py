@@ -1,3 +1,4 @@
+
 from __init__ import db
 
 class Users(db.Model):

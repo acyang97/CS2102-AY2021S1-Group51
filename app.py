@@ -44,6 +44,8 @@ login_manager.init_app(app)
 #        port = int(os.environ.get("PORT", 5000))
 #    )
 
+port = int(os.environ.get('PORT', 33507))
+
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 5000))
+    app.debug = True
     app.run(host='0.0.0.0', port=port)
