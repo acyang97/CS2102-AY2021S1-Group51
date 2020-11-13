@@ -1,7 +1,7 @@
 from __init__ import db, login_manager
 from views import view
 from models import Users
-
+#
 from flask import Flask
 from flask_login import UserMixin
 #from flask_admin.contrib.sqla import ModelView
