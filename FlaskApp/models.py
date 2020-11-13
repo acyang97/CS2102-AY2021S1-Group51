@@ -1,5 +1,6 @@
 #from __init__ import db
-from app import db
+#from app import db
+from FlaskApp import db
 
 class Users(db.Model):
     username = db.Column(db.String, primary_key=True)

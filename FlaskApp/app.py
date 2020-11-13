@@ -1,6 +1,9 @@
 #from __init__ import db, login_manager
-from views import view
-from models import Users
+#from views import view
+#from models import Users
+
+from FlaskApp import Users
+from FlaskApp import view
 
 from flask import Flask
 from flask_login import UserMixin
