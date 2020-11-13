@@ -1,7 +1,7 @@
-from .__init__ import db, login_manager
-from .views import view
-from .models import Users
-#
+from __init__ import db, login_manager
+from views import view
+from models import Users
+
 from flask import Flask
 from flask_login import UserMixin
 #from flask_admin.contrib.sqla import ModelView
@@ -43,6 +43,7 @@ login_manager.init_app(app)
 #        #port=5000
 #        port = int(os.environ.get("PORT", 5000))
 #    )
+
 port = int(os.environ.get('PORT', 33507))
 
 if __name__ == "__main__":
