@@ -1,5 +1,4 @@
-#from __init__ import db, login_manager
-from app import db, login_manager
+from __init__ import db, login_manager
 from flask import Blueprint, redirect, render_template, flash, url_for, request, session
 from flask_login import current_user, login_required, login_user, UserMixin, logout_user
 from flask_bootstrap import Bootstrap
