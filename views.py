@@ -829,7 +829,7 @@ def petowner_bid_selected():
     end_date = session['selectedCaretaker'][6]
     price = session['price_to_pay']
     overlap_date_query = "SELECT COUNT(*) FROM bids WHERE \
-        ()(start_date <= '{}' AND start_date >= '{}') \
+        ((start_date <= '{}' AND start_date >= '{}') \
         OR  (end_date <= '{}' AND end_date >= '{}') \
         OR (start_date <= '{}' AND end_date >= '{})) AND pet_name = '{}' AND owner = '{}'".format(end_date, start_date, end_date, start_date, start_date, end_date, pet_name, owner)
     if db.session.execute(overlap_date_query).fetchone()[0] > 0:
