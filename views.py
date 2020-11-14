@@ -817,6 +817,8 @@ def petowner_bid_selected():
     return redirect(url_for('view.search_caretaker'))
 """
 
+@view.route("/petowner-select-pet", methods=["POST", "GET"])
+@login_required
 def petowner_bid_selected():
     #[employment, category, rating, transport, payment, startDate, endDate]
     ctusername = session['selectedCaretakerUsername']
