@@ -1267,5 +1267,5 @@ def user_update_password():
         query = "UPDATE Users SET password = '{}' WHERE username = '{}'".format(new_password, current_user.username)
         db.session.execute(query)
         db.session.commit()
-    flash('Successfully changed password!', 'success')
+        flash('Successfully changed password!', 'success')
     return render_template("update_password.html", form=form)
