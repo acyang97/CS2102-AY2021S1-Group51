@@ -795,6 +795,7 @@ def petowner_bids():
 TODO: find the price per day and insert it inside as well.
 For now i just put 0 cus quite confused.
 """
+"""
 @view.route("/petowner-select-pet", methods=["POST", "GET"])
 @login_required
 def petowner_bid_selected():
@@ -808,6 +809,38 @@ def petowner_bid_selected():
     start_date = session['selectedCaretaker'][5]
     end_date = session['selectedCaretaker'][6]
     price = session['price_to_pay']
+    bidid = db.session.execute("SELECT COUNT(*) FROM BIDS").fetchone()[0] + 1
+    query = "INSERT INTO bids (bid_id, ctusername, owner, pet_name, mode_of_transport, mode_of_payment, completed, \
+    start_date, end_date, price_per_day) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')". \
+    format(bidid, ctusername, owner, pet_name, mode_of_transport, mode_of_payment, completed, start_date, end_date, price)
+
+    db.session.execute(query)
+    db.session.commit()
+
+    flash('You have successfully added {}'.format(request.args.get('pet_name')), 'Success')
+    return redirect(url_for('view.search_caretaker'))
+"""
+
+@view.route("/petowner-select-pet", methods=["POST", "GET"])
+@login_required
+def petowner_bid_selected():
+    #[employment, category, rating, transport, payment, startDate, endDate]
+    ctusername = session['selectedCaretakerUsername']
+    owner = current_user.username
+    pet_name = request.args.get('pet_name')
+    mode_of_transport = session['selectedCaretaker'][3]
+    mode_of_payment = session['selectedCaretaker'][4]
+    completed = 'f'
+    start_date = session['selectedCaretaker'][5]
+    end_date = session['selectedCaretaker'][6]
+    price = session['price_to_pay']
+    overlap_date_query = "SELECT COUNT(*) FROM bids WHERE \
+        (start_date <= {end_date} AND start_date >= {start_date}) \
+        OR  (end_date <= {end_date} AND end_date >= {start_date}) \
+        OR (start_date <= {start_date} AND end_date >= {end_date})".format(end_date, start_date, end_date, start_date, start_date, end_date)
+    if db.session.execute(overlap_date_query) > 0:
+        flash("You already made a bid on that day!", 'error')
+        return redirect(url_for('view.search_caretaker'))
     bidid = db.session.execute("SELECT COUNT(*) FROM BIDS").fetchone()[0] + 1
     query = "INSERT INTO bids (bid_id, ctusername, owner, pet_name, mode_of_transport, mode_of_payment, completed, \
     start_date, end_date, price_per_day) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')". \
