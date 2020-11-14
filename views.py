@@ -1222,7 +1222,7 @@ def admin_view_jobs_by_pet_type_summary():
         AND O.category = 'Mice' \
         GROUP BY C.year, C.month) AS dummy7 ON CTS.year = dummy7.year AND CTS.month = dummy7.month \
       ) \
-      select year, month, dog, cat, bird, terrapin, rabbit, hamster, fish, mice, \
+      select DISTINCT year, month, dog, cat, bird, terrapin, rabbit, hamster, fish, mice, \
       (dog + cat + bird + terrapin + rabbit + hamster + fish + mice) AS total \
       FROM cte \
       ORDER BY year, month"
