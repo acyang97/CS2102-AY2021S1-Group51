@@ -791,7 +791,7 @@ def petowner_bids():
     session['selectedCaretakerUsername'] = caretaker
     return render_template("bid.html", username=caretaker, pet_table=ownedpets, prices=prices)
 
-"""
+
 @view.route("/petowner-select-pet", methods=["POST", "GET"])
 @login_required
 def petowner_bid_selected():
@@ -815,8 +815,8 @@ def petowner_bid_selected():
 
     flash('You have successfully added {}'.format(request.args.get('pet_name')), 'Success')
     return redirect(url_for('view.search_caretaker'))
-"""
 
+"""
 def petowner_bid_selected():
     #[employment, category, rating, transport, payment, startDate, endDate]
     ctusername = session['selectedCaretakerUsername']
@@ -845,6 +845,7 @@ def petowner_bid_selected():
 
     flash('You have successfully added {}'.format(request.args.get('pet_name')), 'Success')
     return redirect(url_for('view.search_caretaker'))
+"""
 """
 @view.route("/petowner-select-pet", methods=["POST", "GET"])
 @login_required
