@@ -955,8 +955,6 @@ def petowner_completed_transactions_with_review():
     return render_template("petowner_completed_transactions_with_review.html", table=table)
 
 
-
-"""
 Set a route for thE CARE TAKERS to see their COMPLETED transactions
 """
 @view.route("/caretaker_completed_transactions", methods=["POST", "GET"])
