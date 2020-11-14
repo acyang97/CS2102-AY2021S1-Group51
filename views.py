@@ -838,7 +838,7 @@ def petowner_bid_selected():
         (start_date <= {end_date} AND start_date >= {start_date}) \
         OR  (end_date <= {end_date} AND end_date >= {start_date}) \
         OR (start_date <= {start_date} AND end_date >= {end_date})".format(end_date, start_date, end_date, start_date, start_date, end_date)
-    if db.session.execute(overlap_date_query) > 0:
+    if db.session.execute(overlap_date_query).fetchone()[0] > 0:
         flash("You already made a bid on that day!", 'error')
         return redirect(url_for('view.search_caretaker'))
     bidid = db.session.execute("SELECT COUNT(*) FROM BIDS").fetchone()[0] + 1
@@ -1269,3 +1269,10 @@ def user_update_password():
         db.session.commit()
         flash('Successfully changed password!', 'success')
     return render_template("update_password.html", form=form)
+
+"""
+@view.route("/admin_total_user_count_summary", methods = ["POST", "GET"])
+@login_required
+def admin_total_user_count_summary():
+    query_user_count = "SELECT COUNT(*) FROM Users";
+"""
