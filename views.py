@@ -1270,7 +1270,6 @@ def user_update_password():
         flash('Successfully changed password!', 'success')
     return render_template("update_password.html", form=form)
 
-"""
 @view.route("/admin_total_user_count_summary", methods = ["POST", "GET"])
 @login_required
 def admin_total_user_count_summary():
@@ -1280,4 +1279,4 @@ def admin_total_user_count_summary():
     user_count = db.session.execute(query_user_count).fetchone()[0]
     petowner_count = db.session.execute(query_petowner_count).fetchone()[0]
     caretaker_count = db.session.execute(query_caretaker_count).fetchone()[0]
-"""
+    return render_template("admin_total_user_count_summary.html", user_count=user_count, petowner_count=petowner_count, caretaker_count=caretaker_count)
