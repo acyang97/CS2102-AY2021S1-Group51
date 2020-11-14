@@ -795,7 +795,7 @@ def petowner_bids():
 TODO: find the price per day and insert it inside as well.
 For now i just put 0 cus quite confused.
 """
-"""
+
 @view.route("/petowner-select-pet", methods=["POST", "GET"])
 @login_required
 def petowner_bid_selected():
@@ -819,8 +819,9 @@ def petowner_bid_selected():
 
     flash('You have successfully added {}'.format(request.args.get('pet_name')), 'Success')
     return redirect(url_for('view.search_caretaker'))
-"""
 
+
+"""
 @view.route("/petowner-select-pet", methods=["POST", "GET"])
 @login_required
 def petowner_bid_selected():
@@ -851,7 +852,7 @@ def petowner_bid_selected():
 
     flash('You have successfully added {}'.format(request.args.get('pet_name')), 'Success')
     return redirect(url_for('view.search_caretaker'))
-
+"""
 
 @view.route("/testing", methods=["POST","GET"])
 @login_required
