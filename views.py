@@ -791,7 +791,7 @@ def petowner_bids():
     session['selectedCaretakerUsername'] = caretaker
     return render_template("bid.html", username=caretaker, pet_table=ownedpets, prices=prices)
 
-
+"""
 @view.route("/petowner-select-pet", methods=["POST", "GET"])
 @login_required
 def petowner_bid_selected():
@@ -815,8 +815,8 @@ def petowner_bid_selected():
 
     flash('You have successfully added {}'.format(request.args.get('pet_name')), 'Success')
     return redirect(url_for('view.search_caretaker'))
-
 """
+
 def petowner_bid_selected():
     #[employment, category, rating, transport, payment, startDate, endDate]
     ctusername = session['selectedCaretakerUsername']
@@ -829,9 +829,9 @@ def petowner_bid_selected():
     end_date = session['selectedCaretaker'][6]
     price = session['price_to_pay']
     overlap_date_query = "SELECT COUNT(*) FROM bids WHERE \
-        (start_date <= '{}' AND start_date >= '{}') \
+        ()(start_date <= '{}' AND start_date >= '{}') \
         OR  (end_date <= '{}' AND end_date >= '{}') \
-        OR (start_date <= '{}' AND end_date >= '{}')".format(end_date, start_date, end_date, start_date, start_date, end_date)
+        OR (start_date <= '{}' AND end_date >= '{})) AND pet_name = '{}' AND owner = '{}'".format(end_date, start_date, end_date, start_date, start_date, end_date, pet_name, owner)
     if db.session.execute(overlap_date_query).fetchone()[0] > 0:
         flash("You already made a bid on that day!", 'error')
         return redirect(url_for('view.search_caretaker'))
@@ -845,7 +845,7 @@ def petowner_bid_selected():
 
     flash('You have successfully added {}'.format(request.args.get('pet_name')), 'Success')
     return redirect(url_for('view.search_caretaker'))
-"""
+
 """
 @view.route("/petowner-select-pet", methods=["POST", "GET"])
 @login_required
