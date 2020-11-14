@@ -1160,6 +1160,9 @@ def admin_view_underperforming_caretakers():
         return render_template("admin_view_underperforming_caretakers.html", table=table, form=form)
     return render_template("admin_view_underperforming_caretakers.html", form = form)
 
+"""
+Route to view jobs by pet type summary for the admin
+"""
 @view.route("/admin_view_jobs_by_pet_type_summary", methods = ["POST", "GET"])
 @login_required
 def admin_view_jobs_by_pet_type_summary():
