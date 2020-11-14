@@ -222,7 +222,7 @@ class AdminViewUnderperformingCareTakerForm(FlaskForm):
 
 class ChangePasswordForm(FlaskForm):
     old_password = PasswordField('Old Password', validators=[DataRequired()])
-    new_password = PasswordField('New Passwrod', validators=[DataRequired()])
+    new_password = PasswordField('New Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password',
-                                     validators=[DataRequired(), EqualTo('new_assword')])
+                                     validators=[DataRequired(), EqualTo('new_password')])
     submit = SubmitField('Change Password!')
