@@ -836,7 +836,7 @@ def petowner_bid_selected():
         OR (end_date <= '{}' AND end_date >= '{}') \
         OR (start_date <= '{}' AND end_date >= '{}')) AND pet_name = '{}' AND owner = '{}'".format(end_date, start_date, end_date, start_date, start_date, end_date, pet_name, owner)
     if db.session.execute(overlap_date_query).fetchone()[0] > 0:
-        flash("You already made a bid on that day!", 'error')
+        flash("You already made a bid on that day for this pet!", 'error')
         return redirect(url_for('view.search_caretaker'))
     bidid = db.session.execute("SELECT COUNT(*) FROM BIDS").fetchone()[0] + 1
     query = "INSERT INTO bids (bid_id, ctusername, owner, pet_name, mode_of_transport, mode_of_payment, completed, \
