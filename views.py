@@ -849,6 +849,7 @@ def petowner_bid_selected():
     return redirect(url_for('view.search_caretaker'))
 
 """
+"""
 @view.route("/petowner-select-pet", methods=["POST", "GET"])
 @login_required
 def petowner_bid_selected():
@@ -954,7 +955,7 @@ def petowner_completed_transactions_with_review():
     table.border = True
     return render_template("petowner_completed_transactions_with_review.html", table=table)
 
-
+"""
 Set a route for thE CARE TAKERS to see their COMPLETED transactions
 """
 @view.route("/caretaker_completed_transactions", methods=["POST", "GET"])
