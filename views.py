@@ -768,7 +768,8 @@ def selected_filtered_caretaker_history():
 @login_required
 def petowner_bids():
     caretaker = request.args.get('username')
-    ownedpetsquery = "SELECT * FROM ownedpets WHERE owner = '{}' AND category ='{}' AND pet_name NOT IN (SELECT pet_name FROM bids where owner = '{}')".format(current_user.username, session['selectedCaretaker'][1], current_user.username)
+    #ownedpetsquery = "SELECT * FROM ownedpets WHERE owner = '{}' AND category ='{}' AND pet_name NOT IN (SELECT pet_name FROM bids where owner = '{}')".format(current_user.username, session['selectedCaretaker'][1], current_user.username)
+    ownedpetsquery = "SELECT * FROM ownedpets WHERE owner = '{}' AND category ='{}'".format(current_user.username, session['selectedCaretaker'][1])
     ownedpets = db.session.execute(ownedpetsquery)
     ownedpets = list(ownedpets)
     ownedpets = SelectPet(ownedpets)
@@ -791,7 +792,7 @@ def petowner_bids():
     session['selectedCaretakerUsername'] = caretaker
     return render_template("bid.html", username=caretaker, pet_table=ownedpets, prices=prices)
 
-
+"""
 @view.route("/petowner-select-pet", methods=["POST", "GET"])
 @login_required
 def petowner_bid_selected():
@@ -815,8 +816,8 @@ def petowner_bid_selected():
 
     flash('You have successfully added {}'.format(request.args.get('pet_name')), 'Success')
     return redirect(url_for('view.search_caretaker'))
-
 """
+
 @view.route("/petowner-select-pet", methods=["POST", "GET"])
 @login_required
 def petowner_bid_selected():
@@ -848,7 +849,7 @@ def petowner_bid_selected():
     flash('You have successfully added {}'.format(request.args.get('pet_name')), 'Success')
     return redirect(url_for('view.search_caretaker'))
 
-"""
+
 """
 @view.route("/petowner-select-pet", methods=["POST", "GET"])
 @login_required
