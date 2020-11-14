@@ -1280,7 +1280,9 @@ def admin_total_user_count_summary():
     query_user_count = "SELECT COUNT(*) FROM Users"
     query_petowner_count = "SELECT COUNT(*) FROM CareTakers"
     query_caretaker_count = "SELECT COUNT(*) FROM PetOwners"
+    query_admin_count = "SELECT COUNT(*) FROM PCSAdmin"
     user_count = db.session.execute(query_user_count).fetchone()[0]
     petowner_count = db.session.execute(query_petowner_count).fetchone()[0]
     caretaker_count = db.session.execute(query_caretaker_count).fetchone()[0]
-    return render_template("admin_total_user_count_summary.html", user_count=user_count, petowner_count=petowner_count, caretaker_count=caretaker_count)
+    admin_count = db.session.execute(query_admin_count).fetchone()[0]
+    return render_template("admin_total_user_count_summary.html", user_count=user_count, petowner_count=petowner_count, caretaker_count=caretaker_count, admin_count = admin_count)
