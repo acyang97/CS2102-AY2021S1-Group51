@@ -792,10 +792,6 @@ def petowner_bids():
     return render_template("bid.html", username=caretaker, pet_table=ownedpets, prices=prices)
 
 """
-TODO: find the price per day and insert it inside as well.
-For now i just put 0 cus quite confused.
-"""
-
 @view.route("/petowner-select-pet", methods=["POST", "GET"])
 @login_required
 def petowner_bid_selected():
@@ -819,8 +815,36 @@ def petowner_bid_selected():
 
     flash('You have successfully added {}'.format(request.args.get('pet_name')), 'Success')
     return redirect(url_for('view.search_caretaker'))
+"""
 
+def petowner_bid_selected():
+    #[employment, category, rating, transport, payment, startDate, endDate]
+    ctusername = session['selectedCaretakerUsername']
+    owner = current_user.username
+    pet_name = request.args.get('pet_name')
+    mode_of_transport = session['selectedCaretaker'][3]
+    mode_of_payment = session['selectedCaretaker'][4]
+    completed = 'f'
+    start_date = session['selectedCaretaker'][5]
+    end_date = session['selectedCaretaker'][6]
+    price = session['price_to_pay']
+    overlap_date_query = "SELECT COUNT(*) FROM bids WHERE \
+        (start_date <= '{}' AND start_date >= '{}') \
+        OR  (end_date <= '{}' AND end_date >= '{}') \
+        OR (start_date <= '{}' AND end_date >= '{}')".format(end_date, start_date, end_date, start_date, start_date, end_date)
+    if db.session.execute(overlap_date_query).fetchone()[0] > 0:
+        flash("You already made a bid on that day!", 'error')
+        return redirect(url_for('view.search_caretaker'))
+    bidid = db.session.execute("SELECT COUNT(*) FROM BIDS").fetchone()[0] + 1
+    query = "INSERT INTO bids (bid_id, ctusername, owner, pet_name, mode_of_transport, mode_of_payment, completed, \
+    start_date, end_date, price_per_day) VALUES ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')". \
+    format(bidid, ctusername, owner, pet_name, mode_of_transport, mode_of_payment, completed, start_date, end_date, price)
 
+    db.session.execute(query)
+    db.session.commit()
+
+    flash('You have successfully added {}'.format(request.args.get('pet_name')), 'Success')
+    return redirect(url_for('view.search_caretaker'))
 """
 @view.route("/petowner-select-pet", methods=["POST", "GET"])
 @login_required
@@ -854,31 +878,7 @@ def petowner_bid_selected():
     return redirect(url_for('view.search_caretaker'))
 """
 
-@view.route("/testing", methods=["POST","GET"])
-@login_required
-def testing():
-    form = TestForm()
-    x = []
-    if form.validate_on_submit():
-        pet = request.form.get('animal')
-        x.append(pet)
-        return redirect(url_for('view.testing_output', x=x))
-    return render_template('testing.html', form=form, x=x)
 
-@view.route("/testing_output", methods=["POST","GET"])
-@login_required
-def testing_output():
-    x=request.args.get('x', None)
-    return render_template('testing_output.html',  x=x)
-
-
-"""
-I decided to have 3 tables for pet owners to see
-1. Incomplete transactions
-2. Completed but they havent gave a rating and review
-3. Completed and they have already gave a rating and review
-Set a route for the pet owners to see their COMPLETED transactions that they have already reviewed
-"""
 @view.route("/petowner_incomplete_transactions", methods=["POST", "GET"])
 @login_required
 def petowner_incomplete_transactions():
